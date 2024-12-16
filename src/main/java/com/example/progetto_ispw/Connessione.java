@@ -12,20 +12,20 @@ import java.util.logging.Logger;
 
 //----CLASSE PER LA CONNESSIONE AL DB (IMPLEMENTA IL PATTERN SINGLETON)----
 public class Connessione {
-    private static Connessione istance; //----VARIABILE STATICA CHE CONTIENE L'UNICA ISTANZA DELLA CLASSE
-    private Connection connect; //----CONNESSIONE AL DB
+    private static Connessione istance = null; //----VARIABILE STATICA CHE CONTIENE L'UNICA ISTANZA DELLA CLASSE
+    private Connection connect = null; //----CONNESSIONE AL DB
 
-    private final Logger logger = Logger.getLogger(getClass().getName()); //----VARIABILE LOGGER PER LA GESTIONE DELLE ECCEZIONI PREDEFINITE----
+    private Logger logger; //----VARIABILE LOGGER PER LA GESTIONE DELLE ECCEZIONI PREDEFINITE----
 
     //----COSTRUTTORE PRIVATO PER IMPEDIRE L'ISTANZAZIONE ESTERNA----
-    private Connessione() throws SQLException {
+    protected Connessione() {
         createConnection();
     }
 
     //----METODO STATICO PER OTTENERE L'ISTANZA UNICA----
-    public static synchronized Connessione getInstance() throws SQLException {
-        if(istance == null){
-            istance = new Connessione();
+    public static synchronized Connessione getInstance() {
+        if(Connessione.istance == null){
+            Connessione.istance = new Connessione();
         }
         return istance;
     }
@@ -37,49 +37,46 @@ public class Connessione {
                 stm.close();
             }
         } catch (SQLException e){
-            logger.severe("Errore nella chiusura dello statement");
+            this.logger.severe("Errore nella chiusura dello statement");
         }
     }
     //----METODO PER CREARE LA CONNESSIONE----
-    private void createConnection() throws SQLException {
-        if (connect == null || connect.isClosed()){
-            try{
-                InputStream input = getClass().getClassLoader().getResourceAsStream("connecting_info.properties");
-                Properties properties = new Properties();
-                properties.load(input);
+    private void createConnection() {
+        try{
+            this.logger = Logger.getLogger(getClass().getName());
+            InputStream input = getClass().getClassLoader().getResourceAsStream("connecting_info.properties");
+            Properties properties = new Properties();
+            properties.load(input);
 
-                String user = properties.getProperty("db.user");
-                String pssw = properties.getProperty("db.password");
-                String dburl = properties.getProperty("db.url");
-                if(connect == null || connect.isClosed()) {
-                    connect = DriverManager.getConnection(dburl, user, pssw);
-                }
-            } catch (FileNotFoundException e){
-                logger.severe("File inesistente o non accessibile");
-            } catch (IOException e){
-                logger.severe("Errore durante la lettura del file 'connecting_info.properties'");
-            } catch (SQLException e){
-                logger.severe("Errore durante la connessione al database");
-            }
+            String user = properties.getProperty("db.user");
+            String pssw = properties.getProperty("db.password");
+            String dburl = properties.getProperty("db.url");
+            this.connect = DriverManager.getConnection(dburl, user, pssw);
+        } catch (FileNotFoundException e){
+            this.logger.severe("File inesistente o non accessibile");
+        } catch (IOException e){
+            this.logger.severe("Errore durante la lettura del file 'connecting_info.properties'");
+        } catch (SQLException e){
+            this.logger.severe("Errore durante la connessione al database");
         }
     }
 
     //----METODO PER OTTENERE LA CONNESSIONE----
     public Connection getConnect() throws SQLException {
-        if (connect == null || connect.isClosed()){
+        if (this.connect == null || this.connect.isClosed()){
             createConnection(); //Ricrea la connessione
         }
-        return connect;
+        return this.connect;
     }
 
     //----METODO PER CHIUDERE LA CONNESSIONE----
     public void closeConnection() {
-        if (connect != null) {
+        if (this.connect != null) {
             try {
-                connect.close();
-                connect = null;
+                this.connect.close();
+                this.connect = null;
             } catch (SQLException e) {
-                logger.severe("Errore durante la chiusura della connessione al db");
+                this.logger.severe("Errore durante la chiusura della connessione al db");
             }
         }
     }
