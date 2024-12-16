@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Objects;
 
 //----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA (CASO SPECIFICO: HOME)----
@@ -24,7 +23,7 @@ public class HomeFX {
     }
     //----METODO PER EFFETTUARE IL LOGOUT----
     @FXML
-    public void onLogoutButtonClicked() throws IOException, SQLException {
+    public void onLogoutButtonClicked() throws IOException {
         Sessione.clear(); //Cancello le informazioni riguardanti la sessione
         Connessione conn = Connessione.getInstance();
         conn.closeConnection(); //Chiudo definitivamente la connessione con il db
