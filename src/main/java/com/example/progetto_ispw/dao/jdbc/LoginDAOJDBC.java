@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class LoginDAOJDBC {
     private final Connessione connessione;
@@ -23,6 +24,7 @@ public class LoginDAOJDBC {
     //----METODO PER VERIFICARE LA PRESENZA DELLE CREDENZIALI INSERITE NEL DB----
     public void isRegistered(LoginInfoBean currentCred) throws CredentialErrorException {
         boolean userExist = false;
+        Logger logger = Logger.getLogger(getClass().getName()); //Definizione del logger per la gestione delle eccezioni predefinite (solo SQLEXception in questo caso)
         try {
             statement = connection.prepareStatement("SELECT username, password FROM utenti WHERE username = ? AND password = ?"); //Preparazione della query
             statement.setString(1, currentCred.getUsername());                                                          //Imposta primo parametro
@@ -30,7 +32,7 @@ public class LoginDAOJDBC {
             ResultSet result = statement.executeQuery();                                                                              //Esecuzione query
             userExist = result.next();                                                                                               //Verifica se è stata restituita qualche riga
         } catch (SQLException e) {
-            System.out.println("Errore durante la verifica del login");
+            logger.severe("Errore durante la verifica del login");
         } finally {
             connessione.close(statement);
         }

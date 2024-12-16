@@ -8,11 +8,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 //----CLASSE PER LA CONNESSIONE AL DB (IMPLEMENTA IL PATTERN SINGLETON)----
 public class Connessione {
     private static Connessione istance; //----VARIABILE STATICA CHE CONTIENE L'UNICA ISTANZA DELLA CLASSE
     private Connection connect; //----CONNESSIONE AL DB
+
+    private final Logger logger = Logger.getLogger(getClass().getName()); //----VARIABILE LOGGER PER LA GESTIONE DELLE ECCEZIONI PREDEFINITE----
 
     //----COSTRUTTORE PRIVATO PER IMPEDIRE L'ISTANZAZIONE ESTERNA----
     private Connessione() throws SQLException {
@@ -34,7 +37,7 @@ public class Connessione {
                 stm.close();
             }
         } catch (SQLException e){
-            System.out.println("Errore nella chiusura dello statement");
+            logger.severe("Errore nella chiusura dello statement");
         }
     }
     //----METODO PER CREARE LA CONNESSIONE----
@@ -52,11 +55,11 @@ public class Connessione {
                     connect = DriverManager.getConnection(dburl, user, pssw);
                 }
             } catch (FileNotFoundException e){
-                System.out.println("File inesistente o non accessibile");
+                logger.severe("File inesistente o non accessibile");
             } catch (IOException e){
-                System.out.println("Errore durante la lettura del file 'connecting_info.properties'");
+                logger.severe("Errore durante la lettura del file 'connecting_info.properties'");
             } catch (SQLException e){
-                System.out.println("Errore durante la connessione al database");
+                logger.severe("Errore durante la connessione al database");
             }
         }
     }
@@ -76,7 +79,7 @@ public class Connessione {
                 connect.close();
                 connect = null;
             } catch (SQLException e) {
-                System.out.println("Errore durante la chiusura della connessione al db");
+                logger.severe("Errore durante la chiusura della connessione al db");
             }
         }
     }
