@@ -30,8 +30,7 @@ public class LoginDAOJDBC {
             ResultSet result = statement.executeQuery();                                                                              //Esecuzione query
             userExist = result.next();                                                                                               //Verifica se è stata restituita qualche riga
         } catch (SQLException e) {
-            e.printStackTrace();
-            //throw new RuntimeException("Errore durante la verifica del login", e);
+            System.out.println("Errore durante la verifica del login");
         } finally {
             connessione.close(statement);
         }
