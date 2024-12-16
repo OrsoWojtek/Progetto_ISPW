@@ -28,13 +28,14 @@ public class Connessione {
     }
 
     //----METODO PER CHIUDERE LO STATEMENT----
-    public void close(PreparedStatement stm){
+    public void close(PreparedStatement stm) {
         try {
             if (stm != null){
                 stm.close();
             }
         } catch (SQLException e){
-            throw new RuntimeException("Errore nella chiusura dello statement");
+            e.printStackTrace();
+            //throw new RuntimeException("Errore nella chiusura dello statement");
         }
     }
     //----METODO PER CREARE LA CONNESSIONE----
@@ -52,11 +53,14 @@ public class Connessione {
                     connect = DriverManager.getConnection(dburl, user, pssw);
                 }
             } catch (FileNotFoundException e){
-                throw new RuntimeException("File inesistente o non accessibile",e);
+                e.printStackTrace();
+                //throw new RuntimeException("File inesistente o non accessibile",e);
             } catch (IOException e){
-                throw new RuntimeException("Errore durante la lettura del file 'connecting_info.properties'", e);
+                e.printStackTrace();
+                //throw new RuntimeException("Errore durante la lettura del file 'connecting_info.properties'", e);
             } catch (SQLException e){
-                throw new RuntimeException("Errore durante la connessione al database",e);
+                e.printStackTrace();
+                //throw new RuntimeException("Errore durante la connessione al database",e);
             }
         }
     }
@@ -76,7 +80,8 @@ public class Connessione {
                 connect.close();
                 connect = null;
             } catch (SQLException e) {
-                throw new RuntimeException("Errore durante la chiusura della connessione al db");
+                e.printStackTrace();
+                //throw new RuntimeException("Errore durante la chiusura della connessione al db");
             }
         }
     }

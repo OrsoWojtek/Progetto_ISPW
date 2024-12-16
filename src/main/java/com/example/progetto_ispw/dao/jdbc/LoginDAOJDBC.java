@@ -22,7 +22,7 @@ public class LoginDAOJDBC {
 
     //----METODO PER VERIFICARE LA PRESENZA DELLE CREDENZIALI INSERITE NEL DB----
     public void isRegistered(LoginInfoBean currentCred) throws CredentialErrorException {
-        boolean userExist;
+        boolean userExist = false;
         try {
             statement = connection.prepareStatement("SELECT username, password FROM utenti WHERE username = ? AND password = ?"); //Preparazione della query
             statement.setString(1, currentCred.getUsername());                                                          //Imposta primo parametro
@@ -30,7 +30,8 @@ public class LoginDAOJDBC {
             ResultSet result = statement.executeQuery();                                                                              //Esecuzione query
             userExist = result.next();                                                                                               //Verifica se è stata restituita qualche riga
         } catch (SQLException e) {
-            throw new RuntimeException("Errore durante la verifica del login", e);
+            e.printStackTrace();
+            //throw new RuntimeException("Errore durante la verifica del login", e);
         } finally {
             connessione.close(statement);
         }
