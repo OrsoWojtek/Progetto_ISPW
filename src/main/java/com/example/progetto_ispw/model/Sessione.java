@@ -2,18 +2,18 @@ package com.example.progetto_ispw.model;
 
 //----CLASSE UTILITY PER TENERE MEMORIA DELLE CREDENZIALI DELL'UTENTE LOGGATO----
 public class Sessione {
-    private static String current_username;
+    private static String currentUsername;
 
     //----COSTRUTTORE PRIVATO PER IMPEDIRE L'ISTANZA----
     private Sessione(){}
 
     public static void setUsername(String username) {
-        current_username = username;
+        currentUsername = username;
     }
     public static String getUsername() {
-        return current_username;
+        return currentUsername;
     }
     public static void clear(){
-        current_username = null;
+        currentUsername = null;
     }
 }

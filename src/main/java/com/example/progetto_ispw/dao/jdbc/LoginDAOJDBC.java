@@ -9,32 +9,32 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoginDAO_JDBC {
+public class LoginDAOJDBC {
     private final Connessione connessione;
     private final Connection connection;
     private PreparedStatement statement = null;
 
-    public LoginDAO_JDBC() throws SQLException {
+    public LoginDAOJDBC() throws SQLException {
         connection = Connessione.getInstance().getConnect();
         connessione = Connessione.getInstance();
     }
 
 
     //----METODO PER VERIFICARE LA PRESENZA DELLE CREDENZIALI INSERITE NEL DB----
-    public void isRegistered(LoginInfoBean current_cred) throws CredentialErrorException {
-        boolean user_exist;
+    public void isRegistered(LoginInfoBean currentCred) throws CredentialErrorException {
+        boolean userExist;
         try {
             statement = connection.prepareStatement("SELECT username, password FROM utenti WHERE username = ? AND password = ?"); //Preparazione della query
-            statement.setString(1, current_cred.getUsername());                                                          //Imposta primo parametro
-            statement.setString(2, current_cred.getPassword());                                                          //Imposta secondo parametro
+            statement.setString(1, currentCred.getUsername());                                                          //Imposta primo parametro
+            statement.setString(2, currentCred.getPassword());                                                          //Imposta secondo parametro
             ResultSet result = statement.executeQuery();                                                                              //Esecuzione query
-            user_exist = result.next();                                                                                               //Verifica se è stata restituita qualche riga
+            userExist = result.next();                                                                                               //Verifica se è stata restituita qualche riga
         } catch (SQLException e) {
             throw new RuntimeException("Errore durante la verifica del login", e);
         } finally {
             connessione.close(statement);
         }
-        if(!user_exist){
+        if(!userExist){
             throw new CredentialErrorException("Username e/o password inseriti non corretti o non registrati. Prego riprovare.");
         }
     }
