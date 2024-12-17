@@ -73,10 +73,13 @@
                   <Font size="36.0" />
                </font>
             </Label>
-            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="1318.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView accessibleRole="BUTTON" fitHeight="60.0" fitWidth="60.0" layoutX="1318.0" layoutY="70.0" onMouseDragged="#onSearchButtonClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@com/example/progetto_ispw/images/add_icon.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
             </ImageView>
             <Label layoutX="745.0" layoutY="78.0" style="-fx-font-weight: bold; -fx-font-size: 36;" text="Corsi frequentati" underline="true" wrapText="true">
                <font>

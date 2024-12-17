@@ -26,7 +26,7 @@ public class LoginDAOJDBC {
         boolean userExist = false;
         Logger logger = Logger.getLogger(getClass().getName()); //Definizione del logger per la gestione delle eccezioni predefinite (solo SQLEXception in questo caso)
         try {
-            statement = connection.prepareStatement("SELECT username, password FROM utenti WHERE username = ? AND password = ?"); //Preparazione della query
+            statement = connection.prepareStatement("SELECT username, password FROM studente WHERE username = ? AND password = ?"); //Preparazione della query
             statement.setString(1, currentCred.getUsername());                                                          //Imposta primo parametro
             statement.setString(2, currentCred.getPassword());                                                          //Imposta secondo parametro
             ResultSet result = statement.executeQuery();                                                                              //Esecuzione query
