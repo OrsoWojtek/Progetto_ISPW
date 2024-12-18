@@ -62,9 +62,13 @@ public class Connessione {
     }
 
     //----METODO PER OTTENERE LA CONNESSIONE----
-    public Connection getConnect() throws SQLException {
-        if (this.connect == null || this.connect.isClosed()){
-            createConnection(); //Ricrea la connessione
+    public Connection getConnect() {
+        try {
+            if (this.connect == null || this.connect.isClosed()) {
+                createConnection(); //Ricrea la connessione
+            }
+        } catch (SQLException e){
+            this.logger.severe("Errore durante il controllo dello stato della connessione");
         }
         return this.connect;
     }
