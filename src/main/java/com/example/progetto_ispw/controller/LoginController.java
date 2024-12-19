@@ -13,13 +13,12 @@ import com.example.progetto_ispw.model.Utente;
 public class LoginController {
 
     //----METODO DI VERIFICA DEL LOGIN----
-    public UtenteInfoBean checkLogin(LoginInfoBean currLog) throws CredentialErrorException, DataAccessException, RoleNotFoundException {
+    public void checkLogin(LoginInfoBean currLog) throws CredentialErrorException, DataAccessException, RoleNotFoundException {
         UtenteDAOJDBC db = new UtenteDAOJDBC();                     //Istanziamento del DAO per il login
         UtenteInfoBean utenteInfo = new UtenteInfoBean();          //Generato il bean per contenere le informazioni necessarie da trasferire
         Utente utente = db.getNewUtente(currLog);                   //Generato il nuovo utente
         utenteInfo.setRole(utente.getRole());                      //Prelevata l'informazione sul ruolo e username
         utenteInfo.setUsername(utente.getUsername());
         Sessione.setUser(utenteInfo);                               //Inizializzazione della sessione
-        return utenteInfo;
     }
 }

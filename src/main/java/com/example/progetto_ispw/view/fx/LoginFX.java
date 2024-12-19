@@ -1,7 +1,6 @@
 package com.example.progetto_ispw.view.fx;
 
 import com.example.progetto_ispw.bean.LoginInfoBean;
-import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.controller.LoginController;
 import com.example.progetto_ispw.exception.CredentialErrorException;
 import com.example.progetto_ispw.exception.DataAccessException;
@@ -34,9 +33,8 @@ public class LoginFX {
         LoginController controller = new LoginController();     //Istanziamento controller
         bean.setUsername(username.getText());                   //Setting del bean
         bean.setPassword(pssw.getText());
-        UtenteInfoBean currentUser;
         try {
-            currentUser = controller.checkLogin(bean);                                                         //Se le credenziali inserite sono corrette...
+            controller.checkLogin(bean);                                                         //Se le credenziali inserite sono corrette...
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/home.fxml"))); //...Mostra la pagina di home
             Stage stage = (Stage) username.getScene().getWindow();
             Scene scene = new Scene(root);
