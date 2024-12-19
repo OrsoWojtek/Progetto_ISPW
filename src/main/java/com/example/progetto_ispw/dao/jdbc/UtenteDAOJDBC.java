@@ -2,7 +2,7 @@ package com.example.progetto_ispw.dao.jdbc;
 
 import com.example.progetto_ispw.Connessione;
 import com.example.progetto_ispw.bean.LoginInfoBean;
-import com.example.progetto_ispw.exception.CredentialErrorException;
+import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.exception.DataAccessException;
 import com.example.progetto_ispw.exception.RoleNotFoundException;
 import com.example.progetto_ispw.model.Utente;
@@ -25,7 +25,7 @@ public class UtenteDAOJDBC {
 
 
     //----METODO PER VERIFICARE LA PRESENZA DELLE CREDENZIALI INSERITE NEL DB----
-    public Utente getNewUtente(LoginInfoBean currentCred) throws CredentialErrorException, DataAccessException, RoleNotFoundException {
+    public Utente getNewUtente(LoginInfoBean currentCred) throws DataNotFoundException, DataAccessException, RoleNotFoundException {
         String ruolo;
         ResultSet result;
         try {
@@ -34,7 +34,7 @@ public class UtenteDAOJDBC {
             statement.setString(2, currentCred.getPassword());                                                           //Imposta secondo parametro
             result = statement.executeQuery();                                                                                        //Esecuzione query
             if(!result.next()){                                                                                                       //Verifica se è stata restituita qualche riga
-                throw new CredentialErrorException("Username e/o password inseriti non corretti o non registrati. Prego riprovare.");
+                throw new DataNotFoundException("Username e/o password inseriti non corretti o non registrati. Prego riprovare.");
             }
             ruolo = result.getString("tipo");                                                                             //Prelevato il tipo di utente
         } catch (SQLException e) {

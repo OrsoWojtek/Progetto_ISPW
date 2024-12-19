@@ -1,6 +1,8 @@
 package com.example.progetto_ispw.view.fx;
 
 import com.example.progetto_ispw.Connessione;
+import com.example.progetto_ispw.bean.CorsoInfoBean;
+import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.controller.HomeController;
 import com.example.progetto_ispw.model.Sessione;
 import javafx.fxml.FXML;
@@ -11,6 +13,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,14 +30,22 @@ public class HomeFX {
     private Label username; //Username dell'utente loggato
     @FXML
     private ImageView avatar; //Avatar dell'utente loggato
-    private List<String> courseNames;
+    @FXML
+    private AnchorPane catalogoCorsi;
+    private List<CorsoInfoBean> catalogo; //Catalogo dei corsi a cui è iscritto l'utente
+    private UtenteInfoBean user;
     @FXML
     public void initialize(){
         HomeController home = new HomeController();
-        String currentUser = Sessione.getUser().getUsername();
-        username.setText(username.getText()+" "+currentUser); //Mostra nella home l'username dell'utente
-        courseNames = home.getCorsiFrequentati();
-        avatar.setImage(new Image(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/"+Sessione.getUser().getRole().toLowerCase()+"_avatar.png")).toExternalForm()));
+        user = Sessione.getUser();
+        username.setText(username.getText()+" "+user.getUsername()); //Mostra nella home l'username dell'utente
+        catalogo = home.getCorsiFrequentati(user); //Richiesta dei corsi a cui è iscritto l'utente
+        if (!"".equals(catalogo.getFirst().getDescrizione())){
+            showCourseCatalog();
+        } else {
+            showErrorPopup(catalogo.getFirst().getNome(),"Corsi non presenti");
+        }
+        avatar.setImage(new Image(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/"+user.getRole().toLowerCase()+"_avatar.png")).toExternalForm()));
     }
     //----METODO PER EFFETTUARE IL LOGOUT----
     @FXML
@@ -62,6 +77,42 @@ public class HomeFX {
 
         //Mostra il popup e attendi la chiusura
         alert.showAndWait();
+    }
+
+    private void showCourseCatalog(){
+        // Posizione iniziale dei rettangoli
+        double x = 742;
+        double y = 173;
+        double rectWidth = 597;
+        double rectHeight = 86;
+
+        // Creazione dei rettangoli e testo per ogni corso
+        for (CorsoInfoBean corso : catalogo) {
+            // Crea un rettangolo
+            Rectangle rectangle = new Rectangle(x, y, rectWidth, rectHeight);
+            rectangle.setFill(Color.BLACK);
+            rectangle.setStroke(Color.BLACK);
+            // Crea il testo con il nome del corso
+            Text text = new Text(corso.getNome()); // Posiziona il testo dentro il rettangolo
+            text.setFill(Color.WHITE);
+            text.setStyle("-fx-font-weight: bold;");
+            text.setStyle("-fx-font-size: 36;");
+            text.setUnderline(true);
+
+            // Centrare il testo nel rettangolo
+            double textWidth = text.getBoundsInLocal().getWidth();
+            double textHeight = text.getBoundsInLocal().getHeight();
+            text.setX(x + (rectWidth - textWidth) / 2); // Centra orizzontalmente
+            text.setY(y + (rectHeight - textHeight) / 2 + textHeight); // Centra verticalmente
+
+            text.setTextAlignment(TextAlignment.CENTER);
+
+            // Aggiungi rettangolo e testo al contenitore
+            catalogoCorsi.getChildren().addAll(rectangle, text);
+
+            // Aggiorna la posizione per il prossimo rettangolo
+            y += 123; // Sposta verso il basso per evitare sovrapposizioni
+        }
     }
 
 }

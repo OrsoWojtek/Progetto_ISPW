@@ -35,7 +35,7 @@
         </AnchorPane>
     </top>
     <center>
-        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <AnchorPane fx:id="catalogoCorsi" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="851.0" fitWidth="710.0" layoutX="708.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -62,8 +62,8 @@
                   <Image url="@com/example/progetto_ispw/images/tutor_avatar.png" />
                </image>
             </ImageView>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" height="86.0" layoutX="742.0" layoutY="173.0" stroke="BLACK" strokeType="INSIDE" width="597.0" />
-            <Label layoutX="959.0" layoutY="190.0" style="-fx-font-weight: bold; -fx-font-size: 36;" text="Analisi 1" textFill="WHITE" underline="true">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="86.0" layoutX="742.0" layoutY="173.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="597.0" />
+            <Label layoutX="959.0" layoutY="190.0" style="-fx-font-weight: bold; -fx-font-size: 36;" text="Analisi 1" textFill="WHITE" underline="true" visible="false">
                <font>
                   <Font size="36.0" />
                </font>
@@ -86,10 +86,6 @@
                   <Font size="36.0" />
                </font>
             </Label>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" height="86.0" layoutX="742.0" layoutY="293.0" stroke="BLACK" strokeType="INSIDE" width="597.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" height="86.0" layoutX="742.0" layoutY="652.0" stroke="BLACK" strokeType="INSIDE" width="597.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" height="86.0" layoutX="742.0" layoutY="530.0" stroke="BLACK" strokeType="INSIDE" width="597.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" height="86.0" layoutX="742.0" layoutY="410.0" stroke="BLACK" strokeType="INSIDE" width="597.0" />
          </children>
         </AnchorPane>
     </center>

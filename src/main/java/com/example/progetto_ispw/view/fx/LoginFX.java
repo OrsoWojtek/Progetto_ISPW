@@ -2,7 +2,7 @@ package com.example.progetto_ispw.view.fx;
 
 import com.example.progetto_ispw.bean.LoginInfoBean;
 import com.example.progetto_ispw.controller.LoginController;
-import com.example.progetto_ispw.exception.CredentialErrorException;
+import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.exception.DataAccessException;
 import com.example.progetto_ispw.exception.RoleNotFoundException;
 import javafx.fxml.FXML;
@@ -40,7 +40,7 @@ public class LoginFX {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-        } catch (CredentialErrorException e){                                                                           //Altrimenti...
+        } catch (DataNotFoundException e){                                                                           //Altrimenti...
             showErrorPopup(e.getMessage(), "Credenziali errate");                                                  //...Mostra un popup di errore
         } catch (DataAccessException e){
             showErrorPopup(e.getMessage(),"Errore DB");
