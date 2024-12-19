@@ -19,7 +19,7 @@ public class LoginController {
         Utente utente = db.getNewUtente(currLog);                   //Generato il nuovo utente
         utenteInfo.setRole(utente.getRole());                      //Prelevata l'informazione sul ruolo e username
         utenteInfo.setUsername(utente.getUsername());
-        Sessione.setUsername(utente.getUsername());                 //Inizializzazione della sessione
+        Sessione.setUser(utenteInfo);                               //Inizializzazione della sessione
         return utenteInfo;
     }
 }

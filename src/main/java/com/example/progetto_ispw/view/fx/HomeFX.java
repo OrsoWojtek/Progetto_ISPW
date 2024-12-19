@@ -9,8 +9,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,13 +21,16 @@ import java.util.Objects;
 public class HomeFX {
     @FXML
     private Label username; //Username dell'utente loggato
+    @FXML
+    private ImageView avatar; //Avatar dell'utente loggato
     private List<String> courseNames;
     @FXML
     public void initialize(){
         HomeController home = new HomeController();
-        String currentUser = Sessione.getUsername();
+        String currentUser = Sessione.getUser().getUsername();
         username.setText(username.getText()+" "+currentUser); //Mostra nella home l'username dell'utente
         courseNames = home.getCorsiFrequentati();
+        avatar.setImage(new Image(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/"+Sessione.getUser().getRole().toLowerCase()+"_avatar.png")).toExternalForm()));
     }
     //----METODO PER EFFETTUARE IL LOGOUT----
     @FXML
@@ -38,7 +44,7 @@ public class HomeFX {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-        } catch (Exception e){
+        } catch (IOException e){
             showErrorPopup("Errore nell'apertura della pagina di login","Pagina non trovata");
         }
     }

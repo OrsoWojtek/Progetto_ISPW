@@ -15,7 +15,7 @@ public class Connessione {
     private static Connessione istance = null; //----VARIABILE STATICA CHE CONTIENE L'UNICA ISTANZA DELLA CLASSE
     private Connection connect = null; //----CONNESSIONE AL DB
 
-    private Logger logger; //----VARIABILE LOGGER PER LA GESTIONE DELLE ECCEZIONI PREDEFINITE----
+    private Logger logger; //----VARIABILE LOGGER PER LA GESTIONE DELLE ECCEZIONI PREDEFINITE
 
     //----COSTRUTTORE PRIVATO PER IMPEDIRE L'ISTANZAZIONE ESTERNA----
     protected Connessione() {

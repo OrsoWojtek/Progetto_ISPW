@@ -1,19 +1,14 @@
 package com.example.progetto_ispw.model;
 
+import com.example.progetto_ispw.bean.UtenteInfoBean;
+
 //----CLASSE UTILITY PER TENERE MEMORIA DELLE CREDENZIALI DELL'UTENTE LOGGATO----
 public class Sessione {
-    private static String currentUsername;
+    private static UtenteInfoBean user;
 
     //----COSTRUTTORE PRIVATO PER IMPEDIRE L'ISTANZA----
     private Sessione(){}
-
-    public static void setUsername(String username) {
-        currentUsername = username;
-    }
-    public static String getUsername() {
-        return currentUsername;
-    }
-    public static void clear(){
-        currentUsername = null;
-    }
+    public static void setUser(UtenteInfoBean utente){ user = utente;}
+    public static UtenteInfoBean getUser(){return user;}
+    public static void clear(){ user = null;}
 }
