@@ -28,7 +28,7 @@
                   <Image url="@com/example/progetto_ispw/images/logout_icon.png" />
                </image>
                <cursor>
-                  <Cursor fx:constant="OPEN_HAND" />
+                  <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
             </children>
@@ -78,7 +78,7 @@
                   <Image url="@com/example/progetto_ispw/images/add_icon.png" />
                </image>
                <cursor>
-                  <Cursor fx:constant="OPEN_HAND" />
+                  <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
             <Label layoutX="745.0" layoutY="78.0" style="-fx-font-weight: bold; -fx-font-size: 36;" text="Corsi frequentati" underline="true" wrapText="true">
@@ -91,7 +91,7 @@
                   <Image url="@com/example/progetto_ispw/images/option_icon.png" />
                </image>
                <cursor>
-                  <Cursor fx:constant="OPEN_HAND" />
+                  <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
          </children>

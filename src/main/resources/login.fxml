@@ -45,7 +45,7 @@
                   <Image url="@com/example/progetto_ispw/images/log_button_icon.png" />
                </image>
                <cursor>
-                  <Cursor fx:constant="OPEN_HAND" />
+                  <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
             <Label accessibleRole="BUTTON" alignment="CENTER" layoutX="264.0" layoutY="770.0" onMouseClicked="#onRegistReqClick" prefHeight="44.0" prefWidth="913.0" style="-fx-font-weight: bolder; -fx-font-size: 30;" text="Non hai ancora un account? Registrati" textAlignment="CENTER" underline="true">
@@ -53,7 +53,7 @@
                   <Font size="30.0" />
                </font>
                <cursor>
-                  <Cursor fx:constant="OPEN_HAND" />
+                  <Cursor fx:constant="HAND" />
                </cursor>
             </Label>
          </children>

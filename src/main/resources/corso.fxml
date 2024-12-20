@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1024.0" prefWidth="1440.0" style="-fx-background-color: #D07373;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progetto_ispw.view.fx.CorsoFX">
+    <top>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="92.0" prefWidth="1440.0" style="-fx-background-color: #871414; -fx-border-width: 5; -fx-border-color: black;" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="200.0" fitWidth="320.0" layoutX="-44.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@com/example/progetto_ispw/images/ILearn_Title.png" />
+                    </image>
+                </ImageView>
+                <ImageView accessibleRole="BUTTON" fitHeight="50.0" fitWidth="50.0" layoutX="1355.0" layoutY="21.0" onMouseClicked="#onHomeButtonClicked" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@com/example/progetto_ispw/images/clickable_home_icon.png" />
+                    </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </ImageView>
+                <ImageView accessibleRole="BUTTON" fitHeight="51.0" fitWidth="47.0" layoutX="1289.0" layoutY="28.0" onMouseClicked="#onLogoutButtonClicked" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@com/example/progetto_ispw/images/logout_icon.png" />
+                    </image>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ImageView>
+            </children>
+        </AnchorPane>
+    </top>
+   <center>
+      <Label fx:id="nomeCorso" alignment="CENTER" prefHeight="247.0" prefWidth="934.0" text="Label" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="96.0" />
+         </font>
+      </Label>
+   </center>
+</BorderPane>

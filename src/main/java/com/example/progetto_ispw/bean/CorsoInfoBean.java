@@ -5,10 +5,6 @@ public class CorsoInfoBean {
     private String nome;
     private String descrizione;
     //----METODI----
-    public CorsoInfoBean(String nome, String descrizione){
-        this.nome = nome;
-        this.descrizione = descrizione;
-    }
     public void setNome(String nome) {
         this.nome = nome;
     }
