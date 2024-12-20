@@ -55,7 +55,7 @@ public class LoginFX {
     //----METODO CHIAMATO AL CLICK DELLA RICHIESTA DI REGISTRAZIONE----
     @FXML
     public void onRegistReqClick(){
-        showErrorPopup("Questa funzionalità non è stata ancora implementata.\nCi dispiace per il disagio.", "Funzionalità inesistente");
+        showErrorPopup("La funzione di registrazione è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
     }
     //----METODO PER POPUP DI ERRORE----
     private void showErrorPopup(String message, String title) {

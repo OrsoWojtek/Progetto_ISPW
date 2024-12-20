@@ -31,9 +31,12 @@ public class HomeFX {
     @FXML
     private ImageView avatar; //Avatar dell'utente loggato
     @FXML
+    private ImageView optionButton; //Bottone delle impostazioni dei corsi (disponibile solo per i tutor)
+    @FXML
     private AnchorPane catalogoCorsi;
     private List<CorsoInfoBean> catalogo; //Catalogo dei corsi a cui è iscritto l'utente
     private UtenteInfoBean user;
+    //----INIZIALIZZAZIONE DELLA PAGINA HOME----
     @FXML
     public void initialize(){
         HomeController home = new HomeController();
@@ -42,10 +45,9 @@ public class HomeFX {
         catalogo = home.getCorsiFrequentati(user); //Richiesta dei corsi a cui è iscritto l'utente
         if (!"".equals(catalogo.getFirst().getDescrizione())){
             showCourseCatalog();
-        } else {
-            showErrorPopup(catalogo.getFirst().getNome(),"Corsi non presenti");
         }
         avatar.setImage(new Image(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/"+user.getRole().toLowerCase()+"_avatar.png")).toExternalForm()));
+        optionButton.setVisible("tutor".equalsIgnoreCase(user.getRole()));
     }
     //----METODO PER EFFETTUARE IL LOGOUT----
     @FXML
@@ -66,19 +68,13 @@ public class HomeFX {
     //----METODO PER APRIRE LA BARRA DI RICERCA PER ISCRIVERSI AI CORSI----
     @FXML
     public void onSearchButtonClicked() {
-        showErrorPopup("L'iscrizione ad un nuovo corso è al momento disabilitata.\nCi dispiace per il disagio.","Funzionalità inesistente");
+        showErrorPopup("La funzione di iscrizione ad un nuovo corso è al momento disabilitata.\nCi dispiace per il disagio.","Funzionalità in manutenzione");
     }
-
-    private void showErrorPopup(String message, String title) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-
-        //Mostra il popup e attendi la chiusura
-        alert.showAndWait();
+    //----METODO PER GESTIRE I CORSI (DISPONIBILE SOLO PER I TUTOR)----
+    public void onOptionButtonClicked(){
+        showErrorPopup("La funzione di gestione dei corsi è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
     }
-
+    //----METODO PER MOSTRARE IL CATALOGO DI CORSI A CUI L'UTENTE È ISCRITTO----
     private void showCourseCatalog(){
         // Posizione iniziale dei rettangoli
         double x = 742;
@@ -114,5 +110,14 @@ public class HomeFX {
             y += 123; // Sposta verso il basso per evitare sovrapposizioni
         }
     }
+    //----METODO PER MOSTRARE MESSAGGI DI ERRORE----
+    private void showErrorPopup(String message, String title) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
 
+        //Mostra il popup e attendi la chiusura
+        alert.showAndWait();
+    }
 }

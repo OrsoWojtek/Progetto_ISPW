@@ -73,7 +73,7 @@
                   <Font size="36.0" />
                </font>
             </Label>
-            <ImageView accessibleRole="BUTTON" fitHeight="60.0" fitWidth="60.0" layoutX="1318.0" layoutY="70.0" onMouseDragged="#onSearchButtonClicked" pickOnBounds="true" preserveRatio="true">
+            <ImageView accessibleRole="BUTTON" fitHeight="60.0" fitWidth="60.0" layoutX="1318.0" layoutY="70.0" onMouseClicked="#onSearchButtonClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@com/example/progetto_ispw/images/add_icon.png" />
                </image>
@@ -86,6 +86,14 @@
                   <Font size="36.0" />
                </font>
             </Label>
+            <ImageView fx:id="optionButton" accessibleRole="BUTTON" fitHeight="60.0" fitWidth="60.0" layoutX="1251.0" layoutY="70.0" onMouseClicked="#onOptionButtonClicked" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@com/example/progetto_ispw/images/option_icon.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+            </ImageView>
          </children>
         </AnchorPane>
     </center>
