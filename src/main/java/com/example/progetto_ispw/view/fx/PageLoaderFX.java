@@ -1,32 +1,45 @@
 package com.example.progetto_ispw.view.fx;
 
+import com.example.progetto_ispw.view.PageLoader;
+import com.example.progetto_ispw.view.PageManagerAware;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
-//----CLASSE UTILITY PER ESEGUIRE LE OPERAZIONI RELATIVE ALLE SHORTCUT
-public class PageLoaderFX {
+//----CLASSE PER ESEGUIRE LE OPERAZIONI RELATIVE AL CARICAMENTO DELLE PAGINE FXML E ALLA GESTIONE DEI POPUP DI ERRORE
+public class PageLoaderFX implements PageLoader {
+    private Stage stage;
+
     //----COSTRUTTORE PRIVATO PER IMPEDIRE L'ISTANZA----
-    private PageLoaderFX(){}
+    public PageLoaderFX(Stage stage){
+        this.stage = stage;
+    }
     //----METODO PER EFFETTUARE IL CAMBIO PAGINA----
-    public static void loadPage(Label label, String page){
+    @Override
+    public void loadPage(String page){
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(PageLoaderFX.class.getResource("/"+page.toLowerCase()+".fxml"))); //Carica la pagina richiesta
-            Stage stage = (Stage) label.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/"+page.toLowerCase()+".fxml"));
+            Parent root =loader.load(); //Carica la pagina richiesta
+            // Ottieni il controller collegato
+            Object controller = loader.getController();
+
+            // Se il controller implementa un'interfaccia o un metodo setPageManager, imposta PageLoader
+            if (controller instanceof PageManagerAware) {
+                ((PageManagerAware) controller).setPageManager(this);
+            }
             Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            this.stage.setScene(scene);
+            this.stage.show();
         } catch (IOException e){
             showErrorPopup("Errore nell'apertura della pagina di "+page.toLowerCase(),"Pagina non trovata");
         }
     }
     //----METODO PER MOSTRARE MESSAGGI DI ERRORE----
-    public static void showErrorPopup(String message, String title) {
+    @Override
+    public void showErrorPopup(String message, String title) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);

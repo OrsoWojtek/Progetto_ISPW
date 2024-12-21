@@ -8,6 +8,7 @@ module com.example.progetto_ispw {
     exports com.example.progetto_ispw;
     exports com.example.progetto_ispw.exception;
     exports com.example.progetto_ispw.model;
+    exports com.example.progetto_ispw.view;
     exports com.example.progetto_ispw.view.fx;
     opens com.example.progetto_ispw.view.fx to javafx.fxml;
     exports com.example.progetto_ispw.controller;
