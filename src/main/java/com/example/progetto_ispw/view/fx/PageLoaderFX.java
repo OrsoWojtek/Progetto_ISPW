@@ -27,8 +27,8 @@ public class PageLoaderFX implements PageLoader {
             Object controller = loader.getController();
 
             // Se il controller implementa un'interfaccia o un metodo setPageManager, imposta PageLoader
-            if (controller instanceof PageManagerAware) {
-                ((PageManagerAware) controller).setPageManager(this);
+            if (controller instanceof PageManagerAware controllerFX) {
+                controllerFX.setPageManager(this);
             }
             Scene scene = new Scene(root);
             this.stage.setScene(scene);
