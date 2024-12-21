@@ -1,11 +1,10 @@
 package com.example.progetto_ispw.controller;
 
 import com.example.progetto_ispw.Connessione;
-import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.model.Sessione;
 
 //----CONTROLLER APPLICATIVO PER GESTIRE IL CORSO----
-public class CorsoController {
+public class CorsoPageController {
     //----METODO PER PULIRE CONNESSIONE AL DB E SESSIONE AL LOGOUT----
     public void clean(){
         Sessione.clear(); //Cancello le informazioni riguardanti la sessione

@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -41,13 +40,13 @@ public class LoginFX {
             stage.setScene(scene);
             stage.show();
         } catch (DataNotFoundException e){                                                                           //Altrimenti...
-            showErrorPopup(e.getMessage(), "Credenziali errate");                                                  //...Mostra un popup di errore
+            PageLoaderFX.showErrorPopup(e.getMessage(), "Credenziali errate");                                                  //...Mostra un popup di errore
         } catch (DataAccessException e){
-            showErrorPopup(e.getMessage(),"Errore DB");
+            PageLoaderFX.showErrorPopup(e.getMessage(),"Errore DB");
         } catch (RoleNotFoundException e){
-            showErrorPopup(e.getMessage(), "Ruolo indefinito");
+            PageLoaderFX.showErrorPopup(e.getMessage(), "Ruolo indefinito");
         } catch (IOException e){
-            showErrorPopup("Non è stato possibile caricare la pagina di home.","Errore cambio pagina");
+            PageLoaderFX.showErrorPopup("Non è stato possibile caricare la pagina di home.","Errore cambio pagina");
         }
 
     }
@@ -55,16 +54,6 @@ public class LoginFX {
     //----METODO CHIAMATO AL CLICK DELLA RICHIESTA DI REGISTRAZIONE----
     @FXML
     public void onRegistReqClick(){
-        showErrorPopup("La funzione di registrazione è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
-    }
-    //----METODO PER POPUP DI ERRORE----
-    private void showErrorPopup(String message, String title) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-
-        //Mostra il popup e attendi la chiusura
-        alert.showAndWait();
+        PageLoaderFX.showErrorPopup("La funzione di registrazione è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
     }
 }

@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -53,26 +52,18 @@ public class HomeFX {
     //----METODO PER EFFETTUARE IL LOGOUT----
     @FXML
     public void onLogoutButtonClicked(){
-        try {
-            HomeController homeController = new HomeController();
-            homeController.clean();
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/login.fxml"))); //Torna alla pagina di login
-            Stage stage = (Stage) username.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e){
-            showErrorPopup("Errore nell'apertura della pagina di login","Pagina non trovata");
-        }
+        HomeController homeController = new HomeController();
+        homeController.clean();
+        PageLoaderFX.loadPage(username,"login");
     }
     //----METODO PER APRIRE LA BARRA DI RICERCA PER ISCRIVERSI AI CORSI----
     @FXML
     public void onSearchButtonClicked() {
-        showErrorPopup("La funzione di iscrizione ad un nuovo corso è al momento disabilitata.\nCi dispiace per il disagio.","Funzionalità in manutenzione");
+        PageLoaderFX.showErrorPopup("La funzione di iscrizione ad un nuovo corso è al momento disabilitata.\nCi dispiace per il disagio.","Funzionalità in manutenzione");
     }
     //----METODO PER GESTIRE I CORSI (DISPONIBILE SOLO PER I TUTOR)----
     public void onOptionButtonClicked(){
-        showErrorPopup("La funzione di gestione dei corsi è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
+        PageLoaderFX.showErrorPopup("La funzione di gestione dei corsi è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
     }
     //----METODO PER MOSTRARE IL CATALOGO DI CORSI A CUI L'UTENTE È ISCRITTO----
     private void showCourseCatalog(){
@@ -150,18 +141,7 @@ public class HomeFX {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e){
-            showErrorPopup("Errore nell'apertura della pagina del corso selezionato","Pagina non trovata");
+            PageLoaderFX.showErrorPopup("Errore nell'apertura della pagina del corso selezionato","Pagina non trovata");
         }
-    }
-
-    //----METODO PER MOSTRARE MESSAGGI DI ERRORE----
-    private void showErrorPopup(String message, String title) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-
-        //Mostra il popup e attendi la chiusura
-        alert.showAndWait();
     }
 }
