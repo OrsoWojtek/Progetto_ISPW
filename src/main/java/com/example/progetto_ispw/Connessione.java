@@ -38,7 +38,6 @@ public class Connessione {
             }
         } catch (SQLException e){
             throw new ConnectionException("Errore nella chiusura dello statement");
-            //this.logger.severe("Errore nella chiusura dello statement");
         }
     }
     //----METODO PER CREARE LA CONNESSIONE----
