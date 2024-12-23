@@ -3,8 +3,9 @@ package com.example.progetto_ispw.view.fx;
 import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.controller.HomeController;
-import com.example.progetto_ispw.view.PageLoader;
-import com.example.progetto_ispw.view.PageManagerAware;
+import com.example.progetto_ispw.exception.ConnectionException;
+import com.example.progetto_ispw.exception.PageNotFoundException;
+import com.example.progetto_ispw.view.PageManager;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
@@ -21,7 +22,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 //----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA (CASO SPECIFICO: HOME)----
-public class HomeFX implements PageManagerAware {
+public class HomeFX extends PageManager {
     @FXML
     private Label username; //Username dell'utente loggato
     @FXML
@@ -31,41 +32,46 @@ public class HomeFX implements PageManagerAware {
     @FXML
     private AnchorPane catalogoCorsi;
     private List<CorsoInfoBean> catalogo; //Catalogo dei corsi a cui è iscritto l'utente
-    private PageLoader pageManager; //Gestore dello switch di pagina
-    private UtenteInfoBean user; //Informazioni sull'utente corrente
 
     //----INIZIALIZZAZIONE DELLA PAGINA HOME----
     @FXML
     public void initialize(){
         HomeController home = new HomeController();
-        user = home.getInfoUser();
-        username.setText(username.getText()+" "+user.getUsername()); //Mostra nella home l'username dell'utente
-        catalogo = home.getCorsiFrequentati(user); //Richiesta dei corsi a cui è iscritto l'utente
+        //Informazioni sull'utente corrente
+        UtenteInfoBean user = home.getInfoUser();
+        username.setText(username.getText()+" "+ user.getUsername()); //Mostra nella home l'username dell'utente
+        try {
+            catalogo = home.getCorsiFrequentati(user); //Richiesta dei corsi a cui è iscritto l'utente
+        } catch (ConnectionException e){
+            showErrorHandler.showError(e.getMessage(),"Errore connessione");
+        }
         if (!"".equals(catalogo.getFirst().getDescrizione())){
             showCourseCatalog(); //Mostra i corsi a cui è iscritto l'utente
         }
-        avatar.setImage(new Image(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/"+user.getRole().toLowerCase()+"_avatar.png")).toExternalForm()));
+        avatar.setImage(new Image(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/"+ user.getRole().toLowerCase()+"_avatar.png")).toExternalForm()));
         optionButton.setVisible("tutor".equalsIgnoreCase(user.getRole())); //Mostra il bottone delle impostazioni dei corsi (disponibile solo per i tutor)
-    }
-    @Override
-    public void setPageManager(PageLoader pageManager) {
-        this.pageManager = pageManager;
     }
     //----METODO PER EFFETTUARE IL LOGOUT----
     @FXML
     public void onLogoutButtonClicked(){
         HomeController homeController = new HomeController();
-        homeController.clean();
-        pageManager.loadPage("login");
+        try{
+            homeController.clean();
+            pageLoader.loadPage("login");
+        } catch (PageNotFoundException e){
+            showErrorHandler.showError(e.getMessage(),"Pagina non trovata");
+        } catch (ConnectionException e){
+            showErrorHandler.showError(e.getMessage(),"Errore connessione");
+        }
     }
     //----METODO PER APRIRE LA BARRA DI RICERCA PER ISCRIVERSI AI CORSI----
     @FXML
     public void onSearchButtonClicked() {
-        pageManager.showErrorPopup("La funzione di iscrizione ad un nuovo corso è al momento disabilitata.\nCi dispiace per il disagio.","Funzionalità in manutenzione");
+        showErrorHandler.showError("La funzione di iscrizione ad un nuovo corso è al momento disabilitata.\nCi dispiace per il disagio.","Funzionalità in manutenzione");
     }
     //----METODO PER GESTIRE I CORSI (DISPONIBILE SOLO PER I TUTOR)----
     public void onOptionButtonClicked(){
-        pageManager.showErrorPopup("La funzione di gestione dei corsi è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
+        showErrorHandler.showError("La funzione di gestione dei corsi è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
     }
     //----METODO PER MOSTRARE IL CATALOGO DI CORSI A CUI L'UTENTE È ISCRITTO----
     private void showCourseCatalog(){
@@ -136,6 +142,10 @@ public class HomeFX implements PageManagerAware {
         HomeController home = new HomeController();
         Optional<CorsoInfoBean> corsoScelto = catalogo.stream().filter(c -> c.getNome().equals(nomeCorso)).findFirst(); //Cerca il bean del corso nel catalogo corrispondere al nome del corso selezionato dall'utente
         corsoScelto.ifPresent(home::setInfoCourse); //Passa il bean del corso al controller applicativo
-        pageManager.loadPage("corso");//...Mostra la pagina di home
+        try{
+            pageLoader.loadPage("corso");//...Mostra la pagina del corso
+        } catch (PageNotFoundException e){
+            showErrorHandler.showError(e.getMessage(),"Pagina non trovata");
+        }
     }
 }

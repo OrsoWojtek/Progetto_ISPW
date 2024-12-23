@@ -4,6 +4,7 @@ import com.example.progetto_ispw.Connessione;
 import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.dao.jdbc.CorsoDAOJDBC;
+import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataAccessException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.model.Corso;
@@ -15,7 +16,7 @@ import java.util.List;
 //----CONTROLLER APPLICATIVO PER GESTIRE LA HOME----
 public class HomeController {
     //----METODO PER RICERCARE QUALI SONO I CORSI A CUI L'UTENTE È ISCRITTO----
-    public List<CorsoInfoBean> getCorsiFrequentati(UtenteInfoBean utenteInfoBean){
+    public List<CorsoInfoBean> getCorsiFrequentati(UtenteInfoBean utenteInfoBean) throws ConnectionException {
         CorsoDAOJDBC db = new CorsoDAOJDBC();
         List<CorsoInfoBean> catalogoBeans = new ArrayList<>();
         try {
@@ -35,7 +36,7 @@ public class HomeController {
         return catalogoBeans;
     }
     //----METODO PER PULIRE CONNESSIONE AL DB E SESSIONE AL LOGOUT----
-    public void clean(){
+    public void clean() throws ConnectionException {
         Sessione.clear(); //Cancello le informazioni riguardanti la sessione
         Connessione conn = Connessione.getInstance();
         conn.closeConnection(); //Chiudo definitivamente la connessione con il db

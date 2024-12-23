@@ -2,6 +2,7 @@ package com.example.progetto_ispw.dao.jdbc;
 
 import com.example.progetto_ispw.Connessione;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
+import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.model.Corso;
 import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.exception.DataAccessException;
@@ -18,12 +19,12 @@ public class CorsoDAOJDBC {
     private final Connection connection;
     private PreparedStatement statement = null;
 
-    public CorsoDAOJDBC() {
+    public CorsoDAOJDBC() throws ConnectionException {
         connection = Connessione.getInstance().getConnect();
         connessione = Connessione.getInstance();
     }
     //----METODO PER OTTENERE TUTTI I CORSI A CUI È ISCRITTO L'UTENTE----
-    public List<Corso> getCourses(UtenteInfoBean user) throws DataNotFoundException, DataAccessException {
+    public List<Corso> getCourses(UtenteInfoBean user) throws DataNotFoundException, DataAccessException, ConnectionException {
         ResultSet result;
         List<Corso> corsi = new ArrayList<>();
         try {

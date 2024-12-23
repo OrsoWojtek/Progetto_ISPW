@@ -2,24 +2,20 @@ package com.example.progetto_ispw.view.fx;
 
 import com.example.progetto_ispw.bean.LoginInfoBean;
 import com.example.progetto_ispw.controller.LoginController;
-import com.example.progetto_ispw.exception.DataNotFoundException;
-import com.example.progetto_ispw.exception.DataAccessException;
-import com.example.progetto_ispw.exception.RoleNotFoundException;
-import com.example.progetto_ispw.view.PageLoader;
-import com.example.progetto_ispw.view.PageManagerAware;
+import com.example.progetto_ispw.exception.*;
+import com.example.progetto_ispw.view.PageManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 //----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA (CASO SPECIFICO: LOGIN)----
-public class LoginFX implements PageManagerAware {
+public class LoginFX extends PageManager {
     //----USERNAME UTENTE----
     @FXML
     private TextField username;
     //----PASSWORD UTENTE----
     @FXML
     private PasswordField pssw;
-    private PageLoader pageManager;
 
     //----METODO CHIAMATO AL CLICK DEL TASTO DI LOGIN----
     @FXML
@@ -30,23 +26,23 @@ public class LoginFX implements PageManagerAware {
         bean.setPassword(pssw.getText());
         try {
             controller.checkLogin(bean);     //Se le credenziali inserite sono corrette...
-            pageManager.loadPage("home");    //...Mostra la pagina di home
+            pageLoader.loadPage("home");    //...Mostra la pagina di home
         } catch (DataNotFoundException e){                                            //Altrimenti...
-            pageManager.showErrorPopup(e.getMessage(), "Credenziali errate");   //...Mostra un popup di errore
+            showErrorHandler.showError(e.getMessage(), "Credenziali errate");   //...Mostra un popup di errore
         } catch (DataAccessException e){
-            pageManager.showErrorPopup(e.getMessage(),"Errore DB");
+            showErrorHandler.showError(e.getMessage(),"Errore DB");
         } catch (RoleNotFoundException e){
-            pageManager.showErrorPopup(e.getMessage(), "Ruolo indefinito");
+            showErrorHandler.showError(e.getMessage(), "Ruolo indefinito");
+        } catch (PageNotFoundException e){
+            showErrorHandler.showError(e.getMessage(),"Pagina non trovata");
+        } catch (ConnectionException e){
+            showErrorHandler.showError(e.getMessage(),"Errore connessione");
         }
 
-    }
-    @Override
-    public void setPageManager(PageLoader pageManager) {
-        this.pageManager = pageManager;
     }
     //----METODO CHIAMATO AL CLICK DELLA RICHIESTA DI REGISTRAZIONE----
     @FXML
     public void onRegistReqClick(){
-        pageManager.showErrorPopup("La funzione di registrazione è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
+        showErrorHandler.showError("La funzione di registrazione è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
     }
 }

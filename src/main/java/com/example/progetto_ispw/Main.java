@@ -1,8 +1,8 @@
 package com.example.progetto_ispw;
 
-import com.example.progetto_ispw.view.PageLoader;
-import com.example.progetto_ispw.view.PageManagerAware;
+import com.example.progetto_ispw.view.PageManager;
 import com.example.progetto_ispw.view.fx.PageLoaderFX;
+import com.example.progetto_ispw.view.fx.ShowErrorHandlerFX;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,14 +14,13 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        PageLoader pageLoader;
-        PageManagerAware loginPage;
+        PageManager loginPage;
+
         //Versione FX: ----INIZIO----
-        pageLoader= new PageLoaderFX(stage);
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/login.fxml"));
         Parent root = fxmlLoader.load();
         loginPage = fxmlLoader.getController();
-        loginPage.setPageManager(pageLoader);
+        loginPage.setupDependencies(new PageLoaderFX(),new ShowErrorHandlerFX());
         Scene scene = new Scene(root);
         stage.setTitle("ILearn");
         stage.setScene(scene);
