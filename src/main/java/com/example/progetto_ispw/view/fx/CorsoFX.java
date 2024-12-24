@@ -3,7 +3,6 @@ package com.example.progetto_ispw.view.fx;
 import com.example.progetto_ispw.controller.CorsoPageController;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.PageNotFoundException;
-import com.example.progetto_ispw.model.Sessione;
 import com.example.progetto_ispw.view.PageManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -13,16 +12,17 @@ public class CorsoFX extends PageManager {
     @FXML
     private Label nomeCorso; //Nome del corso
     private static final String MAINTENANCE = "Funzionalità in manutenzione";
+    private  CorsoPageController controller; //Riferimento al controller applicativo associato
     @FXML
     public void initialize(){
-        nomeCorso.setText(Sessione.getCourse().getNome()+":"); //Mostra nella pagina del corso nome e descrizione del corso
+        controller = new CorsoPageController();
+        nomeCorso.setText(controller.getInfoCourse().getNome()+":"); //Mostra nella pagina del corso nome del corso
     }
     //----METODO PER EFFETTUARE IL LOGOUT----
     @FXML
     public void onLogoutButtonClicked(){
-        CorsoPageController corsoPageController = new CorsoPageController();
         try {
-            corsoPageController.clean();
+            controller.clean();
             pageLoader.loadPage("login");
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
@@ -33,8 +33,7 @@ public class CorsoFX extends PageManager {
     //----METODO PER TORNARE ALLA HOME----
     @FXML
     public void onHomeButtonClicked(){
-        CorsoPageController corsoPageController = new CorsoPageController();
-        corsoPageController.clearInfoCourse();
+        controller.clearInfoCourse();
         try{
             pageLoader.loadPage("home");
         } catch (PageNotFoundException e){
@@ -47,7 +46,7 @@ public class CorsoFX extends PageManager {
     }
     @FXML
     public void onDescrizioneClicked(){
-        showMessageHandler.showMessage(Sessione.getCourse().getDescrizione(), "Descrizione del corso");
+        showMessageHandler.showMessage(controller.getInfoCourse().getDescrizione(), "Descrizione del corso");
     }
     @FXML
     public void onTeoriaClicked(){

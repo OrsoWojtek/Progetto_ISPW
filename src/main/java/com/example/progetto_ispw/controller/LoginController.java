@@ -11,7 +11,7 @@ import com.example.progetto_ispw.model.Sessione;
 import com.example.progetto_ispw.model.Utente;
 
 //----CONTROLLER APPLICATIVO PER GESTIRE IL PROCESSO DI AUTENTICAZIONE----
-public class LoginController {
+public class LoginController{
 
     //----METODO DI VERIFICA DEL LOGIN----
     public void checkLogin(LoginInfoBean currLog) throws DataNotFoundException, DataAccessException, RoleNotFoundException, ConnectionException {
@@ -20,8 +20,6 @@ public class LoginController {
         Utente utente = db.getNewUtente(currLog);                   //Generato il nuovo utente
         utenteInfo.setRole(utente.getRole());                      //Prelevata l'informazione sul ruolo e username
         utenteInfo.setUsername(utente.getUsername());
-        Sessione.setUser(utenteInfo);                               //Inizializzazione della sessione
-
-        //Aggiungi aggiornamento observer
+        Sessione.getInstance().setUser(utenteInfo);                //Inizializzazione della sessione
     }
 }

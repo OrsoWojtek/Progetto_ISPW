@@ -15,6 +15,7 @@ import java.util.List;
 
 //----CONTROLLER APPLICATIVO PER GESTIRE LA HOME----
 public class HomeController {
+
     //----METODO PER RICERCARE QUALI SONO I CORSI A CUI L'UTENTE È ISCRITTO----
     public List<CorsoInfoBean> getCorsiFrequentati(UtenteInfoBean utenteInfoBean) throws ConnectionException {
         CorsoDAOJDBC db = new CorsoDAOJDBC();
@@ -37,16 +38,16 @@ public class HomeController {
     }
     //----METODO PER PULIRE CONNESSIONE AL DB E SESSIONE AL LOGOUT----
     public void clean() throws ConnectionException {
-        Sessione.clear(); //Cancello le informazioni riguardanti la sessione
+        Sessione.getInstance().clear(); //Cancello le informazioni riguardanti la sessione
         Connessione conn = Connessione.getInstance();
         conn.closeConnection(); //Chiudo definitivamente la connessione con il db
     }
     //----METODO PER OTTENERE LE INFORMAZIONI DELL'UTENTE CORRENTE----
     public UtenteInfoBean getInfoUser(){
-        return Sessione.getUser();
+        return Sessione.getInstance().getUser();
     }
     //----METODO PER MEMORIZZARE NELLA SESSIONE IL CORSO SELEZIONATO
     public void setInfoCourse(CorsoInfoBean currentCourse){
-        Sessione.setCourse(currentCourse);
+        Sessione.getInstance().setCourse(currentCourse);
     }
 }

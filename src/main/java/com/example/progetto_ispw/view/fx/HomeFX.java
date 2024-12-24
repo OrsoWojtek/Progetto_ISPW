@@ -32,11 +32,13 @@ public class HomeFX extends PageManager {
     @FXML
     private AnchorPane catalogoCorsi;
     private List<CorsoInfoBean> catalogo; //Catalogo dei corsi a cui è iscritto l'utente
+    private static final String MAINTENANCE = "Funzionalità in manutenzione";
+    private HomeController home; //Riferimento al controller applicativo
 
     //----INIZIALIZZAZIONE DELLA PAGINA HOME----
     @FXML
     public void initialize(){
-        HomeController home = new HomeController();
+        home = new HomeController();
         //Informazioni sull'utente corrente
         UtenteInfoBean user = home.getInfoUser();
         username.setText(username.getText()+" "+ user.getUsername()); //Mostra nella home l'username dell'utente
@@ -54,9 +56,8 @@ public class HomeFX extends PageManager {
     //----METODO PER EFFETTUARE IL LOGOUT----
     @FXML
     public void onLogoutButtonClicked(){
-        HomeController homeController = new HomeController();
         try{
-            homeController.clean();
+            home.clean();
             pageLoader.loadPage("login");
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
@@ -67,11 +68,11 @@ public class HomeFX extends PageManager {
     //----METODO PER APRIRE LA BARRA DI RICERCA PER ISCRIVERSI AI CORSI----
     @FXML
     public void onSearchButtonClicked() {
-        showMessageHandler.showError("La funzione di iscrizione ad un nuovo corso è al momento disabilitata.\nCi dispiace per il disagio.","Funzionalità in manutenzione");
+        showMessageHandler.showError("La funzione di iscrizione ad un nuovo corso è al momento disabilitata.\nCi dispiace per il disagio.",MAINTENANCE);
     }
     //----METODO PER GESTIRE I CORSI (DISPONIBILE SOLO PER I TUTOR)----
     public void onOptionButtonClicked(){
-        showMessageHandler.showError("La funzione di gestione dei corsi è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
+        showMessageHandler.showError("La funzione di gestione dei corsi è al momento disabilitata.\nCi dispiace per il disagio.", MAINTENANCE);
     }
     //----METODO PER MOSTRARE IL CATALOGO DI CORSI A CUI L'UTENTE È ISCRITTO----
     private void showCourseCatalog(){
@@ -139,7 +140,6 @@ public class HomeFX extends PageManager {
 
     //----METODO PER PASSARE ALLA PAGINA DEL CORSO DESIDERATO----
     private void goToCoursePage(String nomeCorso){
-        HomeController home = new HomeController();
         Optional<CorsoInfoBean> corsoScelto = catalogo.stream().filter(c -> c.getNome().equals(nomeCorso)).findFirst(); //Cerca il bean del corso nel catalogo corrispondere al nome del corso selezionato dall'utente
         corsoScelto.ifPresent(home::setInfoCourse); //Passa il bean del corso al controller applicativo
         try{

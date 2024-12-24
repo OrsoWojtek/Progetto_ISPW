@@ -22,7 +22,7 @@ public class PageLoaderFX implements PageLoader {
             // Ottieni il controller collegato
            Object controller = loader.getController();
 
-            //Se il controller è una sottoclasse di PageManager, inizializzalo
+            //Se il controller grafico è una sottoclasse di PageManager, inizializzalo
             if (controller instanceof PageManager controllerFX) {
                 controllerFX.setupDependencies(new PageLoaderFX(),new ShowMessageHandlerFX());
            }
