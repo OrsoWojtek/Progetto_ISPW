@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 public class CorsoFX extends PageManager {
     @FXML
     private Label nomeCorso; //Nome del corso
+    private static final String maintenance = "Funzionalità in manutenzione";
     @FXML
     public void initialize(){
         nomeCorso.setText(Sessione.getCourse().getNome()+":"); //Mostra nella pagina del corso nome e descrizione del corso
@@ -42,14 +43,14 @@ public class CorsoFX extends PageManager {
     }
     @FXML
     public void onSollecitaDomandaClicked(){
-        showErrorHandler.showError("Al momento non è possibile sollecitare domande al tutor.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
+        showErrorHandler.showError("Al momento non è possibile sollecitare domande al tutor.\nCi dispiace per il disagio.", maintenance);
     }
     @FXML
     public void onDescrizioneClicked(){
-        showErrorHandler.showError("La funzione di gestione dei corsi è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
+        showErrorHandler.showMessage(Sessione.getCourse().getDescrizione(), "Descrizione del corso");
     }
     @FXML
     public void onTeoriaClicked(){
-        showErrorHandler.showError("La teoria del corso non è al momento consultabile.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
+        showErrorHandler.showError("La teoria del corso non è al momento consultabile.\nCi dispiace per il disagio.", maintenance);
     }
 }

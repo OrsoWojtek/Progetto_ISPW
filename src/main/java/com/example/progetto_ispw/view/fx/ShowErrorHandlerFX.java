@@ -14,4 +14,14 @@ public class ShowErrorHandlerFX implements ShowErrorHandler {
         //Mostra il popup e attendi la chiusura
         alert.showAndWait();
     }
+    @Override
+    public void showMessage(String message, String title){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        //Mostra il popup e attendi la chiusura
+        alert.showAndWait();
+    }
 }
