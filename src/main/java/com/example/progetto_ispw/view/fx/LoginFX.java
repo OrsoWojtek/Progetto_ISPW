@@ -28,21 +28,21 @@ public class LoginFX extends PageManager {
             controller.checkLogin(bean);     //Se le credenziali inserite sono corrette...
             pageLoader.loadPage("home");    //...Mostra la pagina di home
         } catch (DataNotFoundException e){                                            //Altrimenti...
-            showErrorHandler.showError(e.getMessage(), "Credenziali errate");   //...Mostra un popup di errore
+            showMessageHandler.showError(e.getMessage(), "Credenziali errate");   //...Mostra un popup di errore
         } catch (DataAccessException e){
-            showErrorHandler.showError(e.getMessage(),"Errore DB");
+            showMessageHandler.showError(e.getMessage(),"Errore DB");
         } catch (RoleNotFoundException e){
-            showErrorHandler.showError(e.getMessage(), "Ruolo indefinito");
+            showMessageHandler.showError(e.getMessage(), "Ruolo indefinito");
         } catch (PageNotFoundException e){
-            showErrorHandler.showError(e.getMessage(),"Pagina non trovata");
+            showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
         } catch (ConnectionException e){
-            showErrorHandler.showError(e.getMessage(),"Errore connessione");
+            showMessageHandler.showError(e.getMessage(),"Errore connessione");
         }
 
     }
     //----METODO CHIAMATO AL CLICK DELLA RICHIESTA DI REGISTRAZIONE----
     @FXML
     public void onRegistReqClick(){
-        showErrorHandler.showError("La funzione di registrazione è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
+        showMessageHandler.showError("La funzione di registrazione è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
     }
 }

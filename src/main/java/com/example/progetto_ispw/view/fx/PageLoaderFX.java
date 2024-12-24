@@ -24,7 +24,7 @@ public class PageLoaderFX implements PageLoader {
 
             //Se il controller è una sottoclasse di PageManager, inizializzalo
             if (controller instanceof PageManager controllerFX) {
-                controllerFX.setupDependencies(new PageLoaderFX(),new ShowErrorHandlerFX());
+                controllerFX.setupDependencies(new PageLoaderFX(),new ShowMessageHandlerFX());
            }
             Scene scene = new Scene(root);
             stage.setScene(scene);

@@ -25,9 +25,9 @@ public class CorsoFX extends PageManager {
             corsoPageController.clean();
             pageLoader.loadPage("login");
         } catch (PageNotFoundException e){
-            showErrorHandler.showError(e.getMessage(),"Pagina non trovata");
+            showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
         } catch (ConnectionException e){
-            showErrorHandler.showError(e.getMessage(),"Errore connessione");
+            showMessageHandler.showError(e.getMessage(),"Errore connessione");
         }
     }
     //----METODO PER TORNARE ALLA HOME----
@@ -38,19 +38,19 @@ public class CorsoFX extends PageManager {
         try{
             pageLoader.loadPage("home");
         } catch (PageNotFoundException e){
-            showErrorHandler.showError(e.getMessage(),"Pagina non trovata");
+            showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
         }
     }
     @FXML
     public void onSollecitaDomandaClicked(){
-        showErrorHandler.showError("Al momento non è possibile sollecitare domande al tutor.\nCi dispiace per il disagio.", MAINTENANCE);
+        showMessageHandler.showError("Al momento non è possibile sollecitare domande al tutor.\nCi dispiace per il disagio.", MAINTENANCE);
     }
     @FXML
     public void onDescrizioneClicked(){
-        showErrorHandler.showMessage(Sessione.getCourse().getDescrizione(), "Descrizione del corso");
+        showMessageHandler.showMessage(Sessione.getCourse().getDescrizione(), "Descrizione del corso");
     }
     @FXML
     public void onTeoriaClicked(){
-        showErrorHandler.showError("La teoria del corso non è al momento consultabile.\nCi dispiace per il disagio.", MAINTENANCE);
+        showMessageHandler.showError("La teoria del corso non è al momento consultabile.\nCi dispiace per il disagio.", MAINTENANCE);
     }
 }

@@ -1,6 +1,6 @@
 package com.example.progetto_ispw.view;
 
-public interface ShowErrorHandler { //Interfaccia per modellare le classi che si occupano della gestione dei messaggi di errore
+public interface ShowMessageHandler { //Interfaccia per modellare le classi che si occupano del display dei messaggi
     void showError(String message, String title);
     void showMessage(String message, String title);
 }

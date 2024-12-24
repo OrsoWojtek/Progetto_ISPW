@@ -43,7 +43,7 @@ public class HomeFX extends PageManager {
         try {
             catalogo = home.getCorsiFrequentati(user); //Richiesta dei corsi a cui è iscritto l'utente
         } catch (ConnectionException e){
-            showErrorHandler.showError(e.getMessage(),"Errore connessione");
+            showMessageHandler.showError(e.getMessage(),"Errore connessione");
         }
         if (!"".equals(catalogo.getFirst().getDescrizione())){
             showCourseCatalog(); //Mostra i corsi a cui è iscritto l'utente
@@ -59,19 +59,19 @@ public class HomeFX extends PageManager {
             homeController.clean();
             pageLoader.loadPage("login");
         } catch (PageNotFoundException e){
-            showErrorHandler.showError(e.getMessage(),"Pagina non trovata");
+            showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
         } catch (ConnectionException e){
-            showErrorHandler.showError(e.getMessage(),"Errore connessione");
+            showMessageHandler.showError(e.getMessage(),"Errore connessione");
         }
     }
     //----METODO PER APRIRE LA BARRA DI RICERCA PER ISCRIVERSI AI CORSI----
     @FXML
     public void onSearchButtonClicked() {
-        showErrorHandler.showError("La funzione di iscrizione ad un nuovo corso è al momento disabilitata.\nCi dispiace per il disagio.","Funzionalità in manutenzione");
+        showMessageHandler.showError("La funzione di iscrizione ad un nuovo corso è al momento disabilitata.\nCi dispiace per il disagio.","Funzionalità in manutenzione");
     }
     //----METODO PER GESTIRE I CORSI (DISPONIBILE SOLO PER I TUTOR)----
     public void onOptionButtonClicked(){
-        showErrorHandler.showError("La funzione di gestione dei corsi è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
+        showMessageHandler.showError("La funzione di gestione dei corsi è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
     }
     //----METODO PER MOSTRARE IL CATALOGO DI CORSI A CUI L'UTENTE È ISCRITTO----
     private void showCourseCatalog(){
@@ -145,7 +145,7 @@ public class HomeFX extends PageManager {
         try{
             pageLoader.loadPage("corso");//...Mostra la pagina del corso
         } catch (PageNotFoundException e){
-            showErrorHandler.showError(e.getMessage(),"Pagina non trovata");
+            showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
         }
     }
 }

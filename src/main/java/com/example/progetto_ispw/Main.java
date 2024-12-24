@@ -2,7 +2,7 @@ package com.example.progetto_ispw;
 
 import com.example.progetto_ispw.view.PageManager;
 import com.example.progetto_ispw.view.fx.PageLoaderFX;
-import com.example.progetto_ispw.view.fx.ShowErrorHandlerFX;
+import com.example.progetto_ispw.view.fx.ShowMessageHandlerFX;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +20,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/login.fxml"));
         Parent root = fxmlLoader.load();
         loginPage = fxmlLoader.getController();
-        loginPage.setupDependencies(new PageLoaderFX(),new ShowErrorHandlerFX());
+        loginPage.setupDependencies(new PageLoaderFX(),new ShowMessageHandlerFX());
         Scene scene = new Scene(root);
         stage.setTitle("ILearn");
         stage.setScene(scene);
