@@ -6,14 +6,21 @@ import com.example.progetto_ispw.bean.UtenteInfoBean;
 
 //----CLASSE SINGLETON PER MANTENERE TRACCIA DELLA SESSIONE CORRENTE DELL'UTENTE----
 public class Sessione {
-    private static final Sessione instance = new Sessione(); // Singleton
+    private static volatile Sessione instance; // Volatile per evitare problemi di visibilità
+
     private UtenteInfoBean user;
     private CorsoInfoBean course;
 
-    // Costruttore privato per impedire l'instanziazione
     private Sessione() {}
 
     public static Sessione getInstance() {
+        if (instance == null) {
+            synchronized (Sessione.class) {
+                if (instance == null) {
+                    instance = new Sessione();
+                }
+            }
+        }
         return instance;
     }
 
