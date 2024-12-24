@@ -6,7 +6,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1024.0" prefWidth="1440.0" style="-fx-background-color: #D07373;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progetto_ispw.view.fx.CorsoFX">
     <top>
@@ -37,10 +39,70 @@
         </AnchorPane>
     </top>
    <center>
-      <Label fx:id="nomeCorso" alignment="CENTER" prefHeight="247.0" prefWidth="934.0" text="Label" BorderPane.alignment="CENTER">
-         <font>
-            <Font size="96.0" />
-         </font>
-      </Label>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+             <ImageView fitHeight="851.0" fitWidth="710.0" layoutX="708.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+                 <image>
+                     <Image url="@com/example/progetto_ispw/images/page_bg.png" />
+                 </image>
+             </ImageView>
+             <ImageView fitHeight="851.0" fitWidth="710.0" layoutX="14.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+                 <image>
+                     <Image url="@com/example/progetto_ispw/images/page_bg.png" />
+                 </image>
+             </ImageView>
+             <ImageView fitHeight="851.0" fitWidth="720.0" layoutX="25.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+                 <image>
+                     <Image url="@com/example/progetto_ispw/images/page_bg.png" />
+                 </image>
+             </ImageView>
+             <ImageView fitHeight="851.0" fitWidth="720.0" layoutX="681.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+                 <image>
+                     <Image url="@com/example/progetto_ispw/images/page_bg.png" />
+                 </image>
+             </ImageView>
+            <Label fx:id="nomeCorso" alignment="CENTER" layoutX="161.0" layoutY="47.0" prefHeight="159.0" prefWidth="390.0" style="-fx-underline: true; -fx-font-weight: bold;" text="Label">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" height="122.0" layoutX="177.0" layoutY="432.0" onMouseClicked="#onTeoriaClicked" stroke="BLACK" strokeType="INSIDE" width="358.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Rectangle>
+            <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" height="122.0" layoutX="177.0" layoutY="234.0" onMouseClicked="#onDescrizioneClicked" stroke="BLACK" strokeType="INSIDE" width="358.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Rectangle>
+            <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" height="122.0" layoutX="177.0" layoutY="630.0" onMouseClicked="#onSollecitaDomandaClicked" stroke="BLACK" strokeType="INSIDE" width="358.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Rectangle>
+            <Text accessibleRole="BUTTON" fill="WHITE" layoutX="248.0" layoutY="281.0" onMouseClicked="#onDescrizioneClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Descrizione Corso" textAlignment="CENTER" wrappingWidth="216.13671875">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Text>
+            <Text accessibleRole="BUTTON" fill="WHITE" layoutX="248.0" layoutY="479.0" onMouseClicked="#onTeoriaClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Consulta Teoria" textAlignment="CENTER" wrappingWidth="216.13671875">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Text>
+            <Text accessibleRole="BUTTON" fill="WHITE" layoutX="248.0" layoutY="677.0" onMouseClicked="#onSollecitaDomandaClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Sollecita Domanda" textAlignment="CENTER" wrappingWidth="216.13671875">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Text>
+         </children>
+      </AnchorPane>
    </center>
 </BorderPane>

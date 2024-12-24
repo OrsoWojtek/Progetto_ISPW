@@ -14,7 +14,7 @@ public class CorsoFX extends PageManager {
     private Label nomeCorso; //Nome del corso
     @FXML
     public void initialize(){
-        nomeCorso.setText(Sessione.getCourse().getNome()+"\n"+Sessione.getCourse().getDescrizione()); //Mostra nella pagina del corso nome e descrizione del corso
+        nomeCorso.setText(Sessione.getCourse().getNome()+":"); //Mostra nella pagina del corso nome e descrizione del corso
     }
     //----METODO PER EFFETTUARE IL LOGOUT----
     @FXML
@@ -39,5 +39,17 @@ public class CorsoFX extends PageManager {
         } catch (PageNotFoundException e){
             showErrorHandler.showError(e.getMessage(),"Pagina non trovata");
         }
+    }
+    @FXML
+    public void onSollecitaDomandaClicked(){
+        showErrorHandler.showError("Al momento non è possibile sollecitare domande al tutor.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
+    }
+    @FXML
+    public void onDescrizioneClicked(){
+        showErrorHandler.showError("La funzione di gestione dei corsi è al momento disabilitata.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
+    }
+    @FXML
+    public void onTeoriaClicked(){
+        showErrorHandler.showError("La teoria del corso non è al momento consultabile.\nCi dispiace per il disagio.", "Funzionalità in manutenzione");
     }
 }
