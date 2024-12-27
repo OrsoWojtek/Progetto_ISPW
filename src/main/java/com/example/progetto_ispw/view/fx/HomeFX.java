@@ -7,15 +7,18 @@ import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.PageNotFoundException;
 import com.example.progetto_ispw.view.PageManager;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 import java.util.List;
 import java.util.Objects;
@@ -52,6 +55,8 @@ public class HomeFX extends PageManager {
         }
         avatar.setImage(new Image(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/"+ user.getRole().toLowerCase()+"_avatar.png")).toExternalForm()));
         optionButton.setVisible("tutor".equalsIgnoreCase(user.getRole())); //Mostra il bottone delle impostazioni dei corsi (disponibile solo per i tutor)
+
+        initializeUI();
     }
     //----METODO PER EFFETTUARE IL LOGOUT----
     @FXML
@@ -74,69 +79,9 @@ public class HomeFX extends PageManager {
     public void onOptionButtonClicked(){
         showMessageHandler.showError("La funzione di gestione dei corsi è al momento disabilitata.\nCi dispiace per il disagio.", MAINTENANCE);
     }
+
     //----METODO PER MOSTRARE IL CATALOGO DI CORSI A CUI L'UTENTE È ISCRITTO----
-    private void showCourseCatalog(){
-        // Posizione iniziale dei rettangoli
-        double x = 742;
-        double y = 173;
-        double rectWidth = 597;
-        double rectHeight = 86;
 
-        // Creazione dei rettangoli e testo per ogni corso
-        for (CorsoInfoBean corso : catalogo) {
-            // Crea un rettangolo
-            Rectangle rectangle = new Rectangle(x, y, rectWidth, rectHeight);
-            rectangle.setFill(Color.BLACK);
-            rectangle.setStroke(Color.BLACK);
-            // Crea il testo con il nome del corso
-            Text text = new Text(corso.getNome()); // Posiziona il testo dentro il rettangolo
-            text.setFill(Color.WHITE);
-            text.setStyle("-fx-font-weight: bold;");
-            text.setStyle("-fx-font-size: 36;");
-            text.setUnderline(true);
-
-            // Centrare il testo nel rettangolo
-            double textWidth = text.getBoundsInLocal().getWidth();
-            double textHeight = text.getBoundsInLocal().getHeight();
-            text.setX(x + (rectWidth - textWidth) / 2); // Centra orizzontalmente
-            text.setY(y + (rectHeight - textHeight) / 2 + textHeight); // Centra verticalmente
-
-            text.setTextAlignment(TextAlignment.CENTER);
-
-
-            // Aggiungi un gestore di eventi per il mouse sopra il rettangolo
-            rectangle.setOnMouseEntered(event -> {
-                rectangle.setCursor(Cursor.HAND); // Cambia il cursore a mano aperta
-            });
-
-            // Aggiungi un gestore di eventi per il mouse che esce dal rettangolo
-            rectangle.setOnMouseExited(event -> {
-                rectangle.setCursor(Cursor.DEFAULT); // Ritorna il cursore predefinito
-            });
-
-            // Aggiungi un gestore di eventi per il mouse sopra il nome del corso
-            text.setOnMouseEntered(event -> {
-                text.setCursor(Cursor.HAND); // Cambia il cursore a mano aperta
-            });
-
-            // Aggiungi un gestore di eventi per il mouse che esce dal nome del corso
-            text.setOnMouseExited(event -> {
-                text.setCursor(Cursor.DEFAULT); // Ritorna il cursore predefinito
-            });
-
-
-            //Cliccando sul testo o sul rettangolo relativo al corso si apre la pagina del corso stesso
-            text.setOnMouseClicked(mouseEvent -> goToCoursePage(text.getText()));
-            rectangle.setOnMouseClicked(text::fireEvent);
-
-
-            // Aggiungi rettangolo e testo al contenitore
-            catalogoCorsi.getChildren().addAll(rectangle,text);
-
-            // Aggiorna la posizione per il prossimo rettangolo
-            y += 123; // Sposta verso il basso per evitare sovrapposizioni
-        }
-    }
 
     //----METODO PER PASSARE ALLA PAGINA DEL CORSO DESIDERATO----
     private void goToCoursePage(String nomeCorso){
@@ -146,6 +91,87 @@ public class HomeFX extends PageManager {
             pageLoader.loadPage("corso");//...Mostra la pagina del corso
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
+        }
+    }
+
+
+
+    private int currentPage = 0; // Indice della pagina corrente
+    private final VBox coursesContainer = new VBox(); // Contenitore per i corsi
+
+    private void initializeUI() {
+        // Configura il contenitore dinamico per i corsi
+        coursesContainer.setLayoutX(742);
+        coursesContainer.setLayoutY(173);
+        coursesContainer.setSpacing(10); // Spazio tra i corsi
+        catalogoCorsi.getChildren().add(coursesContainer);
+    }
+
+    private void showCourseCatalog() {
+        // Rimuovi i precedenti corsi dal contenitore
+        coursesContainer.getChildren().clear();
+
+        // Calcola l'indice iniziale e finale dei corsi da mostrare
+
+        int coursesPerPage = 6; // Numero massimo di corsi per pagina
+        int startIndex = currentPage * coursesPerPage;
+        int endIndex = Math.min(startIndex + coursesPerPage, catalogo.size());
+
+        // Mostra i corsi correnti
+        for (int i = startIndex; i < endIndex; i++) {
+            CorsoInfoBean corso = catalogo.get(i);
+
+            // Crea un rettangolo
+            Rectangle rectangle = new Rectangle(597, 86);
+            rectangle.setFill(Color.BLACK);
+            rectangle.setStroke(Color.BLACK);
+
+            // Crea il testo con il nome del corso
+            Text text = new Text(corso.getNome());
+            text.setFill(Color.WHITE);
+            text.setStyle("-fx-font-weight: bold;");
+            text.setStyle("-fx-font-size: 36;");
+            text.setUnderline(true);
+
+            // Centrare il testo nel rettangolo
+            StackPane courseBox = new StackPane(rectangle, text);
+            courseBox.setAlignment(Pos.CENTER);
+
+            // Eventi per clic sul corso
+            courseBox.setOnMouseEntered(event -> courseBox.setCursor(Cursor.HAND));
+            courseBox.setOnMouseExited(event -> courseBox.setCursor(Cursor.DEFAULT));
+            courseBox.setOnMouseClicked(mouseEvent -> goToCoursePage(corso.getNome()));
+
+            // Aggiungi il rettangolo e il testo al contenitore
+            coursesContainer.getChildren().add(courseBox);
+        }
+
+        // Aggiungi i bottoni di navigazione
+        addNavigationButtons(endIndex);
+    }
+
+    private void addNavigationButtons(int endIndex) {
+        // Rimuovi i precedenti bottoni
+        coursesContainer.getChildren().removeIf(node -> node instanceof Button);
+
+        // Bottone "Torna indietro"
+        if (currentPage > 0) {
+            Button backButton = new Button("Torna indietro");
+            backButton.setOnAction(event -> {
+                currentPage--;
+                showCourseCatalog();
+            });
+            coursesContainer.getChildren().add(backButton);
+        }
+
+        // Bottone "Mostra altri"
+        if (endIndex < catalogo.size()) {
+            Button nextButton = new Button("Mostra altri");
+            nextButton.setOnAction(event -> {
+                currentPage++;
+                showCourseCatalog();
+            });
+            coursesContainer.getChildren().add(nextButton);
         }
     }
 }
