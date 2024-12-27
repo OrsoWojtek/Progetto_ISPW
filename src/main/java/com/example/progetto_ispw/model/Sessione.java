@@ -11,7 +11,7 @@ public class Sessione {
     private UtenteInfoBean user;
     private CorsoInfoBean course;
 
-    private Sessione() {}
+    protected Sessione() {}
 
     public static Sessione getInstance() {
         if (instance == null) {
