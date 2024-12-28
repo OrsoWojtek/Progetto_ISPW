@@ -37,6 +37,8 @@ public class HomeFX extends PageManager {
     private List<CorsoInfoBean> catalogo; //Catalogo dei corsi a cui è iscritto l'utente
     private static final String MAINTENANCE = "Funzionalità in manutenzione";
     private HomeController home; //Riferimento al controller applicativo
+    private int currentPage = 0; // Indice della pagina corrente
+    private final VBox coursesContainer = new VBox(); // Contenitore per i corsi
 
     //----INIZIALIZZAZIONE DELLA PAGINA HOME----
     @FXML
@@ -80,9 +82,6 @@ public class HomeFX extends PageManager {
         showMessageHandler.showError("La funzione di gestione dei corsi è al momento disabilitata.\nCi dispiace per il disagio.", MAINTENANCE);
     }
 
-    //----METODO PER MOSTRARE IL CATALOGO DI CORSI A CUI L'UTENTE È ISCRITTO----
-
-
     //----METODO PER PASSARE ALLA PAGINA DEL CORSO DESIDERATO----
     private void goToCoursePage(String nomeCorso){
         Optional<CorsoInfoBean> corsoScelto = catalogo.stream().filter(c -> c.getNome().equals(nomeCorso)).findFirst(); //Cerca il bean del corso nel catalogo corrispondere al nome del corso selezionato dall'utente
@@ -93,12 +92,7 @@ public class HomeFX extends PageManager {
             showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
         }
     }
-
-
-
-    private int currentPage = 0; // Indice della pagina corrente
-    private final VBox coursesContainer = new VBox(); // Contenitore per i corsi
-
+    //---METODO PER INIZIALIZZARE IL CONTENITORE DEI CORSI----
     private void initializeUI() {
         // Configura il contenitore dinamico per i corsi
         coursesContainer.setLayoutX(742);
@@ -107,6 +101,7 @@ public class HomeFX extends PageManager {
         catalogoCorsi.getChildren().add(coursesContainer);
     }
 
+    //----METODO PER MOSTRARE IL CATALOGO DI CORSI A CUI L'UTENTE È ISCRITTO----
     private void showCourseCatalog() {
         // Rimuovi i precedenti corsi dal contenitore
         coursesContainer.getChildren().clear();
