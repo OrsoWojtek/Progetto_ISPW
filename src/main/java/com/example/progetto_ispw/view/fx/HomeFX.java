@@ -94,9 +94,12 @@ public class HomeFX extends PageManager {
     }
     //---METODO PER INIZIALIZZARE IL CONTENITORE DEI CORSI----
     private void initializeUI() {
+        // Posizione del container
+        int x = 371; //(per il maxi-schermo: 742; per altri schermi: 371)
+        int y = 86; //(per il maxi-schermo: 173; per altri schermi: 86)
         // Configura il contenitore dinamico per i corsi
-        coursesContainer.setLayoutX(742);
-        coursesContainer.setLayoutY(173);
+        coursesContainer.setLayoutX(x);
+        coursesContainer.setLayoutY(y);
         coursesContainer.setSpacing(10); // Spazio tra i corsi
         catalogoCorsi.getChildren().add(coursesContainer);
     }
@@ -117,15 +120,18 @@ public class HomeFX extends PageManager {
             CorsoInfoBean corso = catalogo.get(i);
 
             // Crea un rettangolo
-            Rectangle rectangle = new Rectangle(597, 86);
+            int width = 298; //(per il maxi-schermo: 597; per altri schermi: 298)
+            int height = 43; //(per il maxi-schermo: 86; per altri schermi: 43)
+            Rectangle rectangle = new Rectangle(width, height);
             rectangle.setFill(Color.BLACK);
             rectangle.setStroke(Color.BLACK);
 
             // Crea il testo con il nome del corso
+            String fontSize = "18"; //(per il maxi-schermo: 36; per altri schermi: 18)
             Text text = new Text(corso.getNome());
             text.setFill(Color.WHITE);
             text.setStyle("-fx-font-weight: bold;");
-            text.setStyle("-fx-font-size: 36;");
+            text.setStyle("-fx-font-size:"+fontSize+";");
             text.setUnderline(true);
 
             // Centrare il testo nel rettangolo

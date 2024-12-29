@@ -10,24 +10,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1024.0" prefWidth="1440.0" style="-fx-background-color: #D07373;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progetto_ispw.view.fx.CorsoFX">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="720.0" style="-fx-background-color: #D07373;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progetto_ispw.view.fx.CorsoFX">
     <top>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="92.0" prefWidth="1440.0" style="-fx-background-color: #871414; -fx-border-width: 5; -fx-border-color: black;" BorderPane.alignment="CENTER">
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="720.0" style="-fx-background-color: #871414; -fx-border-width: 5; -fx-border-color: black;" BorderPane.alignment="CENTER">
             <children>
-                <ImageView fitHeight="200.0" fitWidth="320.0" layoutX="-44.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="100.0" fitWidth="160.0" layoutX="-22.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@com/example/progetto_ispw/images/ILearn_Title.png" />
                     </image>
                 </ImageView>
-                <ImageView accessibleRole="BUTTON" fitHeight="50.0" fitWidth="50.0" layoutX="1355.0" layoutY="21.0" onMouseClicked="#onHomeButtonClicked" pickOnBounds="true" preserveRatio="true">
+                <ImageView accessibleRole="BUTTON" fitHeight="25.0" fitWidth="25.0" layoutX="678.0" layoutY="10.0" onMouseClicked="#onHomeButtonClicked" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@com/example/progetto_ispw/images/clickable_home_icon.png" />
                     </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
                 </ImageView>
-                <ImageView accessibleRole="BUTTON" fitHeight="51.0" fitWidth="47.0" layoutX="1289.0" layoutY="28.0" onMouseClicked="#onLogoutButtonClicked" pickOnBounds="true" preserveRatio="true">
+                <ImageView accessibleRole="BUTTON" fitHeight="25.0" fitWidth="23.0" layoutX="645.0" layoutY="14.0" onMouseClicked="#onLogoutButtonClicked" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@com/example/progetto_ispw/images/logout_icon.png" />
                     </image>
@@ -38,76 +38,76 @@
             </children>
         </AnchorPane>
     </top>
-   <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-             <ImageView fitHeight="851.0" fitWidth="710.0" layoutX="708.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
-                 <image>
-                     <Image url="@com/example/progetto_ispw/images/page_bg.png" />
-                 </image>
-             </ImageView>
-             <ImageView fitHeight="851.0" fitWidth="710.0" layoutX="14.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
-                 <image>
-                     <Image url="@com/example/progetto_ispw/images/page_bg.png" />
-                 </image>
-             </ImageView>
-             <ImageView fitHeight="851.0" fitWidth="720.0" layoutX="25.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
-                 <image>
-                     <Image url="@com/example/progetto_ispw/images/page_bg.png" />
-                 </image>
-             </ImageView>
-             <ImageView fitHeight="851.0" fitWidth="720.0" layoutX="681.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
-                 <image>
-                     <Image url="@com/example/progetto_ispw/images/page_bg.png" />
-                 </image>
-             </ImageView>
-            <Label fx:id="nomeCorso" alignment="CENTER" layoutX="161.0" layoutY="47.0" prefHeight="159.0" prefWidth="390.0" style="-fx-underline: true; -fx-font-weight: bold;" text="Label">
-               <font>
-                  <Font size="48.0" />
-               </font>
-            </Label>
-            <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" height="122.0" layoutX="177.0" layoutY="432.0" onMouseClicked="#onTeoriaClicked" stroke="BLACK" strokeType="INSIDE" width="358.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Rectangle>
-            <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" height="122.0" layoutX="177.0" layoutY="234.0" onMouseClicked="#onDescrizioneClicked" stroke="BLACK" strokeType="INSIDE" width="358.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Rectangle>
-            <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" height="122.0" layoutX="177.0" layoutY="630.0" onMouseClicked="#onSollecitaDomandaClicked" stroke="BLACK" strokeType="INSIDE" width="358.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Rectangle>
-            <Text accessibleRole="BUTTON" fill="WHITE" layoutX="248.0" layoutY="281.0" onMouseClicked="#onDescrizioneClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Descrizione Corso" textAlignment="CENTER" wrappingWidth="216.13671875">
-               <font>
-                  <Font size="36.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Text>
-            <Text accessibleRole="BUTTON" fill="WHITE" layoutX="248.0" layoutY="479.0" onMouseClicked="#onTeoriaClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Consulta Teoria" textAlignment="CENTER" wrappingWidth="216.13671875">
-               <font>
-                  <Font size="36.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Text>
-            <Text accessibleRole="BUTTON" fill="WHITE" layoutX="248.0" layoutY="677.0" onMouseClicked="#onSollecitaDomandaClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Sollecita Domanda" textAlignment="CENTER" wrappingWidth="216.13671875">
-               <font>
-                  <Font size="36.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Text>
-             <Label layoutX="745.0" layoutY="78.0" style="-fx-font-weight: bold; -fx-font-size: 36;" text="Quiz disponibili" underline="true" wrapText="true">
-                 <font>
-                     <Font size="36.0" />
-                 </font>
-             </Label>
-         </children>
-      </AnchorPane>
-   </center>
+    <center>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="425.0" fitWidth="355.0" layoutX="354.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@com/example/progetto_ispw/images/page_bg.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="425.0" fitWidth="355.0" layoutX="7.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@com/example/progetto_ispw/images/page_bg.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="425.0" fitWidth="360.0" layoutX="12.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@com/example/progetto_ispw/images/page_bg.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="425.0" fitWidth="360.0" layoutX="340.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@com/example/progetto_ispw/images/page_bg.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="nomeCorso" alignment="CENTER" layoutX="80.0" layoutY="23.0" prefHeight="79.0" prefWidth="195.0" style="-fx-underline: true; -fx-font-weight: bold;" text="Label">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+                <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" height="61.0" layoutX="88.0" layoutY="216.0" onMouseClicked="#onTeoriaClicked" stroke="BLACK" strokeType="INSIDE" width="179.0">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor></Rectangle>
+                <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" height="61.0" layoutX="88.0" layoutY="117.0" onMouseClicked="#onDescrizioneClicked" stroke="BLACK" strokeType="INSIDE" width="179.0">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor></Rectangle>
+                <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" height="61.0" layoutX="88.0" layoutY="315.0" onMouseClicked="#onSollecitaDomandaClicked" stroke="BLACK" strokeType="INSIDE" width="179.0">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor></Rectangle>
+                <Text accessibleRole="BUTTON" fill="WHITE" layoutX="69.0" layoutY="154.0" onMouseClicked="#onDescrizioneClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Descrizione Corso" textAlignment="CENTER" wrappingWidth="216.13671875">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Text>
+                <Text accessibleRole="BUTTON" fill="WHITE" layoutX="69.0" layoutY="253.0" onMouseClicked="#onTeoriaClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Consulta Teoria" textAlignment="CENTER" wrappingWidth="216.13671875">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Text>
+                <Text accessibleRole="BUTTON" fill="WHITE" layoutX="69.0" layoutY="352.0" onMouseClicked="#onSollecitaDomandaClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Sollecita Domanda" textAlignment="CENTER" wrappingWidth="216.13671875">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Text>
+                <Label layoutX="372.0" layoutY="39.0" style="-fx-font-weight: bold; -fx-font-size: 18;" text="Quiz disponibili" underline="true" wrapText="true">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </center>
 </BorderPane>
