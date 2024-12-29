@@ -74,7 +74,7 @@
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor></Rectangle>
-                <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" height="61.0" layoutX="88.0" layoutY="315.0" onMouseClicked="#onSollecitaDomandaClicked" stroke="BLACK" strokeType="INSIDE" width="179.0">
+                <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" height="61.0" layoutX="88.0" layoutY="315.0" onMouseClicked="#onMessageBoxClicked" stroke="BLACK" strokeType="INSIDE" width="179.0">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor></Rectangle>
@@ -94,7 +94,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Text>
-                <Text accessibleRole="BUTTON" fill="WHITE" layoutX="69.0" layoutY="352.0" onMouseClicked="#onSollecitaDomandaClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Sollecita Domanda" textAlignment="CENTER" wrappingWidth="216.13671875">
+                <Text fx:id="sollecitaDomanda" accessibleRole="BUTTON" fill="WHITE" layoutX="69.0" layoutY="352.0" onMouseClicked="#onSollecitaDomandaClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Sollecita Domanda" textAlignment="CENTER" wrappingWidth="216.13671875">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -107,6 +107,14 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
+            <Text fx:id="visualizzaDomande" accessibleRole="BUTTON" fill="WHITE" layoutX="69.0" layoutY="352.0" onMouseClicked="#onVisualizzaDomandeClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Visualizza Domande" textAlignment="CENTER" wrappingWidth="216.13671875">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Text>
             </children>
         </AnchorPane>
     </center>
