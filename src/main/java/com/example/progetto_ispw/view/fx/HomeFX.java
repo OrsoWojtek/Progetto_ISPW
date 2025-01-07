@@ -13,9 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -153,26 +151,38 @@ public class HomeFX extends PageManager {
 
     private void addNavigationButtons(int endIndex) {
         // Rimuovi i precedenti bottoni
-        coursesContainer.getChildren().removeIf(node -> node instanceof Button);
+        coursesContainer.getChildren().removeIf(node -> node instanceof HBox);
 
-        // Bottone "Torna indietro"
+        // Crea un contenitore orizzontale per i bottoni
+        HBox navigationBox = new HBox(20); // Spazio tra i bottoni
+        navigationBox.setAlignment(Pos.CENTER);
+
+        // Bottone "Torna indietro" a sinistra
         if (currentPage > 0) {
             Button backButton = new Button("Torna indietro");
             backButton.setOnAction(event -> {
                 currentPage--;
                 showCourseCatalog();
             });
-            coursesContainer.getChildren().add(backButton);
+            navigationBox.getChildren().add(backButton);
         }
 
-        // Bottone "Mostra altri"
+        // Aggiungi uno "spazio vuoto" che spinge i bottoni ai bordi
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);  // Questo permette di spingere i bottoni ai bordi
+        navigationBox.getChildren().add(spacer);
+
+        // Bottone "Mostra altri" a destra
         if (endIndex < catalogo.size()) {
             Button nextButton = new Button("Mostra altri");
             nextButton.setOnAction(event -> {
                 currentPage++;
                 showCourseCatalog();
             });
-            coursesContainer.getChildren().add(nextButton);
+            navigationBox.getChildren().add(nextButton);
         }
+
+        // Aggiungi il contenitore con i bottoni alla lista dei corsi
+        coursesContainer.getChildren().add(navigationBox);
     }
 }
