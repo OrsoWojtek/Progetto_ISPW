@@ -19,13 +19,11 @@ public class PageLoaderFX implements PageLoader {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/"+page.toLowerCase()+".fxml"));
             Parent root =loader.load(); //Carica la pagina richiesta
             Stage stage = (Stage) Stage.getWindows().getFirst();
-            // Ottieni il controller collegato
-           Object controller = loader.getController();
 
-            //Se il controller grafico è una sottoclasse di PageManager, inizializzalo
-            if (controller instanceof PageManager controllerFX) {
-                controllerFX.setupDependencies(new PageLoaderFX(),new ShowMessageHandlerFX());
-           }
+            // Ottieni il controller collegato e lo inizializzi
+            PageManager controller = loader.getController();
+            controller.setupDependencies(new PageLoaderFX(),new ShowMessageHandlerFX());
+
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
