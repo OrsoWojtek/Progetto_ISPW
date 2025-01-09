@@ -9,7 +9,6 @@ import com.example.progetto_ispw.view.PageManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -159,8 +158,13 @@ public class HomeFX extends PageManager {
 
         // Bottone "Torna indietro" a sinistra
         if (currentPage > 0) {
-            Button backButton = new Button("Torna indietro");
-            backButton.setOnAction(event -> {
+            ImageView backButton = new ImageView(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/go_back.png")).toExternalForm());
+            backButton.setFitWidth(30);  // Larghezza desiderata
+            backButton.setFitHeight(20); // Altezza desiderata
+            backButton.setPreserveRatio(true); // Mantieni le proporzioni
+            backButton.setOnMouseEntered(event -> backButton.setCursor(Cursor.HAND));
+            backButton.setOnMouseExited(event -> backButton.setCursor(Cursor.DEFAULT));
+            backButton.setOnMouseClicked(mouseEvent -> {
                 currentPage--;
                 showCourseCatalog();
             });
@@ -174,8 +178,13 @@ public class HomeFX extends PageManager {
 
         // Bottone "Mostra altri" a destra
         if (endIndex < catalogo.size()) {
-            Button nextButton = new Button("Mostra altri");
-            nextButton.setOnAction(event -> {
+            ImageView nextButton = new ImageView(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/go_next.png")).toExternalForm());
+            nextButton.setFitWidth(30);  // Larghezza desiderata
+            nextButton.setFitHeight(20); // Altezza desiderata
+            nextButton.setPreserveRatio(true); // Mantieni le proporzioni
+            nextButton.setOnMouseEntered(event -> nextButton.setCursor(Cursor.HAND));
+            nextButton.setOnMouseExited(event -> nextButton.setCursor(Cursor.DEFAULT));
+            nextButton.setOnMouseClicked(mouseEvent -> {
                 currentPage++;
                 showCourseCatalog();
             });
