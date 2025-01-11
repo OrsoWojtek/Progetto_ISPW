@@ -14,7 +14,7 @@ public class QuizInfoBean {
     public String getTitolo() {
         return titoloBean;
     }
-    public void setTitolo(String titolo) {
+    public void setTitolo(String titoloBean) {
         this.titoloBean = titoloBean;
     }
     public String getDifficolta() {
