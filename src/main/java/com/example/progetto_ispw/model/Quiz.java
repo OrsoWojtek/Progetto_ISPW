@@ -3,66 +3,91 @@ package com.example.progetto_ispw.model;
 import java.util.ArrayList;
 import java.util.List;
 
+// Implementato il Builder pattern per non avere troppi paramentri nel costruttore del Quiz
 public class Quiz {
     private String titolo;
     private String difficolta;
     private String argomenti;
-    private int punteggio = 0;
     private int durata;
     private List<Quesito> quesiti;
+    private int punteggio;
 
-    // Costruttore realizzato per mantenere la relazione di composizione
-    public Quiz(String titolo, String difficolta, String argomenti, List<Integer> punteggio, int durata, List<String> domande, List<List<String>> risposte, List<List<Boolean>> corrette){
-        this.argomenti = argomenti;
-        this.durata = durata;
-        this.titolo = titolo;
-        this.difficolta = difficolta;
-        this.quesiti = new ArrayList<>();
-        for (int i=0; i<domande.size(); i++){
-            this.quesiti.add(new Quesito(domande.get(i),risposte.get(i),corrette.get(i),punteggio.get(i)));
-            this.punteggio+=punteggio.get(i);
-        }
+    // Costruttore privato
+    private Quiz(Builder builder) {
+        this.titolo = builder.titolo;
+        this.difficolta = builder.difficolta;
+        this.argomenti = builder.argomenti;
+        this.durata = builder.durata;
+        this.quesiti = new ArrayList<>(builder.quesiti);
+        this.punteggio = builder.quesiti.stream().mapToInt(Quesito::getPunti).sum();
     }
     // Metodo per rispondere ad un quesito
     public void answering(int quesito, int risposta ){
         quesiti.get(quesito).tickingAnswer(risposta);
     }
-    //----METODI SET----
-    public void setQuesiti(List<Quesito> quesiti) {
-        this.quesiti = quesiti;
+    // Classe Builder interna
+    public static class Builder {
+        private String titolo;
+        private String difficolta;
+        private String argomenti;
+        private int durata;
+        private List<Quesito> quesiti = new ArrayList<>();
+
+        public Builder setTitolo(String titolo) {
+            this.titolo = titolo;
+            return this;
+        }
+
+        public Builder setDifficolta(String difficolta) {
+            this.difficolta = difficolta;
+            return this;
+        }
+
+        public Builder setArgomenti(String argomenti) {
+            this.argomenti = argomenti;
+            return this;
+        }
+
+        public Builder setDurata(int durata) {
+            this.durata = durata;
+            return this;
+        }
+
+        public Builder addQuesito(String domanda, List<String> risposte, List<Boolean> corrette, int punteggio) {
+            this.quesiti.add(new Quesito(domanda, risposte, corrette, punteggio));
+            return this;
+        }
+
+        public Quiz build() {
+            if (titolo == null || difficolta == null || argomenti == null || quesiti.isEmpty()) {
+                throw new IllegalStateException("Mancano dati obbligatori per costruire il quiz.");
+            }
+            return new Quiz(this);
+        }
     }
-    public void setDurata(int durata) {
-        this.durata = durata;
+
+    // Getters per gli attributi
+    public String getTitolo() {
+        return titolo;
     }
-    public void setArgomenti(String argomenti) {
-        this.argomenti = argomenti;
-    }
-    public void setTitolo(String titolo) {
-        this.titolo = titolo;
-    }
-    public void setDifficolta(String difficolta) {
-        this.difficolta = difficolta;
-    }
-    public void setPunteggio(int punteggio) {
-        this.punteggio = punteggio;
-    }
-    //----METODI GET----
-    public List<Quesito> getQuesiti() {
-        return quesiti;
-    }
-    public int getDurata() {
-        return durata;
-    }
-    public int getPunteggio() {
-        return punteggio;
-    }
-    public String getArgomenti() {
-        return argomenti;
-    }
+
     public String getDifficolta() {
         return difficolta;
     }
-    public String getTitolo() {
-        return titolo;
+
+    public String getArgomenti() {
+        return argomenti;
+    }
+
+    public int getDurata() {
+        return durata;
+    }
+
+    public List<Quesito> getQuesiti() {
+        return new ArrayList<>(quesiti); // Copia immutabile
+    }
+
+    public int getPunteggio() {
+        return punteggio;
     }
 }
