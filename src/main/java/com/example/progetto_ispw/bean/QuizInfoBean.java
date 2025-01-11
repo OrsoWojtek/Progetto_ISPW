@@ -4,47 +4,45 @@ import java.util.List;
 
 public class QuizInfoBean {
     //----ATTRIBUTI----
-    private String titolo;
-    private String difficolta;
-    private String argomenti;
-    private int durata;
-    private List<QuesitoInfoBean> quesiti;
-    private int punteggio;
+    private String titoloBean;
+    private String difficoltaBean;
+    private String argomentiBean;
+    private int durataBean;
+    private List<QuesitoInfoBean> quesitiBean;
+    private int punteggioBean;
     //----METODI----
     public String getTitolo() {
-        return titolo;
+        return titoloBean;
     }
     public void setTitolo(String titolo) {
-        this.titolo = titolo;
+        this.titoloBean = titoloBean;
     }
     public String getDifficolta() {
-        return difficolta;
+        return difficoltaBean;
     }
-    public void setDifficolta(String difficolta) {
-        this.difficolta = difficolta;
-    }
+    public void setDifficolta(String difficoltaBean) { this.difficoltaBean = difficoltaBean;}
     public String getArgomenti() {
-        return argomenti;
+        return argomentiBean;
     }
-    public void setArgomenti(String argomenti) {
-        this.argomenti = argomenti;
+    public void setArgomenti(String argomentiBean) {
+        this.argomentiBean = argomentiBean;
     }
     public List<QuesitoInfoBean> getQuesiti() {
-        return quesiti;
+        return quesitiBean;
     }
-    public void setQuesiti(List<QuesitoInfoBean> quesiti) {
-        this.quesiti = quesiti;
+    public void setQuesiti(List<QuesitoInfoBean> quesitiBean) {
+        this.quesitiBean = quesitiBean;
     }
     public int getPunteggio() {
-        return punteggio;
+        return punteggioBean;
     }
-    public void setPunteggio(int punteggio) {
-        this.punteggio = punteggio;
+    public void setPunteggio(int punteggioBean) {
+        this.punteggioBean = punteggioBean;
     }
     public int getDurata() {
-        return durata;
+        return durataBean;
     }
-    public void setDurata(int durata) {
-        this.durata = durata;
+    public void setDurata(int durataBean) {
+        this.durataBean = durataBean;
     }
 }

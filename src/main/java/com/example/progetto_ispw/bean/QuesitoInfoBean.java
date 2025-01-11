@@ -4,26 +4,26 @@ import java.util.List;
 
 public class QuesitoInfoBean {
     //----ATTRIBUTI----
-    private String domanda;
-    private int punti;
-    private List<RispostaInfoBean> risposte;
+    private String domandaBean;
+    private int puntiBean;
+    private List<RispostaInfoBean> risposteBean;
     //----METODI----
-    public void setPunti(int punti) {
-        this.punti = punti;
+    public void setPunti(int puntiBean) {
+        this.puntiBean = puntiBean;
     }
     public int getPunti() {
-        return punti;
+        return puntiBean;
     }
-    public void setRisposte(List<RispostaInfoBean> risposte) {
-        this.risposte = risposte;
+    public void setRisposte(List<RispostaInfoBean> risposteBean) {
+        this.risposteBean = risposteBean;
     }
     public List<RispostaInfoBean> getRisposte() {
-        return risposte;
+        return risposteBean;
     }
     public String getDomanda() {
-        return domanda;
+        return domandaBean;
     }
-    public void setDomanda(String domanda) {
-        this.domanda = domanda;
+    public void setDomanda(String domandaBean) {
+        this.domandaBean = domandaBean;
     }
 }
