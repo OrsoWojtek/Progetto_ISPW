@@ -1,5 +1,7 @@
 package com.example.progetto_ispw.model;
 
+import com.example.progetto_ispw.exception.DataNotFoundException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,9 +60,9 @@ public class Quiz {
             return this;
         }
 
-        public Quiz build() {
+        public Quiz build() throws DataNotFoundException{
             if (titolo == null || difficolta == null || argomenti == null || quesiti.isEmpty()) {
-                throw new IllegalStateException("Mancano dati obbligatori per costruire il quiz.");
+                throw new DataNotFoundException("Mancano dati obbligatori per costruire il quiz.");
             }
             return new Quiz(this);
         }
