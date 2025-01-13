@@ -38,6 +38,7 @@ public class UtenteDAOJDBC {
                 throw new DataNotFoundException("Username e/o password inseriti non corretti o non registrati. Prego riprovare.");
             }
             ruolo = result.getString("tipo");                                                                             //Prelevato il tipo di utente
+            result.close();
         } catch (SQLException e) {
             throw new DataAccessException("Vi sono stati problemi di comunicazione con il DB.");                                    //Può verificarsi sia per errori di connessione che per operazioni errate su righe ottenute
         } finally {

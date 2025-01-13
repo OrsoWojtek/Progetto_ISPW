@@ -39,6 +39,7 @@ public class CorsoDAOJDBC {
                 String descrizione = result.getString("descrizione");
                 corsi.add(new Corso(nomeCorso,descrizione));
             } while (result.next());
+            result.close();
         } catch (SQLException e) {
             throw new DataAccessException("Vi sono stati problemi di comunicazione con il DB.");                                        //Può verificarsi sia per errori di connessione che per operazioni errate su righe ottenute
         } finally {
