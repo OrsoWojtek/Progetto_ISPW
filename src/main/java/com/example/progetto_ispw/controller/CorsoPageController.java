@@ -5,7 +5,6 @@ import com.example.progetto_ispw.bean.*;
 import com.example.progetto_ispw.dao.jdbc.QuizDAOJDBC;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataAccessException;
-import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.model.Quesito;
 import com.example.progetto_ispw.model.Quiz;
 import com.example.progetto_ispw.model.Risposta;
@@ -17,7 +16,7 @@ import java.util.List;
 //----CONTROLLER APPLICATIVO PER GESTIRE IL CORSO----
 public class CorsoPageController {
     //----METODO PER RICERCARE QUALI SONO I QUIZ DISPONIBILI NEL CORSO----
-    public List<QuizInfoBean> getQuizDisponibili(CorsoInfoBean corso) throws ConnectionException, DataNotFoundException, DataAccessException {
+    public List<QuizInfoBean> getQuizDisponibili(CorsoInfoBean corso) throws ConnectionException, DataAccessException {
         QuizDAOJDBC dao = new QuizDAOJDBC();
         List<QuizInfoBean> catalogoQuiz = new ArrayList<>();
         List<Quiz> quizzes = dao.getQuizzes(corso);

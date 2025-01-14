@@ -5,6 +5,7 @@ import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataAccessException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
+import com.example.progetto_ispw.exception.QuizCreationException;
 import com.example.progetto_ispw.model.Quesito;
 import com.example.progetto_ispw.model.Quiz;
 
@@ -90,7 +91,7 @@ public class QuizDAOJDBC {
                     try {
                         quizzes.add(builder.build());
                     } catch (DataNotFoundException e) {
-                        throw new RuntimeException(e);
+                        throw new QuizCreationException(e.getMessage());
                     }
                 });
             }

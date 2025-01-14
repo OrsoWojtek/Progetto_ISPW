@@ -4,10 +4,7 @@ import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.QuizInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.controller.CorsoPageController;
-import com.example.progetto_ispw.exception.ConnectionException;
-import com.example.progetto_ispw.exception.DataAccessException;
-import com.example.progetto_ispw.exception.DataNotFoundException;
-import com.example.progetto_ispw.exception.PageNotFoundException;
+import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.PageManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -50,7 +47,7 @@ public class CorsoFX extends PageManager {
             showQuizCatalog();
         } catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(), "Errrore connessione");
-        } catch (DataNotFoundException e){
+        } catch (QuizCreationException e){
             showMessageHandler.showError(e.getMessage(), "Quiz non trovati");
         } catch (DataAccessException e){
             showMessageHandler.showError(e.getMessage(),"Errore DB");
