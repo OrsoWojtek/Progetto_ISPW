@@ -34,7 +34,7 @@ public class HomeFX extends PageManager {
     private List<CorsoInfoBean> catalogo; //Catalogo dei corsi a cui è iscritto l'utente
     private static final String MAINTENANCE = "Funzionalità in manutenzione";
     private HomeController home; //Riferimento al controller applicativo
-    private int currentPage = 0; // Indice della pagina corrente
+    private int currentPage = 0; // Indice della pagina corrente dei corsi da mostrare
     private final VBox coursesContainer = new VBox(); // Contenitore per i corsi
 
     //----INIZIALIZZAZIONE DELLA PAGINA HOME----

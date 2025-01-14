@@ -7,10 +7,10 @@ import java.util.List;
 
 // Implementato il Builder pattern per non avere troppi paramentri nel costruttore del Quiz
 public class Quiz {
-    private String titolo;
-    private String difficolta;
-    private String argomenti;
-    private int durata;
+    private final String titolo;
+    private final String difficolta;
+    private final String argomenti;
+    private final int durata;
     private List<Quesito> quesiti;
     private int punteggio;
 
@@ -54,10 +54,11 @@ public class Quiz {
             this.durata = durata;
             return this;
         }
-
-        public Builder addQuesito(String domanda, List<String> risposte, List<Boolean> corrette, int punteggio) {
-            this.quesiti.add(new Quesito(domanda, risposte, corrette, punteggio));
-            return this;
+        public void addQuesito(Quesito quesito) {
+            if (quesito == null) {
+                throw new IllegalArgumentException("Il quesito non può essere null.");
+            }
+            this.quesiti.add(quesito);
         }
 
         public Quiz build() throws DataNotFoundException{

@@ -1,5 +1,6 @@
 package com.example.progetto_ispw.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class QuizInfoBean {
@@ -8,7 +9,7 @@ public class QuizInfoBean {
     private String difficoltaBean;
     private String argomentiBean;
     private int durataBean;
-    private List<QuesitoInfoBean> quesitiBean;
+    private List<QuesitoInfoBean> quesitiBean = new ArrayList<>();
     private int punteggioBean;
     //----METODI----
     public String getTitolo() {
@@ -31,7 +32,7 @@ public class QuizInfoBean {
         return quesitiBean;
     }
     public void setQuesiti(List<QuesitoInfoBean> quesitiBean) {
-        this.quesitiBean = quesitiBean;
+        this.quesitiBean.addAll(quesitiBean);
     }
     public int getPunteggio() {
         return punteggioBean;

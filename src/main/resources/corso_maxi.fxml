@@ -12,7 +12,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1024.0" prefWidth="1440.0" style="-fx-background-color: #D07373;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progetto_ispw.view.fx.CorsoFX">
     <top>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="92.0" prefWidth="1440.0" style="-fx-background-color: #871414; -fx-border-width: 5; -fx-border-color: black;" BorderPane.alignment="CENTER">
+        <AnchorPane fx:id="catalogoQuiz" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="92.0" prefWidth="1440.0" style="-fx-background-color: #871414; -fx-border-width: 5; -fx-border-color: black;" BorderPane.alignment="CENTER">
             <children>
                 <ImageView fitHeight="200.0" fitWidth="320.0" layoutX="-44.0" pickOnBounds="true" preserveRatio="true">
                     <image>

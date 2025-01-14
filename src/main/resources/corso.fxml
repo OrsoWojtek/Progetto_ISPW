@@ -39,7 +39,7 @@
         </AnchorPane>
     </top>
     <center>
-        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <AnchorPane fx:id="catalogoQuiz" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
                 <ImageView fitHeight="425.0" fitWidth="355.0" layoutX="354.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
                     <image>
