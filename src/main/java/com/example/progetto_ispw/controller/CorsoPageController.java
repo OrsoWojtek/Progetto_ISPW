@@ -39,6 +39,7 @@ public class CorsoPageController {
 
         return catalogoQuiz;
     }
+    //----METODO PER LA CONVERSIONE DEI QUESITI----
     private List<QuesitoInfoBean> getQuesitoInfoBeans(Quiz quiz) {
         List<QuesitoInfoBean> quesiti = new ArrayList<>();
         for (Quesito quesito : quiz.getQuesiti()) {
