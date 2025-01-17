@@ -2,7 +2,7 @@ package com.example.progetto_ispw.model;
 
 import java.util.ArrayList;
 import java.util.List;
-public class Quesito {
+public class Quesito implements Entity{
     private final String domanda;
     private final int punti;
     private List<Risposta> risposte;
