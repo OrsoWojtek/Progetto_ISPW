@@ -148,7 +148,7 @@ public class CorsoFX extends PageManager {
             // Eventi per clic sul quiz
             quizBox.setOnMouseEntered(event -> quizBox.setCursor(Cursor.HAND));
             quizBox.setOnMouseExited(event -> quizBox.setCursor(Cursor.DEFAULT));
-            //courseBox.setOnMouseClicked(mouseEvent -> );
+            //courseBox.setOnMouseClicked(mouseEvent -> ); porta alla pagina del quiz
 
             // Aggiungi il rettangolo e il testo al contenitore
             quizContainer.getChildren().add(quizBox);
