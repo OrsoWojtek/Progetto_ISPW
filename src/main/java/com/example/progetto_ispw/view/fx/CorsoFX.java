@@ -33,6 +33,7 @@ public class CorsoFX extends PageManager {
     private CorsoInfoBean corso; //Riferimento al corso della pagina
     private List<QuizInfoBean> quizzes; //Catalogo dei quiz disponibili
     private static final String MAINTENANCE = "Funzionalità in manutenzione";
+    private static final String PAGENOTFOUND = "Pagina non trovata";
     private  CorsoPageController controller; //Riferimento al controller applicativo associato
     private int currentPage = 0;//Indice della pagina corrente dei quiz da mostrare
     private final VBox quizContainer = new VBox(); //Contenitore per i quiz
@@ -81,7 +82,7 @@ public class CorsoFX extends PageManager {
             controller.clean();
             pageLoader.loadPage("login");
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
+            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
         } catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(),"Errore connessione");
         }
@@ -93,7 +94,7 @@ public class CorsoFX extends PageManager {
         try{
             pageLoader.loadPage("home");
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
+            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
         }
     }
     @FXML
@@ -128,7 +129,7 @@ public class CorsoFX extends PageManager {
         try{
             pageLoader.loadPage("quiz");//...Mostra la pagina del quiz
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
+            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
         }
     }
 
@@ -169,7 +170,7 @@ public class CorsoFX extends PageManager {
             //Eventi per clic sul quiz
             quizBox.setOnMouseEntered(event -> quizBox.setCursor(Cursor.HAND));
             quizBox.setOnMouseExited(event -> quizBox.setCursor(Cursor.DEFAULT));
-            //quizBox.setOnMouseClicked(mouseEvent -> goToQuizPage(quiz.getTitolo()); porta alla pagina del quiz
+            quizBox.setOnMouseClicked(mouseEvent -> goToQuizPage(quiz.getTitolo())); //porta alla pagina del quiz
 
             //Aggiungi il rettangolo e il testo al contenitore
             quizContainer.getChildren().add(quizBox);
