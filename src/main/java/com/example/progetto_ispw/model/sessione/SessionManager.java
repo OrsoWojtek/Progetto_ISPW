@@ -8,7 +8,7 @@ public class SessionManager {
     private static volatile SessionManager instance;
     private Map<String, Session> activeSessions;
 
-    private SessionManager() {
+    protected SessionManager() {
         this.activeSessions = new HashMap<>();
     }
 
