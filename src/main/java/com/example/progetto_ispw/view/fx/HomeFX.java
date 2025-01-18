@@ -101,77 +101,77 @@ public class HomeFX extends PageManager {
     }
     //---METODO PER INIZIALIZZARE IL CONTENITORE DEI CORSI----
     private void initializeUI() {
-        // Posizione del container
-        int x = 371; //(per il maxi-schermo: 742; per altri schermi: 371)
-        int y = 86; //(per il maxi-schermo: 173; per altri schermi: 86)
-        // Configura il contenitore dinamico per i corsi
+        //Posizione del container
+        int x = 371; //(per il 'maxi-schermo': 742; per altri schermi: 371)
+        int y = 86; //(per il 'maxi-schermo': 173; per altri schermi: 86)
+        //Configura il contenitore dinamico per i corsi
         coursesContainer.setLayoutX(x);
         coursesContainer.setLayoutY(y);
-        coursesContainer.setSpacing(10); // Spazio tra i corsi
+        coursesContainer.setSpacing(10); //Spazio tra i corsi
         catalogoCorsi.getChildren().add(coursesContainer);
     }
 
     //----METODO PER MOSTRARE IL CATALOGO DI CORSI A CUI L'UTENTE È ISCRITTO----
     private void showCourseCatalog() {
-        // Rimuovi i precedenti corsi dal contenitore
+        //Rimuovi i precedenti corsi dal contenitore
         coursesContainer.getChildren().clear();
 
-        // Calcola l'indice iniziale e finale dei corsi da mostrare
+        //Calcola l'indice iniziale e finale dei corsi da mostrare
 
-        int coursesPerPage = 6; // Numero massimo di corsi per pagina
+        int coursesPerPage = 6; //Numero massimo di corsi per pagina
         int startIndex = currentPage * coursesPerPage;
         int endIndex = Math.min(startIndex + coursesPerPage, catalogo.size());
 
-        // Mostra i corsi correnti
+        //Mostra i corsi correnti
         for (int i = startIndex; i < endIndex; i++) {
             CorsoInfoBean corso = catalogo.get(i);
 
-            // Crea un rettangolo
-            int width = 298; //(per il maxi-schermo: 597; per altri schermi: 298)
-            int height = 43; //(per il maxi-schermo: 86; per altri schermi: 43)
+            //Crea un rettangolo
+            int width = 298; //(per il 'maxi-schermo': 597; per altri schermi: 298)
+            int height = 43; //(per il 'maxi-schermo': 86; per altri schermi: 43)
             Rectangle rectangle = new Rectangle(width, height);
             rectangle.setFill(Color.BLACK);
             rectangle.setStroke(Color.BLACK);
 
-            // Crea il testo con il nome del corso
-            String fontSize = "18"; //(per il maxi-schermo: 36; per altri schermi: 18)
+            //Crea il testo con il nome del corso
+            String fontSize = "18"; //(per il 'maxi-schermo': 36; per altri schermi: 18)
             Text text = new Text(corso.getNome());
             text.setFill(Color.WHITE);
             text.setStyle("-fx-font-weight: bold;");
             text.setStyle("-fx-font-size:"+fontSize+";");
             text.setUnderline(true);
 
-            // Centrare il testo nel rettangolo
+            //Centrare il testo nel rettangolo
             StackPane courseBox = new StackPane(rectangle, text);
             courseBox.setAlignment(Pos.CENTER);
 
-            // Eventi per clic sul corso
+            //Eventi per clic sul corso
             courseBox.setOnMouseEntered(event -> courseBox.setCursor(Cursor.HAND));
             courseBox.setOnMouseExited(event -> courseBox.setCursor(Cursor.DEFAULT));
             courseBox.setOnMouseClicked(mouseEvent -> goToCoursePage(corso.getNome()));
 
-            // Aggiungi il rettangolo e il testo al contenitore
+            //Aggiungi il rettangolo e il testo al contenitore
             coursesContainer.getChildren().add(courseBox);
         }
 
-        // Aggiungi i bottoni di navigazione
+        //Aggiungi i bottoni di navigazione
         addNavigationButtons(endIndex);
     }
 
     private void addNavigationButtons(int endIndex) {
-        // Rimuovi i precedenti bottoni
+        //Rimuovi i precedenti bottoni
         coursesContainer.getChildren().removeIf(node -> node instanceof HBox);
 
-        // Crea un contenitore orizzontale per i bottoni
-        HBox navigationBox = new HBox(20); // Spazio tra i bottoni
+        //Crea un contenitore orizzontale per i bottoni
+        HBox navigationBox = new HBox(20); //Spazio tra i bottoni
         navigationBox.setAlignment(Pos.CENTER);
 
-        // Bottone "Torna indietro" a sinistra
+        //Bottone "Torna indietro" a sinistra
         if (currentPage > 0) {
             ImageView backButton = new ImageView(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/go_back.png")).toExternalForm());
-            backButton.setFitWidth(30);  // Larghezza desiderata
-            backButton.setFitHeight(20); // Altezza desiderata
-            backButton.setPreserveRatio(true); // Mantieni le proporzioni
+            backButton.setFitWidth(30);  //Larghezza desiderata
+            backButton.setFitHeight(20); //Altezza desiderata
+            backButton.setPreserveRatio(true); //Mantieni le proporzioni
             backButton.setOnMouseEntered(event -> backButton.setCursor(Cursor.HAND));
             backButton.setOnMouseExited(event -> backButton.setCursor(Cursor.DEFAULT));
             backButton.setOnMouseClicked(mouseEvent -> {
@@ -181,17 +181,17 @@ public class HomeFX extends PageManager {
             navigationBox.getChildren().add(backButton);
         }
 
-        // Aggiungi uno "spazio vuoto" che spinge i bottoni ai bordi
+        //Aggiungi uno "spazio vuoto" che spinge i bottoni ai bordi
         Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);  // Questo permette di spingere i bottoni ai bordi
+        HBox.setHgrow(spacer, Priority.ALWAYS);  //Questo permette di spingere i bottoni ai bordi
         navigationBox.getChildren().add(spacer);
 
-        // Bottone "Mostra altri" a destra
+        //Bottone "Mostra altri" a destra
         if (endIndex < catalogo.size()) {
             ImageView nextButton = new ImageView(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/go_next.png")).toExternalForm());
-            nextButton.setFitWidth(30);  // Larghezza desiderata
-            nextButton.setFitHeight(20); // Altezza desiderata
-            nextButton.setPreserveRatio(true); // Mantieni le proporzioni
+            nextButton.setFitWidth(30);  //Larghezza desiderata
+            nextButton.setFitHeight(20); //Altezza desiderata
+            nextButton.setPreserveRatio(true); //Mantieni le proporzioni
             nextButton.setOnMouseEntered(event -> nextButton.setCursor(Cursor.HAND));
             nextButton.setOnMouseExited(event -> nextButton.setCursor(Cursor.DEFAULT));
             nextButton.setOnMouseClicked(mouseEvent -> {
@@ -201,7 +201,7 @@ public class HomeFX extends PageManager {
             navigationBox.getChildren().add(nextButton);
         }
 
-        // Aggiungi il contenitore con i bottoni alla lista dei corsi
+        //Aggiungi il contenitore con i bottoni alla lista dei corsi
         coursesContainer.getChildren().add(navigationBox);
     }
 }
