@@ -82,4 +82,8 @@ public class CorsoPageController {
     public UtenteInfoBean getInfoUser() throws DataNotFoundException {
         return SessionManager.getInstance().getSession("login").getDato("utente",UtenteInfoBean.class);
     }
+    //----METODO PER MEMORIZZARE NELLA SESSIONE IL QUIZ SELEZIONATO
+    public void setInfoQuiz(QuizInfoBean currentQuiz){
+        SessionManager.getInstance().createSession("quiz_page").addDato("quiz",currentQuiz);
+    }
 }

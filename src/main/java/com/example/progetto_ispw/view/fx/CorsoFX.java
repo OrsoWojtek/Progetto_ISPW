@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 //----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA (CASO SPECIFICO: CORSO)----
 public class CorsoFX extends PageManager {
@@ -120,6 +121,17 @@ public class CorsoFX extends PageManager {
         showMessageHandler.showError("La teoria del corso non è al momento consultabile.\nCi dispiace per il disagio.", MAINTENANCE);
     }
 
+    //----METODO PER PASSARE ALLA PAGINA DEL QUIZ DESIDERATO----
+    private void goToQuizPage(String nomeQuiz){
+        Optional<QuizInfoBean> quizScelto = quizzes.stream().filter(c -> c.getTitolo().equals(nomeQuiz)).findFirst(); //Cerca il bean del quiz nel catalogo corrispondere al nome del quiz selezionato dall'utente
+        quizScelto.ifPresent(controller::setInfoQuiz); //Passa il bean del quiz al controller applicativo
+        try{
+            pageLoader.loadPage("quiz");//...Mostra la pagina del quiz
+        } catch (PageNotFoundException e){
+            showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
+        }
+    }
+
     //----METODO PER MOSTRARE IL CATALOGO DI QUIZ DISPONIBILI----
     private void showQuizCatalog() {
         //Rimuovi i precedenti quiz dal contenitore
@@ -135,7 +147,7 @@ public class CorsoFX extends PageManager {
         for (int i = startIndx; i < endIndx; i++) {
             QuizInfoBean quiz = quizzes.get(i);
 
-            // Crea un rettangolo
+            //Crea un rettangolo
             int width = 298; //(per il maxi-schermo: 597; per altri schermi: 298)
             int height = 43; //(per il maxi-schermo: 86; per altri schermi: 43)
             Rectangle rectangle = new Rectangle(width, height);
@@ -157,7 +169,7 @@ public class CorsoFX extends PageManager {
             //Eventi per clic sul quiz
             quizBox.setOnMouseEntered(event -> quizBox.setCursor(Cursor.HAND));
             quizBox.setOnMouseExited(event -> quizBox.setCursor(Cursor.DEFAULT));
-            //courseBox.setOnMouseClicked(mouseEvent -> ); porta alla pagina del quiz
+            //quizBox.setOnMouseClicked(mouseEvent -> goToQuizPage(quiz.getTitolo()); porta alla pagina del quiz
 
             //Aggiungi il rettangolo e il testo al contenitore
             quizContainer.getChildren().add(quizBox);
@@ -172,7 +184,7 @@ public class CorsoFX extends PageManager {
         quizContainer.getChildren().removeIf(node -> node instanceof HBox);
 
         //Crea un contenitore orizzontale per i bottoni
-        HBox navigBox = new HBox(20); // Spazio tra i bottoni
+        HBox navigBox = new HBox(20); //Spazio tra i bottoni
         navigBox.setAlignment(Pos.CENTER);
 
         //Bottone "Torna indietro" a sinistra
@@ -192,7 +204,7 @@ public class CorsoFX extends PageManager {
 
         //Aggiungi uno "spazio vuoto" che spinge i bottoni ai bordi
         Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);  // Questo permette di spingere i bottoni ai bordi
+        HBox.setHgrow(spacer, Priority.ALWAYS);  //Questo permette di spingere i bottoni ai bordi
         navigBox.getChildren().add(spacer);
 
         //Bottone "Mostra altri" a destra
