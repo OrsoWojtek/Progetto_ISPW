@@ -1,6 +1,6 @@
 package com.example.progetto_ispw.bean;
 
-public class RispostaInfoBean {
+public class RispostaInfoBean implements Bean{
     //----ATTRIBUTI----
     private String testoBean;
     private boolean correttaBean; // Attributo che indica se la risposta è corretta

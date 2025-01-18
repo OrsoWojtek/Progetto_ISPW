@@ -3,7 +3,7 @@ package com.example.progetto_ispw.bean;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuizInfoBean {
+public class QuizInfoBean implements Bean{
     //----ATTRIBUTI----
     private String titoloBean;
     private String difficoltaBean;

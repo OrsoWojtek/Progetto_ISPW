@@ -1,7 +1,7 @@
 package com.example.progetto_ispw.bean;
 
 //----BEAN CONTENENTE INFORMAZIONI UTILI PER IL LOGIN----
-public class LoginInfoBean {
+public class LoginInfoBean implements Bean{
     //----ATTRIBUTI----
     private String username;
     private String password;

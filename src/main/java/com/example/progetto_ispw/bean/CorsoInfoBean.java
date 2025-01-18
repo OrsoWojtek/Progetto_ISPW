@@ -1,6 +1,6 @@
 package com.example.progetto_ispw.bean;
 
-public class CorsoInfoBean {
+public class CorsoInfoBean implements Bean{
     //----ATTRIBUTI----
     private String nome;
     private String descrizione;

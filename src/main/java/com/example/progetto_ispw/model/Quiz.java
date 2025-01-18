@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Implementato il Builder pattern per non avere troppi paramentri nel costruttore del Quiz
-public class Quiz implements Entity{
+public class Quiz {
     private final String titolo;
     private final String difficolta;
     private final String argomenti;

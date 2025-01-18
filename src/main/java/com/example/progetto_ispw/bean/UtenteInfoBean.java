@@ -1,6 +1,6 @@
 package com.example.progetto_ispw.bean;
 //----BEAN CONTENENTE INFORMAZIONI UTILI PER IL RICONOSCIMENTO DELL'UTENTE----
-public class UtenteInfoBean {
+public class UtenteInfoBean implements Bean{
     //----ATTRIBUTI----
     private String username;
     private String role;

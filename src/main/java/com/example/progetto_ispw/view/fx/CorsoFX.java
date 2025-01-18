@@ -28,21 +28,23 @@ public class CorsoFX extends PageManager {
     @FXML
     private Text visualizzaDomande; //Testo per la richiesta di "visualizza domande"
     @FXML
-    private AnchorPane catalogoQuiz;
+    private AnchorPane catalogoQuiz; //'Sfondo' del catalogo
+    private CorsoInfoBean corso; //Riferimento al corso della pagina
     private List<QuizInfoBean> quizzes; //Catalogo dei quiz disponibili
     private static final String MAINTENANCE = "Funzionalità in manutenzione";
     private  CorsoPageController controller; //Riferimento al controller applicativo associato
-    private int currentPage = 0; // Indice della pagina corrente dei quiz da mostrare
-    private final VBox quizContainer = new VBox(); // Contenitore per i quiz
+    private int currentPage = 0;//Indice della pagina corrente dei quiz da mostrare
+    private final VBox quizContainer = new VBox(); //Contenitore per i quiz
     @FXML
     public void initialize(){
         controller = new CorsoPageController();
-        UtenteInfoBean user = controller.getInfoUser();
-        CorsoInfoBean corso = controller.getInfoCourse();
-        nomeCorso.setText(corso.getNome()+":"); //Mostra nella pagina del corso il nome del corso
-        visualizzaDomande.setVisible("tutor".equalsIgnoreCase(user.getRole())); //Mostra il testo per accedere alla funzionalità disponibile solo per i tutor
-        sollecitaDomanda.setVisible("studente".equalsIgnoreCase(user.getRole())); //Mostra il testo per accedere alla funzionalità disponibile solo per gli studenti
+        UtenteInfoBean user;
         try{
+            user = controller.getInfoUser();
+            corso = controller.getInfoCourse();
+            nomeCorso.setText(corso.getNome()+":"); //Mostra nella pagina del corso il nome del corso
+            visualizzaDomande.setVisible("tutor".equalsIgnoreCase(user.getRole())); //Mostra il testo per accedere alla funzionalità disponibile solo per i tutor
+            sollecitaDomanda.setVisible("studente".equalsIgnoreCase(user.getRole())); //Mostra il testo per accedere alla funzionalità disponibile solo per gli studenti
             quizzes = controller.getQuizDisponibili(corso);
             showQuizCatalog();
         } catch (ConnectionException e){
@@ -51,6 +53,12 @@ public class CorsoFX extends PageManager {
             showMessageHandler.showError(e.getMessage(), "Quiz non trovati");
         } catch (DataAccessException e){
             showMessageHandler.showError(e.getMessage(),"Errore DB");
+        } catch (DataNotFoundException e) {
+            showMessageHandler.showError(e.getMessage(),"Errore di sessione");
+            onLogoutButtonClicked();
+        }catch (DataSessionCastingException e){
+            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.","Errore di casting");
+            onLogoutButtonClicked();
         }
         configUI();
     }
@@ -105,24 +113,25 @@ public class CorsoFX extends PageManager {
     }
     @FXML
     public void onDescrizioneClicked(){
-        showMessageHandler.showMessage(controller.getInfoCourse().getDescrizione(), "Descrizione del corso");
+        showMessageHandler.showMessage(corso.getDescrizione(), "Descrizione del corso");
     }
     @FXML
     public void onTeoriaClicked(){
         showMessageHandler.showError("La teoria del corso non è al momento consultabile.\nCi dispiace per il disagio.", MAINTENANCE);
     }
+
     //----METODO PER MOSTRARE IL CATALOGO DI QUIZ DISPONIBILI----
     private void showQuizCatalog() {
-        // Rimuovi i precedenti corsi dal contenitore
+        //Rimuovi i precedenti quiz dal contenitore
         quizContainer.getChildren().clear();
 
-        // Calcola l'indice iniziale e finale dei quiz da mostrare
+        //Calcola l'indice iniziale e finale dei quiz da mostrare
 
-        int quizzesPerPage = 6; // Numero massimo di quiz per pagina
+        int quizzesPerPage = 6; //Numero massimo di quiz per pagina
         int startIndx = currentPage * quizzesPerPage;
         int endIndx = Math.min(startIndx + quizzesPerPage, quizzes.size());
 
-        // Mostra i quiz correnti
+        //Mostra i quiz correnti
         for (int i = startIndx; i < endIndx; i++) {
             QuizInfoBean quiz = quizzes.get(i);
 
@@ -133,7 +142,7 @@ public class CorsoFX extends PageManager {
             rectangle.setFill(Color.BLACK);
             rectangle.setStroke(Color.BLACK);
 
-            // Crea il testo con il nome del quiz
+            //Crea il testo con il nome del quiz
             String fontSize = "18"; //(per il maxi-schermo: 36; per altri schermi: 18)
             Text titolo = new Text(quiz.getTitolo());
             titolo.setFill(Color.WHITE);
@@ -141,37 +150,37 @@ public class CorsoFX extends PageManager {
             titolo.setStyle("-fx-font-size:"+fontSize+";");
             titolo.setUnderline(true);
 
-            // Centrare il testo nel rettangolo
+            //Centrare il testo nel rettangolo
             StackPane quizBox = new StackPane(rectangle, titolo);
             quizBox.setAlignment(Pos.CENTER);
 
-            // Eventi per clic sul quiz
+            //Eventi per clic sul quiz
             quizBox.setOnMouseEntered(event -> quizBox.setCursor(Cursor.HAND));
             quizBox.setOnMouseExited(event -> quizBox.setCursor(Cursor.DEFAULT));
             //courseBox.setOnMouseClicked(mouseEvent -> ); porta alla pagina del quiz
 
-            // Aggiungi il rettangolo e il testo al contenitore
+            //Aggiungi il rettangolo e il testo al contenitore
             quizContainer.getChildren().add(quizBox);
         }
 
-        // Aggiungi i bottoni di navigazione
+        //Aggiungi i bottoni di navigazione
         addNavigationButtons(endIndx);
     }
 
     private void addNavigationButtons(int endIndx) {
-        // Rimuovi i precedenti bottoni
+        //Rimuovi i precedenti bottoni
         quizContainer.getChildren().removeIf(node -> node instanceof HBox);
 
-        // Crea un contenitore orizzontale per i bottoni
+        //Crea un contenitore orizzontale per i bottoni
         HBox navigBox = new HBox(20); // Spazio tra i bottoni
         navigBox.setAlignment(Pos.CENTER);
 
-        // Bottone "Torna indietro" a sinistra
+        //Bottone "Torna indietro" a sinistra
         if (currentPage > 0) {
             ImageView backArrow = new ImageView(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/go_back.png")).toExternalForm());
-            backArrow.setFitWidth(30);  // Larghezza desiderata
-            backArrow.setFitHeight(20); // Altezza desiderata
-            backArrow.setPreserveRatio(true); // Mantieni le proporzioni
+            backArrow.setFitWidth(30);  //Larghezza desiderata
+            backArrow.setFitHeight(20); //Altezza desiderata
+            backArrow.setPreserveRatio(true); //Mantieni le proporzioni
             backArrow.setOnMouseEntered(event -> backArrow.setCursor(Cursor.HAND));
             backArrow.setOnMouseExited(event -> backArrow.setCursor(Cursor.DEFAULT));
             backArrow.setOnMouseClicked(mouseEvent -> {
@@ -181,17 +190,17 @@ public class CorsoFX extends PageManager {
             navigBox.getChildren().add(backArrow);
         }
 
-        // Aggiungi uno "spazio vuoto" che spinge i bottoni ai bordi
+        //Aggiungi uno "spazio vuoto" che spinge i bottoni ai bordi
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);  // Questo permette di spingere i bottoni ai bordi
         navigBox.getChildren().add(spacer);
 
-        // Bottone "Mostra altri" a destra
+        //Bottone "Mostra altri" a destra
         if (endIndx < quizzes.size()) {
             ImageView nextArrow = new ImageView(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/go_next.png")).toExternalForm());
-            nextArrow.setFitWidth(30);  // Larghezza desiderata
-            nextArrow.setFitHeight(20); // Altezza desiderata
-            nextArrow.setPreserveRatio(true); // Mantieni le proporzioni
+            nextArrow.setFitWidth(30);  //Larghezza desiderata
+            nextArrow.setFitHeight(20); //Altezza desiderata
+            nextArrow.setPreserveRatio(true); //Mantieni le proporzioni
             nextArrow.setOnMouseEntered(event -> nextArrow.setCursor(Cursor.HAND));
             nextArrow.setOnMouseExited(event -> nextArrow.setCursor(Cursor.DEFAULT));
             nextArrow.setOnMouseClicked(mouseEvent -> {
@@ -201,7 +210,7 @@ public class CorsoFX extends PageManager {
             navigBox.getChildren().add(nextArrow);
         }
 
-        // Aggiungi il contenitore con i bottoni alla lista dei corsi
+        //Aggiungi il contenitore con i bottoni alla lista dei corsi
         quizContainer.getChildren().add(navigBox);
     }
 }

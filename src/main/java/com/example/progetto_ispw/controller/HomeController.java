@@ -8,7 +8,7 @@ import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataAccessException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.model.Corso;
-import com.example.progetto_ispw.model.Sessione;
+import com.example.progetto_ispw.model.sessione.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,18 +36,18 @@ public class HomeController {
         }
         return catalogoBeans;
     }
-    //----METODO PER PULIRE CONNESSIONE AL DB E SESSIONE AL LOGOUT----
+    //----METODO PER PULIRE CONNESSIONE AL DB E SESSIONE----
     public void clean() throws ConnectionException {
-        Sessione.getInstance().clear(); //Cancello le informazioni riguardanti la sessione
+        SessionManager.getInstance().invalidateSessions(); //Formatto le sessioni
         Connessione conn = Connessione.getInstance();
         conn.closeConnection(); //Chiudo definitivamente la connessione con il db
     }
     //----METODO PER OTTENERE LE INFORMAZIONI DELL'UTENTE CORRENTE----
-    public UtenteInfoBean getInfoUser(){
-        return Sessione.getInstance().getUser();
+    public UtenteInfoBean getInfoUser() throws DataNotFoundException {
+        return SessionManager.getInstance().getSession("login").getDato("utente",UtenteInfoBean.class);
     }
     //----METODO PER MEMORIZZARE NELLA SESSIONE IL CORSO SELEZIONATO
     public void setInfoCourse(CorsoInfoBean currentCourse){
-        Sessione.getInstance().setCourse(currentCourse);
+        SessionManager.getInstance().createSession("course_page").addDato("corso",currentCourse);
     }
 }

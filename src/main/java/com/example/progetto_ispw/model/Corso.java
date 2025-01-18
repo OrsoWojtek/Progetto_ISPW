@@ -1,6 +1,6 @@
 package com.example.progetto_ispw.model;
 
-public class Corso implements Entity{
+public class Corso {
     private String nome;
     private String descrizione;
     public Corso(String nome, String descrizione){

@@ -4,6 +4,8 @@ import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.controller.HomeController;
 import com.example.progetto_ispw.exception.ConnectionException;
+import com.example.progetto_ispw.exception.DataNotFoundException;
+import com.example.progetto_ispw.exception.DataSessionCastingException;
 import com.example.progetto_ispw.exception.PageNotFoundException;
 import com.example.progetto_ispw.view.PageManager;
 import javafx.fxml.FXML;
@@ -30,30 +32,38 @@ public class HomeFX extends PageManager {
     @FXML
     private ImageView optionButton; //Bottone delle impostazioni dei corsi (disponibile solo per i tutor)
     @FXML
-    private AnchorPane catalogoCorsi;
+    private AnchorPane catalogoCorsi; //'Sfondo' del catalogo
     private List<CorsoInfoBean> catalogo; //Catalogo dei corsi a cui è iscritto l'utente
     private static final String MAINTENANCE = "Funzionalità in manutenzione";
     private HomeController home; //Riferimento al controller applicativo
-    private int currentPage = 0; // Indice della pagina corrente dei corsi da mostrare
-    private final VBox coursesContainer = new VBox(); // Contenitore per i corsi
+    private int currentPage = 0; //Indice della pagina corrente dei corsi da mostrare
+    private final VBox coursesContainer = new VBox(); //Contenitore per i corsi
 
     //----INIZIALIZZAZIONE DELLA PAGINA HOME----
     @FXML
-    public void initialize(){
+    public void initialize() {
         home = new HomeController();
-        //Informazioni sull'utente corrente
-        UtenteInfoBean user = home.getInfoUser();
-        username.setText(username.getText()+" "+ user.getUsername()); //Mostra nella home l'username dell'utente
         try {
+            //Informazioni sull'utente corrente
+            UtenteInfoBean user = home.getInfoUser();
+            username.setText(username.getText()+" "+ user.getUsername()); //Mostra nella home l'username dell'utente
+
+            avatar.setImage(new Image(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/"+ user.getRole().toLowerCase()+"_avatar.png")).toExternalForm())); //Setting dell'immagine relativa al ruolo dell'utente
+            optionButton.setVisible("tutor".equalsIgnoreCase(user.getRole())); //Mostra il bottone delle impostazioni dei corsi (disponibile solo per i tutor)
+
             catalogo = home.getCorsiFrequentati(user); //Richiesta dei corsi a cui è iscritto l'utente
         } catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(),"Errore connessione");
+        } catch (DataNotFoundException e){
+            showMessageHandler.showError(e.getMessage(),"Errore di sessione");
+            onLogoutButtonClicked();
+        } catch (DataSessionCastingException e){
+            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.","Errore di casting");
+            onLogoutButtonClicked();
         }
         if (!"".equals(catalogo.getFirst().getDescrizione())){
             showCourseCatalog(); //Mostra i corsi a cui è iscritto l'utente
         }
-        avatar.setImage(new Image(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/"+ user.getRole().toLowerCase()+"_avatar.png")).toExternalForm()));
-        optionButton.setVisible("tutor".equalsIgnoreCase(user.getRole())); //Mostra il bottone delle impostazioni dei corsi (disponibile solo per i tutor)
 
         initializeUI();
     }

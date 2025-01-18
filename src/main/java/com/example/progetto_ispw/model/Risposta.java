@@ -1,6 +1,6 @@
 package com.example.progetto_ispw.model;
 
-public class Risposta implements Entity{
+public class Risposta {
     private String testo;
     private boolean corretta; // Attributo che indica se la risposta è corretta
     private boolean ticked; // Attributo per indicare che la risposta è stata selezionata dall'utente

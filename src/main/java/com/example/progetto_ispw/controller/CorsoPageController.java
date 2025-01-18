@@ -5,10 +5,11 @@ import com.example.progetto_ispw.bean.*;
 import com.example.progetto_ispw.dao.jdbc.QuizDAOJDBC;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataAccessException;
+import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.model.Quesito;
 import com.example.progetto_ispw.model.Quiz;
 import com.example.progetto_ispw.model.Risposta;
-import com.example.progetto_ispw.model.Sessione;
+import com.example.progetto_ispw.model.sessione.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,18 +66,20 @@ public class CorsoPageController {
 
     //----METODO PER PULIRE CONNESSIONE AL DB E SESSIONE AL LOGOUT----
     public void clean() throws ConnectionException {
-        Sessione.getInstance().clear(); //Cancello le informazioni riguardanti la sessione
+        SessionManager.getInstance().invalidateSessions(); //Formatto le sessioni
         Connessione conn = Connessione.getInstance();
         conn.closeConnection(); //Chiudo definitivamente la connessione con il db
     }
     //----METODO PER RESETTARE NELLA SESSIONE LE INFO SUL CORSO SELEZIONATO
     public void clearInfoCourse(){
-        Sessione.getInstance().setCourse(null);
+        SessionManager.getInstance().getSession("course_page").removeDato("corso");
     }
     //----METODO PER RESTITUIRE LE INFO SUL CORSO SELEZIONATO
-    public CorsoInfoBean getInfoCourse(){
-        return Sessione.getInstance().getCourse();
+    public CorsoInfoBean getInfoCourse() throws DataNotFoundException {
+        return SessionManager.getInstance().getSession("course_page").getDato("corso",CorsoInfoBean.class);
     }
     //----METODO PER RESTITUIRE LE INFO DELL'UTENTE CORRENTE
-    public UtenteInfoBean getInfoUser(){return Sessione.getInstance().getUser();}
+    public UtenteInfoBean getInfoUser() throws DataNotFoundException {
+        return SessionManager.getInstance().getSession("login").getDato("utente",UtenteInfoBean.class);
+    }
 }
