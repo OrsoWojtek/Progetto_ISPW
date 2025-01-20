@@ -21,13 +21,13 @@ public class QuizFX extends PageManager {
     @FXML
     private Label difficoltaQuiz; //Difficoltà del quiz
     private QuizInfoBean quiz; //Riferimento al quiz della pagina
-    private QuizController controller; //Riferimento al controller applicativo associato
+    private QuizController quizController; //Riferimento al controller applicativo associato
     private static final String PAGENOTFOUND = "Pagina non trovata";
     @FXML
     public void initialize(){
-        controller = new QuizController();
+        quizController = new QuizController();
         try {
-            quiz = controller.getInfoQuiz();
+            quiz = quizController.getInfoQuiz();
             titoloQuiz.setText(quiz.getTitolo());
             durataQuiz.setText(quiz.getDurata()+" minuti");
             domandeQuiz.setText(quiz.getNumeroDomandeBean()+"");
@@ -44,7 +44,7 @@ public class QuizFX extends PageManager {
     @FXML
     public void onLogoutButtonClicked(){
         try {
-            controller.clean();
+            quizController.clean();
             pageLoader.loadPage("login");
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
@@ -52,25 +52,25 @@ public class QuizFX extends PageManager {
             showMessageHandler.showError(e.getMessage(),"Errore connessione");
         }
     }
+    //----METODO PER MOSTRARE GLI ARGOMENTI DEL QUIZ----
+    @FXML
+    public void onArgomentiClicked(){
+        showMessageHandler.showMessage(quiz.getArgomenti(), "Argomenti del quiz");
+    }
     //----METODO PER TORNARE ALLA HOME----
     @FXML
     public void onHomeButtonClicked(){
-        controller.clearOtherInfo();
+        quizController.clearOtherInfo();
         try{
             pageLoader.loadPage("home");
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
         }
     }
-    //----METODO PER MOSTRARE GLI ARGOMENTI DEL QUIZ----
-    @FXML
-    public void onArgomentiClicked(){
-        showMessageHandler.showMessage(quiz.getArgomenti(), "Argomenti del quiz");
-    }
     //----METODO PER TORNARE ALLA PAGINA DEL CORSO----
     @FXML
     public void onTornaAlCorso(){
-        controller.clearInfoQuiz();
+        quizController.clearInfoQuiz();
         try{
             pageLoader.loadPage("corso");
         } catch (PageNotFoundException e){
