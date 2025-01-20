@@ -112,12 +112,12 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" fill="#871414" height="59.0" layoutX="418.0" layoutY="322.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="156.0">
+            <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" fill="#871414" height="59.0" layoutX="418.0" layoutY="322.0" onMouseClicked="#avviaQuiz" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="156.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Rectangle>
-            <Label accessibleRole="BUTTON" layoutX="454.0" layoutY="328.0" style="-fx-font-weight: bold;" text="Avvia" textFill="WHITE">
+            <Label accessibleRole="BUTTON" layoutX="454.0" layoutY="328.0" onMouseClicked="#avviaQuiz" style="-fx-font-weight: bold;" text="Avvia" textFill="WHITE">
                <font>
                   <Font size="32.0" />
                </font>

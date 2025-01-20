@@ -77,4 +77,13 @@ public class QuizFX extends PageManager {
             showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
         }
     }
+    //----METODO AL CLICK DEL TASTO DI AVVIO DEL QUIZ----
+    @FXML
+    public void avviaQuiz(){
+        try{
+            pageLoader.loadPage("svolgimento_quiz");
+        } catch (PageNotFoundException e){
+            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
+        }
+    }
 }
