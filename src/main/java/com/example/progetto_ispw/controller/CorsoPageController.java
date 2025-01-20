@@ -35,6 +35,7 @@ public class CorsoPageController {
             List<QuesitoInfoBean> quesiti = getQuesitoInfoBeans(quiz);
 
             quizInfoBean.setQuesiti(quesiti);
+            quizInfoBean.setNumeroDomandeBean();
             catalogoQuiz.add(quizInfoBean);
         }
 

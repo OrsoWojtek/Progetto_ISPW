@@ -10,6 +10,7 @@ public class QuizInfoBean implements Bean{
     private String argomentiBean;
     private int durataBean;
     private List<QuesitoInfoBean> quesitiBean = new ArrayList<>();
+    private int numeroDomandeBean;
     private int punteggioBean;
     //----METODI----
     public String getTitolo() {
@@ -45,5 +46,11 @@ public class QuizInfoBean implements Bean{
     }
     public void setDurata(int durataBean) {
         this.durataBean = durataBean;
+    }
+    public int getNumeroDomandeBean() {
+        return numeroDomandeBean;
+    }
+    public void setNumeroDomandeBean() {
+        this.numeroDomandeBean = this.quesitiBean.size();
     }
 }

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="720.0" style="-fx-background-color: #D07373;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progetto_ispw.view.fx.QuizFX">
+    <top>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="720.0" style="-fx-background-color: #871414; -fx-border-width: 5; -fx-border-color: black;" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="100.0" fitWidth="160.0" layoutX="-22.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@com/example/progetto_ispw/images/ILearn_Title.png" />
+                    </image>
+                </ImageView>
+                <ImageView accessibleRole="BUTTON" fitHeight="25.0" fitWidth="25.0" layoutX="678.0" layoutY="10.0" onMouseClicked="#onHomeButtonClicked" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@com/example/progetto_ispw/images/clickable_home_icon.png" />
+                    </image>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ImageView>
+                <ImageView accessibleRole="BUTTON" fitHeight="25.0" fitWidth="23.0" layoutX="645.0" layoutY="14.0" onMouseClicked="#onLogoutButtonClicked" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@com/example/progetto_ispw/images/logout_icon.png" />
+                    </image>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ImageView>
+            </children>
+        </AnchorPane>
+    </top>
+    <center>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#472608" height="400.0" layoutX="49.0" layoutY="34.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="622.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="350.0" layoutX="76.0" layoutY="59.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="285.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="350.0" layoutX="88.0" layoutY="59.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="275.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="350.0" layoutX="98.0" layoutY="58.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="265.0" />
+                <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" height="61.0" layoutX="136.0" layoutY="270.0" onMouseClicked="#onTornaAlCorso" stroke="BLACK" strokeType="INSIDE" width="179.0">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor></Rectangle>
+                <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" height="61.0" layoutX="136.0" layoutY="134.0" onMouseClicked="#onArgomentiClicked" stroke="BLACK" strokeType="INSIDE" width="179.0">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor></Rectangle>
+                <Text accessibleRole="BUTTON" fill="WHITE" layoutX="117.0" layoutY="171.0" onMouseClicked="#onArgomentiClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Argomenti" textAlignment="CENTER" wrappingWidth="216.13671875">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Text>
+                <Text accessibleRole="BUTTON" fill="WHITE" layoutX="146.0" layoutY="294.0" onMouseClicked="#onTornaAlCorso" strokeType="OUTSIDE" strokeWidth="0.0" text="Torna alla pagina del corso" textAlignment="CENTER" wrappingWidth="158.13671875">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Text>
+            <Line endX="-100.0" endY="368.0" layoutX="460.0" layoutY="65.0" startX="-100.0" startY="-30.0" strokeWidth="2.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="350.0" layoutX="358.0" layoutY="59.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="285.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="350.0" layoutX="358.0" layoutY="59.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="275.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="350.0" layoutX="358.0" layoutY="58.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="265.0" />
+                <Label fx:id="titoloQuiz" alignment="CENTER" layoutX="398.0" layoutY="77.0" prefHeight="79.0" prefWidth="195.0" style="-fx-underline: true; -fx-font-weight: bold;" text="Label">
+                    <font>
+                        <Font size="48.0" />
+                    </font>
+                </Label>
+            <Label alignment="CENTER" layoutX="376.0" layoutY="172.0" prefHeight="46.0" prefWidth="74.0" style="-fx-underline: true; -fx-font-weight: bold;" text="Durata:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="376.0" layoutY="210.0" prefHeight="46.0" prefWidth="99.0" style="-fx-underline: true; -fx-font-weight: bold;" text="Domande:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="376.0" layoutY="251.0" prefHeight="46.0" prefWidth="99.0" style="-fx-underline: true; -fx-font-weight: bold;" text="Difficoltà:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Line endX="119.0" layoutX="477.0" layoutY="208.0" startX="-94.0" />
+            <Line endX="119.0" layoutX="477.0" layoutY="246.0" startX="-94.0" />
+            <Line endX="119.0" layoutX="478.0" layoutY="287.0" startX="-94.0" />
+            <Label fx:id="durataQuiz" layoutX="456.0" layoutY="183.0" text="minuti">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="domandeQuiz" layoutX="477.0" layoutY="221.0" text="numero">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="difficoltaQuiz" layoutX="477.0" layoutY="262.0" text="Qualsiasi">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" fill="#871414" height="59.0" layoutX="418.0" layoutY="322.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="156.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Rectangle>
+            <Label accessibleRole="BUTTON" layoutX="454.0" layoutY="328.0" style="-fx-font-weight: bold;" text="Avvia" textFill="WHITE">
+               <font>
+                  <Font size="32.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>
