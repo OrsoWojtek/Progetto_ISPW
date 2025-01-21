@@ -28,7 +28,16 @@
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="400.0" layoutX="49.0" layoutY="33.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="622.0" />
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dcd58b" height="255.0" layoutX="140.0" layoutY="94.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="454.0" />
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dcd58b" height="255.0" layoutX="132.0" layoutY="87.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="456.0" />
+            <AnchorPane layoutX="132.0" layoutY="87.0">
+               <children>
+                      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dcd58b" height="255.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="456.0" />
+                      <Label fx:id="domanda" alignment="TOP_LEFT" layoutX="18.0" layoutY="40.0" maxWidth="424.0" prefHeight="98.0" prefWidth="424.0" text="Testo della domanda" textOverrun="CLIP" wrapText="true">
+                          <font>
+                              <Font size="16.0" />
+                          </font>
+                      </Label>
+               </children>
+            </AnchorPane>
                 <Label fx:id="nameQuiz" alignment="CENTER" layoutX="279.0" layoutY="17.0" prefHeight="79.0" prefWidth="195.0" style="-fx-underline: true; -fx-font-weight: bold;" text="Label">
                     <font>
                         <Font size="48.0" />
@@ -37,11 +46,6 @@
                 <Label fx:id="currentQuestion" alignment="CENTER" layoutX="132.0" layoutY="87.0" prefHeight="46.0" prefWidth="135.0" style="-fx-underline: true; -fx-font-weight: bold;" text="Domanda n.">
                     <font>
                         <Font size="18.0" />
-                    </font>
-                </Label>
-                <Label fx:id="domanda" layoutX="150.0" layoutY="127.0" text="Testo della domanda">
-                    <font>
-                        <Font size="16.0" />
                     </font>
                 </Label>
                 <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" fill="#871414" height="59.0" layoutX="299.0" layoutY="359.0" onMouseClicked="#onTerminaButtonClicked" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="156.0">
@@ -57,35 +61,55 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Label>
-            <RadioButton fx:id="risposta1" layoutX="156.0" layoutY="225.0" mnemonicParsing="false" text="Risposta 1">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <toggleGroup>
-                  <ToggleGroup fx:id="poolRisposte" />
-               </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="risposta2" layoutX="337.0" layoutY="225.0" mnemonicParsing="false" text="Risposta 2" toggleGroup="$poolRisposte">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </RadioButton>
-            <RadioButton fx:id="risposta3" layoutX="156.0" layoutY="269.0" mnemonicParsing="false" text="Risposta 3" toggleGroup="$poolRisposte">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </RadioButton>
-            <RadioButton fx:id="risposta4" layoutX="337.0" layoutY="269.0" mnemonicParsing="false" text="Risposta 4" toggleGroup="$poolRisposte">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </RadioButton>
+            <AnchorPane layoutX="156.0" layoutY="225.0" prefHeight="69.0" prefWidth="410.0">
+               <children>
+                  <RadioButton fx:id="risposta1" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="195.0" text="Risposta 1" textOverrun="CLIP" wrapText="true">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="poolRisposte" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="risposta2" layoutX="205.0" maxWidth="202.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="202.0" text="Risposta 2" textOverrun="CLIP" toggleGroup="$poolRisposte" wrapText="true">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="risposta3" layoutY="44.0" maxWidth="195.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="195.0" text="Risposta 3" textOverrun="CLIP" toggleGroup="$poolRisposte" wrapText="true">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="risposta4" layoutX="205.0" layoutY="44.0" maxWidth="202.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="202.0" text="Risposta 4" textOverrun="CLIP" toggleGroup="$poolRisposte" wrapText="true">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </RadioButton>
+               </children>
+            </AnchorPane>
             <Rectangle arcHeight="5.0" arcWidth="5.0" height="25.0" layoutX="49.0" layoutY="33.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Label fx:id="timer" layoutX="60.0" layoutY="33.0" text="Timer" textFill="WHITE">
+            <Label fx:id="timer" layoutX="60.0" layoutY="33.0" text="??:??" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
+            <ImageView fx:id="frecciaAvanti" accessibleRole="BUTTON" fitHeight="40.0" fitWidth="38.0" layoutX="540.0" layoutY="301.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@com/example/progetto_ispw/images/go_next.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="frecciaIndietro" accessibleRole="BUTTON" fitHeight="40.0" fitWidth="38.0" layoutX="140.0" layoutY="301.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@com/example/progetto_ispw/images/go_back.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
             </children>
         </AnchorPane>
     </center>

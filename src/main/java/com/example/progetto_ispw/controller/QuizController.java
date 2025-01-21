@@ -1,14 +1,36 @@
 package com.example.progetto_ispw.controller;
 
 import com.example.progetto_ispw.Connessione;
+import com.example.progetto_ispw.bean.QuesitoInfoBean;
 import com.example.progetto_ispw.bean.QuizInfoBean;
+import com.example.progetto_ispw.bean.RispostaInfoBean;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
+import com.example.progetto_ispw.exception.NotFilledQuestionException;
 import com.example.progetto_ispw.model.sessione.Session;
 import com.example.progetto_ispw.model.sessione.SessionManager;
 
 //----CONTROLLER APPLICATIVO PER GESTIRE IL QUIZ----
 public class QuizController {
+    //----METODO CHE CONTROLLA LA PRESENZA DI ALMENO UN QUESITO DEL QUIZ SENZA UNA RISPOSTA SELEZIONATA DALL'UTENTE----
+    public void isFullyFilled(QuizInfoBean quiz) throws NotFilledQuestionException {
+        for (QuesitoInfoBean quesito : quiz.getQuesiti()) {
+            boolean allNotTicked = true;
+
+            for (RispostaInfoBean risposta : quesito.getRisposte()) {
+                if (risposta.isTicked()) {
+                    allNotTicked = false;
+                    break; //Esci dal ciclo interno appena trovi una risposta di un quesito che è stata selezionata
+                }
+            }
+
+            if (allNotTicked) {
+                //Lancia l'eccezione appena trovi un quesito con tutte le risposte non selezionate
+                throw new NotFilledQuestionException("Trovato un quesito con tutte le risposte non ticked.");
+            }
+        }
+        //Se il metodo termina senza lanciare l'eccezione, significa che non esiste un quesito con tutte le risposte non ticked
+    }
     //----METODO PER RESTITUIRE LE INFO DEL QUIZ CORRENTE
     public QuizInfoBean getInfoQuiz() throws DataNotFoundException {
         return getQuizSession().getDato("quiz",QuizInfoBean.class);
@@ -28,10 +50,16 @@ public class QuizController {
     public void clearInfoQuiz(){
         getQuizSession().removeDato("quiz");
     }
-
-
     //----METODO PER OTTENERE LA SESSIONE RIGUARDO ALLA PAGINA DEL QUIZ
     private Session getQuizSession(){
         return SessionManager.getInstance().getSession("quiz_page");
+    }
+    //----METODO PER SPUNTARE LA RISPOSTA SELEZIONATA----
+    public void tickAnswer(RispostaInfoBean risposta) {
+        risposta.setTicked(true);
+    }
+    //----METODO PER TOGLIERE LA SPUNTA DA UNA RISPOSTA----
+    public void untickAnswer(RispostaInfoBean risposta) {
+        risposta.setTicked(false);
     }
 }
