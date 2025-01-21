@@ -1,14 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.progetto_ispw.view.fx.EsitoQuizFX"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="720.0" style="-fx-background-color: #D07373;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progetto_ispw.view.fx.EsitoQuizFX">
+    <top>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="46.0" prefWidth="720.0" style="-fx-background-color: #871414; -fx-border-width: 5; -fx-border-color: black;" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="100.0" fitWidth="160.0" layoutX="-22.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@com/example/progetto_ispw/images/ILearn_Title.png" />
+                    </image>
+                </ImageView>
+                <ImageView accessibleRole="BUTTON" fitHeight="25.0" fitWidth="25.0" layoutX="678.0" layoutY="10.0" onMouseClicked="#onHomeButtonClicked" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@com/example/progetto_ispw/images/clickable_home_icon.png" />
+                    </image>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ImageView>
+                <ImageView accessibleRole="BUTTON" fitHeight="25.0" fitWidth="23.0" layoutX="645.0" layoutY="14.0" onMouseClicked="#onLogoutButtonClicked" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@com/example/progetto_ispw/images/logout_icon.png" />
+                    </image>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ImageView>
+            </children>
+        </AnchorPane>
+    </top>
+    <center>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+            <AnchorPane layoutX="200.0" layoutY="52.0">
+               <children>
+                      <ImageView fitHeight="361.0" fitWidth="310.0" layoutX="11.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@com/example/progetto_ispw/images/page_bg.png" />
+                          </image>
+                      </ImageView>
+                      <ImageView fitHeight="390.0" fitWidth="315.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@com/example/progetto_ispw/images/page_bg.png" />
+                          </image>
+                      </ImageView>
+                      <Label layoutX="103.0" style="-fx-font-weight: bold; -fx-font-size: 48;" text="Esito" underline="true" wrapText="true">
+                          <font>
+                              <Font size="48.0" />
+                          </font>
+                      </Label>
+                  <Line endX="100.0" layoutX="160.0" layoutY="125.0" startX="-100.0" />
+                  <Label layoutX="82.0" layoutY="98.0" style="-fx-font-weight: bold; -fx-font-size: 18;" text="Punteggio:" underline="true" wrapText="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Line endX="100.0" layoutX="160.0" layoutY="172.0" startX="-100.0" />
+                  <Label layoutX="97.0" layoutY="145.0" style="-fx-font-weight: bold; -fx-font-size: 18;" text="Tempo:" underline="true" wrapText="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="185.0" layoutY="98.0" text="??/??">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="175.0" layoutY="145.0" text="??:??">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#871414" height="64.0" layoutX="80.0" layoutY="207.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="156.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Rectangle>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#871414" height="64.0" layoutX="80.0" layoutY="283.0" onMouseClicked="#onTornaAlCorsoClicked" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="156.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Rectangle>
+                  <Label layoutX="127.0" layoutY="222.0" style="-fx-font-weight: bold; -fx-font-size: 24;" text="Errori" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="99.0" layoutY="272.0" onMouseClicked="#onTornaAlCorsoClicked" prefHeight="81.0" prefWidth="118.0" style="-fx-font-weight: bold; -fx-font-size: 24;" text="Torna al corso" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="428.0" layoutY="-36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@com/example/progetto_ispw/images/star_decoration.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="108.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+               <image>
+                  <Image url="@com/example/progetto_ispw/images/star_decoration.png" />
+               </image>
+            </ImageView>
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>
