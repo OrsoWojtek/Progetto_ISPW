@@ -2,7 +2,6 @@ package com.example.progetto_ispw.view.fx;
 
 import com.example.progetto_ispw.bean.QuesitoInfoBean;
 import com.example.progetto_ispw.bean.QuizInfoBean;
-import com.example.progetto_ispw.bean.RispostaInfoBean;
 import com.example.progetto_ispw.controller.QuizController;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.PageManager;
@@ -72,23 +71,13 @@ public class SvolgiQuizFX extends PageManager {
             //Verifica quale RadioButton è stato selezionato
             if (newValue != null) {
                 RadioButton selectedRadioButton = (RadioButton) newValue;
-                for(RispostaInfoBean risposta : quesiti.get(indxCurrentQuesito).getRisposte()){
-                    if(risposta.getTesto().equals(selectedRadioButton.getText())){
-                        controllerApplicativo.tickAnswer(risposta);
-                        break;
-                    }
-                }
+                controllerApplicativo.tickAnswer(quesiti.get(indxCurrentQuesito),selectedRadioButton.getText());
             }
 
             //Verifica quale RadioButton era precedentemente selezionato
             if (oldValue != null) {
                 RadioButton previousRadioButton = (RadioButton) oldValue;
-                for(RispostaInfoBean risposta : quesiti.get(indxCurrentQuesito).getRisposte()){
-                    if(risposta.getTesto().equals(previousRadioButton.getText())){
-                        controllerApplicativo.untickAnswer(risposta);
-                        break;
-                    }
-                }
+                controllerApplicativo.untickAnswer(quesiti.get(indxCurrentQuesito),previousRadioButton.getText());
             }
         });
     }

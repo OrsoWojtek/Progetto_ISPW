@@ -55,11 +55,21 @@ public class QuizController {
         return SessionManager.getInstance().getSession("quiz_page");
     }
     //----METODO PER SPUNTARE LA RISPOSTA SELEZIONATA----
-    public void tickAnswer(RispostaInfoBean risposta) {
-        risposta.setTicked(true);
+    public void tickAnswer(QuesitoInfoBean quesito, String rispostaSelezionata) {
+        for(RispostaInfoBean risposta : quesito.getRisposte()){
+            if(risposta.getTesto().equals(rispostaSelezionata)){
+                risposta.setTicked(true);
+                break;
+            }
+        }
     }
     //----METODO PER TOGLIERE LA SPUNTA DA UNA RISPOSTA----
-    public void untickAnswer(RispostaInfoBean risposta) {
-        risposta.setTicked(false);
+    public void untickAnswer(QuesitoInfoBean quesito, String rispostaPrecedente) {
+        for(RispostaInfoBean risposta : quesito.getRisposte()){
+            if(risposta.getTesto().equals(rispostaPrecedente)){
+                risposta.setTicked(false);
+                break;
+            }
+        }
     }
 }
