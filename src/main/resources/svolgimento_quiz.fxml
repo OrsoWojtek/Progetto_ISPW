@@ -44,12 +44,12 @@
                         <Font size="16.0" />
                     </font>
                 </Label>
-                <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" fill="#871414" height="59.0" layoutX="299.0" layoutY="359.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="156.0">
+                <Rectangle accessibleRole="BUTTON" arcHeight="5.0" arcWidth="5.0" fill="#871414" height="59.0" layoutX="299.0" layoutY="359.0" onMouseClicked="#onTerminaButtonClicked" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="156.0">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Rectangle>
-                <Label accessibleRole="BUTTON" layoutX="315.0" layoutY="365.0" style="-fx-font-weight: bold;" text="Termina" textFill="WHITE">
+                <Label accessibleRole="BUTTON" layoutX="315.0" layoutY="365.0" onMouseClicked="#onTerminaButtonClicked" style="-fx-font-weight: bold;" text="Termina" textFill="WHITE">
                     <font>
                         <Font size="32.0" />
                     </font>
