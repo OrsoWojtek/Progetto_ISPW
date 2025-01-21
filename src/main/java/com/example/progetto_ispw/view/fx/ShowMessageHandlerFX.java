@@ -29,10 +29,10 @@ public class ShowMessageHandlerFX implements ShowMessageHandler {
         alert.showAndWait();
     }
     @Override
-    public boolean askConfirmation(String header, String content, String title){
+    public boolean askConfirmation(String header, String content){
         //Mostra una finestra di dialogo di conferma
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(title);
+        alert.setTitle("Conferma");
         alert.setHeaderText(header);
         alert.setContentText(content);
 
