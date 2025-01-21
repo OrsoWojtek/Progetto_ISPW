@@ -10,7 +10,7 @@ import com.example.progetto_ispw.view.PageManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-//----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA (CASO SPECIFICO: QUIZ)----
+//----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA [CASO SPECIFICO: QUIZ (1/3)]----
 public class QuizFX extends PageManager {
     @FXML
     private Label titoloQuiz; //Titolo del quiz
