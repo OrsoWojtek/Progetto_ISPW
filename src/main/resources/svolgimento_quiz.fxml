@@ -29,17 +29,17 @@
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="400.0" layoutX="49.0" layoutY="33.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="622.0" />
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dcd58b" height="255.0" layoutX="140.0" layoutY="94.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="454.0" />
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dcd58b" height="255.0" layoutX="132.0" layoutY="87.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="456.0" />
-                <Label fx:id="titoloQuiz" alignment="CENTER" layoutX="279.0" layoutY="17.0" prefHeight="79.0" prefWidth="195.0" style="-fx-underline: true; -fx-font-weight: bold;" text="Label">
+                <Label fx:id="nameQuiz" alignment="CENTER" layoutX="279.0" layoutY="17.0" prefHeight="79.0" prefWidth="195.0" style="-fx-underline: true; -fx-font-weight: bold;" text="Label">
                     <font>
                         <Font size="48.0" />
                     </font>
                 </Label>
-                <Label alignment="CENTER" layoutX="132.0" layoutY="87.0" prefHeight="46.0" prefWidth="135.0" style="-fx-underline: true; -fx-font-weight: bold;" text="Domanda n.">
+                <Label fx:id="currentQuestion" alignment="CENTER" layoutX="132.0" layoutY="87.0" prefHeight="46.0" prefWidth="135.0" style="-fx-underline: true; -fx-font-weight: bold;" text="Domanda n.">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <Label fx:id="durataQuiz" layoutX="150.0" layoutY="127.0" text="Testo della domanda">
+                <Label fx:id="domanda" layoutX="150.0" layoutY="127.0" text="Testo della domanda">
                     <font>
                         <Font size="16.0" />
                     </font>
@@ -57,7 +57,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Label>
-            <RadioButton layoutX="156.0" layoutY="225.0" mnemonicParsing="false" text="Risposta 1">
+            <RadioButton fx:id="risposta1" layoutX="156.0" layoutY="225.0" mnemonicParsing="false" text="Risposta 1">
                <font>
                   <Font size="16.0" />
                </font>
@@ -65,23 +65,23 @@
                   <ToggleGroup fx:id="poolRisposte" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton layoutX="337.0" layoutY="225.0" mnemonicParsing="false" text="Risposta 2" toggleGroup="$poolRisposte">
+            <RadioButton fx:id="risposta2" layoutX="337.0" layoutY="225.0" mnemonicParsing="false" text="Risposta 2" toggleGroup="$poolRisposte">
                <font>
                   <Font size="16.0" />
                </font>
             </RadioButton>
-            <RadioButton layoutX="156.0" layoutY="269.0" mnemonicParsing="false" text="Risposta 3" toggleGroup="$poolRisposte">
+            <RadioButton fx:id="risposta3" layoutX="156.0" layoutY="269.0" mnemonicParsing="false" text="Risposta 3" toggleGroup="$poolRisposte">
                <font>
                   <Font size="16.0" />
                </font>
             </RadioButton>
-            <RadioButton layoutX="337.0" layoutY="269.0" mnemonicParsing="false" text="Risposta 4" toggleGroup="$poolRisposte">
+            <RadioButton fx:id="risposta4" layoutX="337.0" layoutY="269.0" mnemonicParsing="false" text="Risposta 4" toggleGroup="$poolRisposte">
                <font>
                   <Font size="16.0" />
                </font>
             </RadioButton>
             <Rectangle arcHeight="5.0" arcWidth="5.0" height="25.0" layoutX="49.0" layoutY="33.0" stroke="BLACK" strokeType="INSIDE" width="60.0" />
-            <Label layoutX="60.0" layoutY="33.0" text="Timer" textFill="WHITE">
+            <Label fx:id="timer" layoutX="60.0" layoutY="33.0" text="Timer" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>

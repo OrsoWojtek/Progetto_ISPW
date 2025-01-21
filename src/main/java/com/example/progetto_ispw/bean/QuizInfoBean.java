@@ -11,7 +11,8 @@ public class QuizInfoBean implements Bean{
     private int durataBean;
     private List<QuesitoInfoBean> quesitiBean = new ArrayList<>();
     private int numeroDomandeBean;
-    private int punteggioBean;
+    private int punteggioBean; //PUNTEGGIO TOTALE DEL QUIZ
+    private int punteggioStudente = 0; //PUNTEGGIO OTTENUTO DALLO STUDENTE
     //----METODI----
     public String getTitolo() {
         return titoloBean;
@@ -53,4 +54,8 @@ public class QuizInfoBean implements Bean{
     public void setNumeroDomandeBean() {
         this.numeroDomandeBean = this.quesitiBean.size();
     }
+    public void setPunteggioStudente(int punti){
+        this.punteggioStudente+=punti;
+    }
+    public int getPunteggioStudente(){return punteggioStudente;}
 }
