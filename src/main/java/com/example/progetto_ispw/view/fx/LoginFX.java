@@ -2,6 +2,7 @@ package com.example.progetto_ispw.view.fx;
 
 import com.example.progetto_ispw.bean.LoginInfoBean;
 import com.example.progetto_ispw.constants.ErrorCode;
+import com.example.progetto_ispw.constants.PageID;
 import com.example.progetto_ispw.controller.LoginController;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.PageManager;
@@ -51,7 +52,7 @@ public class LoginFX extends PageManager {
         bean.setPassword(pssw.getText());
         try {
             controller.checkLogin(bean);     //Se le credenziali inserite sono corrette...
-            pageLoader.loadPage("home");    //...Mostra la pagina di home
+            pageLoader.loadPage(PageID.HOME);    //...Mostra la pagina di home
         } catch (DataNotFoundException e){                                            //Altrimenti...
             showMessageHandler.showError(e.getMessage(), ErrorCode.CREDENTIAL_ERROR);   //...Mostra un popup di errore
         } catch (DataAccessException e){

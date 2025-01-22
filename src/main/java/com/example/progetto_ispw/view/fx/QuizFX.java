@@ -2,6 +2,7 @@ package com.example.progetto_ispw.view.fx;
 
 import com.example.progetto_ispw.bean.QuizInfoBean;
 import com.example.progetto_ispw.constants.ErrorCode;
+import com.example.progetto_ispw.constants.PageID;
 import com.example.progetto_ispw.controller.QuizController;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
@@ -45,7 +46,7 @@ public class QuizFX extends PageManager {
     public void onLogoutButtonClicked(){
         try {
             quizController.clean();
-            pageLoader.loadPage("login");
+            pageLoader.loadPage(PageID.LOGIN);
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         } catch (ConnectionException e){
@@ -62,7 +63,7 @@ public class QuizFX extends PageManager {
     public void onHomeButtonClicked(){
         quizController.clearOtherInfo();
         try{
-            pageLoader.loadPage("home");
+            pageLoader.loadPage(PageID.HOME);
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         }
@@ -72,7 +73,7 @@ public class QuizFX extends PageManager {
     public void onTornaAlCorso(){
         quizController.clearInfoQuiz();
         try{
-            pageLoader.loadPage("corso");
+            pageLoader.loadPage(PageID.CORSO);
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         }
@@ -81,7 +82,7 @@ public class QuizFX extends PageManager {
     @FXML
     public void avviaQuiz(){
         try{
-            pageLoader.loadPage("svolgimento_quiz");
+            pageLoader.loadPage(PageID.SVOLGIMENTO_QUIZ);
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         }

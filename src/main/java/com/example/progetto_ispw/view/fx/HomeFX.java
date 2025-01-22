@@ -3,6 +3,7 @@ package com.example.progetto_ispw.view.fx;
 import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.constants.ErrorCode;
+import com.example.progetto_ispw.constants.PageID;
 import com.example.progetto_ispw.controller.HomeController;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.PageManager;
@@ -69,7 +70,7 @@ public class HomeFX extends PageManager {
     public void onLogoutButtonClicked(){
         try{
             home.clean();
-            pageLoader.loadPage("login");
+            pageLoader.loadPage(PageID.LOGIN);
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         } catch (ConnectionException e){
@@ -101,7 +102,7 @@ public class HomeFX extends PageManager {
             }
         });
         try{
-            pageLoader.loadPage("corso");//...Mostra la pagina del corso
+            pageLoader.loadPage(PageID.CORSO);//...Mostra la pagina del corso
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         }

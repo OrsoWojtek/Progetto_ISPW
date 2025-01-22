@@ -1,5 +1,6 @@
 package com.example.progetto_ispw.view.fx;
 
+import com.example.progetto_ispw.constants.PageID;
 import com.example.progetto_ispw.exception.PageNotFoundException;
 import com.example.progetto_ispw.view.PageLoader;
 import com.example.progetto_ispw.view.PageManager;
@@ -14,7 +15,8 @@ public class PageLoaderFX implements PageLoader {
 
     //----METODO PER EFFETTUARE IL CAMBIO PAGINA----
     @Override
-    public void loadPage(String page) throws PageNotFoundException {
+    public void loadPage(PageID pageID) throws PageNotFoundException {
+        String page = pageID.getValue();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/"+page.toLowerCase()+".fxml"));
             Parent root =loader.load(); //Carica la pagina richiesta

@@ -4,6 +4,7 @@ import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.QuizInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.constants.ErrorCode;
+import com.example.progetto_ispw.constants.PageID;
 import com.example.progetto_ispw.controller.CorsoPageController;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.PageManager;
@@ -79,7 +80,7 @@ public class CorsoFX extends PageManager {
     public void onLogout(){
         try {
             controller.clean();
-            pageLoader.loadPage("login");
+            pageLoader.loadPage(PageID.LOGIN);
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         } catch (ConnectionException e){
@@ -91,7 +92,7 @@ public class CorsoFX extends PageManager {
     public void onHomeButtonClicked(){
         controller.clearInfoCourse();
         try{
-            pageLoader.loadPage("home");
+            pageLoader.loadPage(PageID.HOME);
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         }
@@ -136,7 +137,7 @@ public class CorsoFX extends PageManager {
             }
         });
         try{
-            pageLoader.loadPage("quiz");//...Mostra la pagina del quiz
+            pageLoader.loadPage(PageID.QUIZ);//...Mostra la pagina del quiz
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         }

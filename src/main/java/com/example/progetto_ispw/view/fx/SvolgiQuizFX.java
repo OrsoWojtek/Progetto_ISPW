@@ -3,6 +3,7 @@ package com.example.progetto_ispw.view.fx;
 import com.example.progetto_ispw.bean.QuesitoInfoBean;
 import com.example.progetto_ispw.bean.QuizInfoBean;
 import com.example.progetto_ispw.constants.ErrorCode;
+import com.example.progetto_ispw.constants.PageID;
 import com.example.progetto_ispw.controller.QuizController;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.PageManager;
@@ -170,7 +171,7 @@ public class SvolgiQuizFX extends PageManager {
         //int i = 0;
 
         try {
-            pageLoader.loadPage("esito_quiz");
+            pageLoader.loadPage(PageID.ESITO_QUIZ);
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         }
@@ -179,7 +180,7 @@ public class SvolgiQuizFX extends PageManager {
     private void logout(){
         try {
             controllerApplicativo.clean();
-            pageLoader.loadPage("login");
+            pageLoader.loadPage(PageID.LOGIN);
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         } catch (ConnectionException e){
