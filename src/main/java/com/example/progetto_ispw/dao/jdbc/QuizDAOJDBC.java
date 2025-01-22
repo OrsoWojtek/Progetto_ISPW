@@ -47,7 +47,6 @@ public class QuizDAOJDBC {
                 int rispostaCorrente = 1;
                 while (result.next()) {
                     int quizId = result.getInt("idquiz");
-
                     int domandaId = result.getInt("iddomanda");
                     String titolo = result.getString("titolo");
                     String difficolta = result.getString("difficolta");

@@ -125,7 +125,17 @@ public class CorsoFX extends PageManager {
     //----METODO PER PASSARE ALLA PAGINA DEL QUIZ DESIDERATO----
     private void goToQuizPage(String nomeQuiz){
         Optional<QuizInfoBean> quizScelto = quizzes.stream().filter(c -> c.getTitolo().equals(nomeQuiz)).findFirst(); //Cerca il bean del quiz nel catalogo corrispondere al nome del quiz selezionato dall'utente
-        quizScelto.ifPresent(controller::setInfoQuiz); //Passa il bean del quiz al controller applicativo
+        quizScelto.ifPresent(currentQuiz -> {
+            try {
+                controller.setInfoQuiz(currentQuiz); //Passa il bean del quiz al controller applicativo
+            } catch (DataNotFoundException e) {
+                showMessageHandler.showError(e.getMessage(),"Errore di sessione");
+                onLogoutButtonClicked();
+            }catch (DataSessionCastingException e){
+                showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.","Errore di casting");
+                onLogoutButtonClicked();
+            }
+        });
         try{
             pageLoader.loadPage("quiz");//...Mostra la pagina del quiz
         } catch (PageNotFoundException e){

@@ -23,6 +23,7 @@ public class HomeController {
         try {
             List<Corso> corsiFrequentati = db.getCourses(utenteInfoBean);
             corsiFrequentati.forEach(corso -> {
+                SessionManager.getInstance().createSession("catalogo_corsi").addEntity(corso.getNome(),corso); //Creazione di una sessione dedicata per contenere il catalogo dei corsi estratti dal db
                 CorsoInfoBean corsoInfoBean = new CorsoInfoBean();
                 corsoInfoBean.setNome(corso.getNome());
                 corsoInfoBean.setDescrizione(corso.getDescrizione());
@@ -47,15 +48,12 @@ public class HomeController {
         return SessionManager.getInstance().getSession("login").getDato("utente",UtenteInfoBean.class);
     }
     //----METODO PER MEMORIZZARE NELLA SESSIONE IL CORSO SELEZIONATO
-    public void setInfoCourse(CorsoInfoBean currentCourse) throws ConnectionException, DataNotFoundException, DataAccessException {
+    public void setInfoCourse(CorsoInfoBean currentCourse) throws DataNotFoundException {
         SessionManager istance = SessionManager.getInstance();
+        Corso corsoSelezionato = istance.getSession("catalogo_corsi").getEntity(currentCourse.getNome(), Corso.class);
         istance.createSession("course_page").addDato("corso",currentCourse);
-        istance.getSession("course_page").addEntity("corso",getCorsoSelezionato(currentCourse));
+        istance.getSession("course_page").addEntity("corso",corsoSelezionato);
+
         System.out.println("CorsoBean: \nNome= "+istance.getSession("course_page").getDato("corso",CorsoInfoBean.class).getNome()+"\nDescrizione= "+istance.getSession("course_page").getDato("corso",CorsoInfoBean.class).getDescrizione()+"\nCorsoEntity: \nNome= "+ istance.getSession("course_page").getEntity("corso",Corso.class).getNome()+"\nDescrizione= "+ istance.getSession("course_page").getEntity("corso",Corso.class).getDescrizione());
-    }
-    //----METODO PER OTTENERE IL CORSO SELEZIONATO DALL'UTENTE----
-    private Corso getCorsoSelezionato(CorsoInfoBean corsoSelezionato) throws ConnectionException, DataNotFoundException, DataAccessException {
-        CorsoDAOJDBC dao = new CorsoDAOJDBC();
-        return dao.getCourse(corsoSelezionato);
     }
 }

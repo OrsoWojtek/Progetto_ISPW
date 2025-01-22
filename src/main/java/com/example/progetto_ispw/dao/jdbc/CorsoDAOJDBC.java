@@ -1,7 +1,6 @@
 package com.example.progetto_ispw.dao.jdbc;
 
 import com.example.progetto_ispw.Connessione;
-import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.model.Corso;
@@ -47,23 +46,5 @@ public class CorsoDAOJDBC {
             connessione.close(statement);
         }
         return corsi;
-    }
-
-    public Corso getCourse(CorsoInfoBean corsoSelezionato) throws DataAccessException, DataNotFoundException {
-        String query = "SELECT c.nome_corso, c.descrizione FROM corso c WHERE c.nome_corso = ?";
-        Corso corso;
-        try (PreparedStatement stm = connection.prepareStatement(query)) {
-            stm.setString(1, corsoSelezionato.getNome());
-            try (ResultSet result = stm.executeQuery()) {
-                if(result.next()){
-                    corso = new Corso(result.getString("nome_corso"), result.getString("descrizione"));
-                } else{
-                    throw new DataNotFoundException("È stato riscontrato un problema con la ricerca del corso nel db.");
-                }
-            }
-        }catch (SQLException e) {
-            throw new DataAccessException("Errore di comunicazione con il database.");
-        }
-        return corso;
     }
 }

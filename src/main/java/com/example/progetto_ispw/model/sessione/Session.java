@@ -23,10 +23,10 @@ public class Session {
         return sessionId;
     }
     public synchronized void addEntity(String nome, Entity entity){
-        entityInSessione.computeIfAbsent(nome, key -> entity); //Aggiunge l'entità se non esiste già
+        entityInSessione.put(nome,entity); //Aggiunge l'entità se non è presente, o la aggiorna se esiste già
     }
     public synchronized void addDato(String nome, Bean dato){
-        datiDiSessione.computeIfAbsent(nome, key -> dato); //Aggiunge il dato se non esiste già
+        datiDiSessione.put(nome,dato); //Aggiunge il dato se non è presente, o lo aggiorna se esiste già
     }
     public synchronized void removeDato(String nome){
         datiDiSessione.remove(nome);

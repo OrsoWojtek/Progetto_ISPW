@@ -9,6 +9,7 @@ import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.model.Quesito;
 import com.example.progetto_ispw.model.Quiz;
 import com.example.progetto_ispw.model.Risposta;
+import com.example.progetto_ispw.model.sessione.Session;
 import com.example.progetto_ispw.model.sessione.SessionManager;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class CorsoPageController {
 
         // Conversione dei quiz in oggetti QuizInfoBean
         for (Quiz quiz : quizzes) {
+            SessionManager.getInstance().createSession("catalogo_quiz").addEntity(quiz.getTitolo(), quiz); //Creazione di una sessione dedicata per contenere il catalogo dei quiz estratti dal db
             QuizInfoBean quizInfoBean = new QuizInfoBean();
             quizInfoBean.setTitolo(quiz.getTitolo());
             quizInfoBean.setDurata(quiz.getDurata());
@@ -73,7 +75,11 @@ public class CorsoPageController {
     }
     //----METODO PER RESETTARE NELLA SESSIONE LE INFO SUL CORSO SELEZIONATO
     public void clearInfoCourse(){
-        SessionManager.getInstance().getSession("course_page").removeDato("corso");
+        String nome = "corso";
+        String idSessione = "course_page";
+        Session session = SessionManager.getInstance().getSession(idSessione);
+        session.removeDato(nome);
+        session.removeEntity(nome);
     }
     //----METODO PER RESTITUIRE LE INFO SUL CORSO SELEZIONATO
     public CorsoInfoBean getInfoCourse() throws DataNotFoundException {
@@ -84,7 +90,10 @@ public class CorsoPageController {
         return SessionManager.getInstance().getSession("login").getDato("utente",UtenteInfoBean.class);
     }
     //----METODO PER MEMORIZZARE NELLA SESSIONE IL QUIZ SELEZIONATO
-    public void setInfoQuiz(QuizInfoBean currentQuiz){
-        SessionManager.getInstance().createSession("quiz_page").addDato("quiz",currentQuiz);
+    public void setInfoQuiz(QuizInfoBean currentQuiz) throws DataNotFoundException {
+        SessionManager istance = SessionManager.getInstance();
+        Quiz quizSelezionato = istance.getSession("catalogo_quiz").getEntity(currentQuiz.getTitolo(), Quiz.class);
+        istance.createSession("quiz_page").addDato("quiz",currentQuiz);
+        istance.createSession("quiz_page").addEntity("quiz",quizSelezionato);
     }
 }

@@ -31,10 +31,15 @@ public class HomeFX extends PageManager {
     @FXML
     private AnchorPane catalogoCorsi; //'Sfondo' del catalogo
     private List<CorsoInfoBean> catalogo; //Catalogo dei corsi a cui è iscritto l'utente
-    private static final String MAINTENANCE = "Funzionalità in manutenzione";
     private HomeController home; //Riferimento al controller applicativo
     private int currentPage = 0; //Indice della pagina corrente dei corsi da mostrare
     private final VBox coursesContainer = new VBox(); //Contenitore per i corsi
+    //----TITOLI DEI MESSAGGI DI ERRORE----
+    private static final String MAINTENANCE = "Funzionalità in manutenzione";
+    private static final String CONNECTION = "Errore connessione";
+    private static final String PAGENOTFOUND = "Pagina non trovata";
+    private static final String SESSION = "Errore di sessione";
+    private static final String CASTING = "Errore di casting";
 
     //----INIZIALIZZAZIONE DELLA PAGINA HOME----
     @FXML
@@ -50,12 +55,12 @@ public class HomeFX extends PageManager {
 
             catalogo = home.getCorsiFrequentati(user); //Richiesta dei corsi a cui è iscritto l'utente
         } catch (ConnectionException e){
-            showMessageHandler.showError(e.getMessage(),"Errore connessione");
+            showMessageHandler.showError(e.getMessage(),CONNECTION);
         } catch (DataNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),"Errore di sessione");
+            showMessageHandler.showError(e.getMessage(),SESSION);
             onLogoutButtonClicked();
         } catch (DataSessionCastingException e){
-            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.","Errore di casting");
+            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",CASTING);
             onLogoutButtonClicked();
         }
         if (!"".equals(catalogo.getFirst().getDescrizione())){
@@ -71,9 +76,9 @@ public class HomeFX extends PageManager {
             home.clean();
             pageLoader.loadPage("login");
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
+            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
         } catch (ConnectionException e){
-            showMessageHandler.showError(e.getMessage(),"Errore connessione");
+            showMessageHandler.showError(e.getMessage(),CONNECTION);
         }
     }
     //----METODO PER APRIRE LA BARRA DI RICERCA PER ISCRIVERSI AI CORSI----
@@ -92,16 +97,18 @@ public class HomeFX extends PageManager {
         corsoScelto.ifPresent(currentCourse -> {
             try {
                 home.setInfoCourse(currentCourse); //Passa il bean del corso al controller applicativo
-            } catch (ConnectionException | DataAccessException e) {
-                showMessageHandler.showError(e.getMessage(),"Errore connessione");
             } catch (DataNotFoundException e) {
-                showMessageHandler.showError(e.getMessage(),"Corso non trovato");
+                showMessageHandler.showError(e.getMessage(),SESSION);
+                onLogoutButtonClicked();
+            }catch (DataSessionCastingException e){
+                showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",CASTING);
+                onLogoutButtonClicked();
             }
         });
         try{
             pageLoader.loadPage("corso");//...Mostra la pagina del corso
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
+            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
         }
     }
     //---METODO PER INIZIALIZZARE IL CONTENITORE DEI CORSI----

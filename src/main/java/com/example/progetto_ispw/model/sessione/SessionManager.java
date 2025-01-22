@@ -26,7 +26,6 @@ public class SessionManager {
         if (!activeSessions.containsKey(sessionId)) {
             Session session = new Session(sessionId);
             activeSessions.put(sessionId, session);
-            return session;
         }
         return activeSessions.get(sessionId);
     }
