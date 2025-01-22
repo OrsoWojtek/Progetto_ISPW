@@ -1,6 +1,7 @@
 package com.example.progetto_ispw.controller;
 
 import com.example.progetto_ispw.Connessione;
+import com.example.progetto_ispw.bean.AnsweringProcessInfoBean;
 import com.example.progetto_ispw.bean.QuesitoInfoBean;
 import com.example.progetto_ispw.bean.QuizInfoBean;
 import com.example.progetto_ispw.bean.RispostaInfoBean;
@@ -60,7 +61,9 @@ public class QuizController {
         return SessionManager.getInstance().getSession(SessionID.QUIZ_PAGE);
     }
     //----METODO PER SPUNTARE LA RISPOSTA SELEZIONATA----
-    public void tickAnswer(QuesitoInfoBean quesito, String rispostaSelezionata) {
+    public void tickAnswer(AnsweringProcessInfoBean answer) {
+        QuesitoInfoBean quesito = answer.getQuesitoInfoBean();
+        String rispostaSelezionata = answer.getRisposta();
         for(RispostaInfoBean risposta : quesito.getRisposte()){
             if(risposta.getTesto().equals(rispostaSelezionata)){
                 risposta.setTicked(true);
@@ -69,7 +72,9 @@ public class QuizController {
         }
     }
     //----METODO PER TOGLIERE LA SPUNTA DA UNA RISPOSTA----
-    public void untickAnswer(QuesitoInfoBean quesito, String rispostaPrecedente) {
+    public void untickAnswer(AnsweringProcessInfoBean answer) {
+        QuesitoInfoBean quesito = answer.getQuesitoInfoBean();
+        String rispostaPrecedente = answer.getRisposta();
         for(RispostaInfoBean risposta : quesito.getRisposte()){
             if(risposta.getTesto().equals(rispostaPrecedente)){
                 risposta.setTicked(false);

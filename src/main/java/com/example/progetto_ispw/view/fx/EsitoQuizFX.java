@@ -15,7 +15,6 @@ public class EsitoQuizFX extends PageManager {
     private Label punteggio; //Punteggio ottenuto nel quiz
     @FXML
     private Label tempo; //Tempo impiegato a finire il quiz
-    private static final String PAGENOTFOUND = "Pagina non trovata";
     private QuizController controllerQuiz; //Riferimento al controller applicativo
 
     @FXML
