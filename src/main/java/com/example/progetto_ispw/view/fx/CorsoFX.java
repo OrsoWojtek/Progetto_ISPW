@@ -56,10 +56,10 @@ public class CorsoFX extends PageManager {
             showMessageHandler.showError(e.getMessage(),ErrorCode.DB_ERROR);
         } catch (DataNotFoundException e) {
             showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
-            onLogoutButtonClicked();
+            onLogout();
         }catch (DataSessionCastingException e){
             showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
-            onLogoutButtonClicked();
+            onLogout();
         }
         configUI();
     }
@@ -76,7 +76,7 @@ public class CorsoFX extends PageManager {
     }
     //----METODO PER EFFETTUARE IL LOGOUT----
     @FXML
-    public void onLogoutButtonClicked(){
+    public void onLogout(){
         try {
             controller.clean();
             pageLoader.loadPage("login");
@@ -129,10 +129,10 @@ public class CorsoFX extends PageManager {
                 controller.setInfoQuiz(currentQuiz); //Passa il bean del quiz al controller applicativo
             } catch (DataNotFoundException e) {
                 showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
-                onLogoutButtonClicked();
+                onLogout();
             }catch (DataSessionCastingException e){
                 showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
-                onLogoutButtonClicked();
+                onLogout();
             }
         });
         try{

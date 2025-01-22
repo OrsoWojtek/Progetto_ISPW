@@ -27,7 +27,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </ImageView>
-                <ImageView accessibleRole="BUTTON" fitHeight="25.0" fitWidth="23.0" layoutX="645.0" layoutY="14.0" onMouseClicked="#onLogoutButtonClicked" pickOnBounds="true" preserveRatio="true">
+                <ImageView accessibleRole="BUTTON" fitHeight="25.0" fitWidth="23.0" layoutX="645.0" layoutY="14.0" onMouseClicked="#onLogout" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@com/example/progetto_ispw/images/logout_icon.png" />
                     </image>
