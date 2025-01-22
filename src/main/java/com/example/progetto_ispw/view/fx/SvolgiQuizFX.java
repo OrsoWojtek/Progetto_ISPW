@@ -165,9 +165,8 @@ public class SvolgiQuizFX extends PageManager {
     }
     //----METODO PER LA CHIUSURA DEL QUIZ----
     private synchronized void termina(){
-        //CHIUDE IL QUIZ E APRE LA PAGINA DI ESITO
-
         //Blocco in cui salvo l'esito del quiz nella sessione
+
         try {
             pageLoader.loadPage("esito_quiz");
         } catch (PageNotFoundException e){

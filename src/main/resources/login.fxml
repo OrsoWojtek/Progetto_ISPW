@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="720.0" style="-fx-background-color: #D07373;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progetto_ispw.view.fx.LoginFX">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="720.0" style="-fx-background-color: #D07373;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progetto_ispw.view.fx.LoginFX">
          <top>
             <AnchorPane prefHeight="140.0" prefWidth="1440.0" BorderPane.alignment="CENTER">
                <children>
@@ -41,7 +40,7 @@
                         <Font size="24.0" />
                      </font>
                   </PasswordField>
-                  <ImageView accessibleRole="BUTTON" fitHeight="67.0" fitWidth="60.0" layoutX="530.0" layoutY="260.0" onMouseClicked="#onLoginButtonClick" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="loginImageButton" accessibleRole="BUTTON" fitHeight="67.0" fitWidth="60.0" layoutX="530.0" layoutY="260.0" onMouseClicked="#onLoginButtonClick" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@com/example/progetto_ispw/images/log_button_icon.png" />
                      </image>

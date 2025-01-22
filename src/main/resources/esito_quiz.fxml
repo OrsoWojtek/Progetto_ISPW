@@ -19,7 +19,7 @@
                         <Image url="@com/example/progetto_ispw/images/ILearn_Title.png" />
                     </image>
                 </ImageView>
-                <ImageView accessibleRole="BUTTON" fitHeight="25.0" fitWidth="25.0" layoutX="678.0" layoutY="10.0" onMouseClicked="#onHomeButtonClicked" pickOnBounds="true" preserveRatio="true">
+                <ImageView accessibleRole="BUTTON" fitHeight="25.0" fitWidth="25.0" layoutX="678.0" layoutY="10.0" onMouseClicked="#tornaAllaHome" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@com/example/progetto_ispw/images/clickable_home_icon.png" />
                     </image>
@@ -27,7 +27,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </ImageView>
-                <ImageView accessibleRole="BUTTON" fitHeight="25.0" fitWidth="23.0" layoutX="645.0" layoutY="14.0" onMouseClicked="#onLogoutButtonClicked" pickOnBounds="true" preserveRatio="true">
+                <ImageView accessibleRole="BUTTON" fitHeight="25.0" fitWidth="23.0" layoutX="645.0" layoutY="14.0" onMouseClicked="#effettuaLogout" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@com/example/progetto_ispw/images/logout_icon.png" />
                     </image>
@@ -41,81 +41,81 @@
     <center>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-            <AnchorPane layoutX="200.0" layoutY="52.0">
-               <children>
-                      <ImageView fitHeight="361.0" fitWidth="310.0" layoutX="11.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
-                          <image>
-                              <Image url="@com/example/progetto_ispw/images/page_bg.png" />
-                          </image>
-                      </ImageView>
-                      <ImageView fitHeight="390.0" fitWidth="315.0" pickOnBounds="true" preserveRatio="true">
-                          <image>
-                              <Image url="@com/example/progetto_ispw/images/page_bg.png" />
-                          </image>
-                      </ImageView>
-                      <Label layoutX="103.0" style="-fx-font-weight: bold; -fx-font-size: 48;" text="Esito" underline="true" wrapText="true">
-                          <font>
-                              <Font size="48.0" />
-                          </font>
-                      </Label>
-                  <Line endX="100.0" layoutX="160.0" layoutY="125.0" startX="-100.0" />
-                  <Label layoutX="82.0" layoutY="98.0" style="-fx-font-weight: bold; -fx-font-size: 18;" text="Punteggio:" underline="true" wrapText="true">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Line endX="100.0" layoutX="160.0" layoutY="172.0" startX="-100.0" />
-                  <Label layoutX="97.0" layoutY="145.0" style="-fx-font-weight: bold; -fx-font-size: 18;" text="Tempo:" underline="true" wrapText="true">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="185.0" layoutY="98.0" text="??/??">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="175.0" layoutY="145.0" text="??:??">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#871414" height="64.0" layoutX="80.0" layoutY="207.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="156.0">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></Rectangle>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#871414" height="64.0" layoutX="80.0" layoutY="283.0" onMouseClicked="#onTornaAlCorsoClicked" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="156.0">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></Rectangle>
-                  <Label layoutX="127.0" layoutY="222.0" style="-fx-font-weight: bold; -fx-font-size: 24;" text="Errori" textFill="WHITE" wrapText="true">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="99.0" layoutY="272.0" onMouseClicked="#onTornaAlCorsoClicked" prefHeight="81.0" prefWidth="118.0" style="-fx-font-weight: bold; -fx-font-size: 24;" text="Torna al corso" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Label>
-               </children>
-            </AnchorPane>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="428.0" layoutY="-36.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@com/example/progetto_ispw/images/star_decoration.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="108.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
-               <image>
-                  <Image url="@com/example/progetto_ispw/images/star_decoration.png" />
-               </image>
-            </ImageView>
+                <AnchorPane layoutX="200.0" layoutY="52.0">
+                    <children>
+                        <ImageView fitHeight="361.0" fitWidth="310.0" layoutX="11.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@com/example/progetto_ispw/images/page_bg.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="390.0" fitWidth="315.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@com/example/progetto_ispw/images/page_bg.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="103.0" style="-fx-font-weight: bold; -fx-font-size: 48;" text="Esito" underline="true" wrapText="true">
+                            <font>
+                                <Font size="48.0" />
+                            </font>
+                        </Label>
+                        <Line endX="100.0" layoutX="160.0" layoutY="125.0" startX="-100.0" />
+                        <Label layoutX="82.0" layoutY="98.0" style="-fx-font-weight: bold; -fx-font-size: 18;" text="Punteggio:" underline="true" wrapText="true">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Line endX="100.0" layoutX="160.0" layoutY="172.0" startX="-100.0" />
+                        <Label layoutX="97.0" layoutY="145.0" style="-fx-font-weight: bold; -fx-font-size: 18;" text="Tempo:" underline="true" wrapText="true">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="punteggio" layoutX="185.0" layoutY="98.0" text="??/??">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="tempo" layoutX="175.0" layoutY="145.0" text="??:??">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#871414" height="64.0" layoutX="80.0" layoutY="207.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="156.0">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor></Rectangle>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#871414" height="64.0" layoutX="80.0" layoutY="283.0" onMouseClicked="#onTornaAlCorsoClicked" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="156.0">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor></Rectangle>
+                        <Label layoutX="127.0" layoutY="222.0" style="-fx-font-weight: bold; -fx-font-size: 24;" text="Errori" textFill="WHITE" wrapText="true">
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Label>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="99.0" layoutY="272.0" onMouseClicked="#onTornaAlCorsoClicked" prefHeight="81.0" prefWidth="118.0" style="-fx-font-weight: bold; -fx-font-size: 24;" text="Torna al corso" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <ImageView fitHeight="98.0" fitWidth="127.0" layoutX="459.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@com/example/progetto_ispw/images/star_decoration.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="102.0" fitWidth="168.0" layoutX="135.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+                    <image>
+                        <Image url="@com/example/progetto_ispw/images/star_decoration.png" />
+                    </image>
+                </ImageView>
             </children>
         </AnchorPane>
     </center>
