@@ -1,6 +1,6 @@
 package com.example.progetto_ispw.model;
 
-public abstract class Utente {
+public abstract class Utente implements Entity{
     private final String  username;
     private final String password;
 
