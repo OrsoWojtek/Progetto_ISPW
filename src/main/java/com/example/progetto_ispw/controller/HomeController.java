@@ -53,7 +53,5 @@ public class HomeController {
         Corso corsoSelezionato = istance.getSession("catalogo_corsi").getEntity(currentCourse.getNome(), Corso.class);
         istance.createSession("course_page").addDato("corso",currentCourse);
         istance.getSession("course_page").addEntity("corso",corsoSelezionato);
-
-        System.out.println("CorsoBean: \nNome= "+istance.getSession("course_page").getDato("corso",CorsoInfoBean.class).getNome()+"\nDescrizione= "+istance.getSession("course_page").getDato("corso",CorsoInfoBean.class).getDescrizione()+"\nCorsoEntity: \nNome= "+ istance.getSession("course_page").getEntity("corso",Corso.class).getNome()+"\nDescrizione= "+ istance.getSession("course_page").getEntity("corso",Corso.class).getDescrizione());
     }
 }
