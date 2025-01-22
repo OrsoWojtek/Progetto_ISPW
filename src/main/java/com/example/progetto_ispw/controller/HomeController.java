@@ -3,6 +3,8 @@ package com.example.progetto_ispw.controller;
 import com.example.progetto_ispw.Connessione;
 import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
+import com.example.progetto_ispw.constants.DataID;
+import com.example.progetto_ispw.constants.SessionID;
 import com.example.progetto_ispw.dao.jdbc.CorsoDAOJDBC;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataAccessException;
@@ -23,7 +25,7 @@ public class HomeController {
         try {
             List<Corso> corsiFrequentati = db.getCourses(utenteInfoBean);
             corsiFrequentati.forEach(corso -> {
-                SessionManager.getInstance().createSession("catalogo_corsi").addEntity(corso.getNome(),corso); //Creazione di una sessione dedicata per contenere il catalogo dei corsi estratti dal db
+                SessionManager.getInstance().createSession(SessionID.CATALOGO_CORSI).addEntity(corso.getNome(),corso); //Creazione di una sessione dedicata per contenere il catalogo dei corsi estratti dal db
                 CorsoInfoBean corsoInfoBean = new CorsoInfoBean();
                 corsoInfoBean.setNome(corso.getNome());
                 corsoInfoBean.setDescrizione(corso.getDescrizione());
@@ -45,13 +47,13 @@ public class HomeController {
     }
     //----METODO PER OTTENERE LE INFORMAZIONI DELL'UTENTE CORRENTE----
     public UtenteInfoBean getInfoUser() throws DataNotFoundException {
-        return SessionManager.getInstance().getSession("login").getDato("utente",UtenteInfoBean.class);
+        return SessionManager.getInstance().getSession(SessionID.LOGIN).getDato(DataID.UTENTE,UtenteInfoBean.class);
     }
     //----METODO PER MEMORIZZARE NELLA SESSIONE IL CORSO SELEZIONATO
     public void setInfoCourse(CorsoInfoBean currentCourse) throws DataNotFoundException {
         SessionManager istance = SessionManager.getInstance();
-        Corso corsoSelezionato = istance.getSession("catalogo_corsi").getEntity(currentCourse.getNome(), Corso.class);
-        istance.createSession("course_page").addDato("corso",currentCourse);
-        istance.getSession("course_page").addEntity("corso",corsoSelezionato);
+        Corso corsoSelezionato = istance.getSession(SessionID.CATALOGO_CORSI).getEntity(currentCourse.getNome(), Corso.class);
+        istance.createSession(SessionID.COURSE_PAGE).addDato(DataID.CORSO,currentCourse);
+        istance.getSession(SessionID.COURSE_PAGE).addEntity(DataID.CORSO.getValue(), corsoSelezionato);
     }
 }

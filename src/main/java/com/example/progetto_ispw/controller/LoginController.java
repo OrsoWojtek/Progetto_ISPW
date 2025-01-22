@@ -2,6 +2,8 @@ package com.example.progetto_ispw.controller;
 
 import com.example.progetto_ispw.bean.LoginInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
+import com.example.progetto_ispw.constants.DataID;
+import com.example.progetto_ispw.constants.SessionID;
 import com.example.progetto_ispw.dao.jdbc.UtenteDAOJDBC;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
@@ -21,7 +23,7 @@ public class LoginController{
         utenteInfo.setRole(utente.getRole());                      //Prelevata l'informazione sul ruolo e username
         utenteInfo.setUsername(utente.getUsername());
         SessionManager istance = SessionManager.getInstance();
-        istance.createSession("login").addDato("utente",utenteInfo); //Creata la sessione di login e inserito il bean con le info dell'utente
-        istance.getSession("login").addEntity("utente",utente); //Inserita anche l'entità
+        istance.createSession(SessionID.LOGIN).addDato(DataID.UTENTE, utenteInfo); //Creata la sessione di login e inserito il bean con le info dell'utente
+        istance.getSession(SessionID.LOGIN).addEntity(DataID.UTENTE.getValue(),utente); //Inserita anche l'entità
     }
 }

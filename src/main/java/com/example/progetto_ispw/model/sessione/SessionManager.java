@@ -1,5 +1,7 @@
 package com.example.progetto_ispw.model.sessione;
 
+import com.example.progetto_ispw.constants.SessionID;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +24,8 @@ public class SessionManager {
         }
         return instance;
     }
-    public synchronized Session createSession(String sessionId) {
+    public synchronized Session createSession(SessionID id) {
+        String sessionId = id.getValue();
         if (!activeSessions.containsKey(sessionId)) {
             Session session = new Session(sessionId);
             activeSessions.put(sessionId, session);
@@ -30,12 +33,12 @@ public class SessionManager {
         return activeSessions.get(sessionId);
     }
 
-    public synchronized Session getSession(String sessionId) {
-        return activeSessions.get(sessionId);
+    public synchronized Session getSession(SessionID id) {
+        return activeSessions.get(id.getValue());
     }
 
-    public synchronized void invalidateSession(String sessionId) {
-        activeSessions.remove(sessionId);
+    public synchronized void invalidateSession(SessionID sessionId) {
+        activeSessions.remove(sessionId.getValue());
     }
     public synchronized void invalidateSessions() {
         activeSessions.clear();

@@ -2,6 +2,8 @@ package com.example.progetto_ispw.controller;
 
 import com.example.progetto_ispw.Connessione;
 import com.example.progetto_ispw.bean.*;
+import com.example.progetto_ispw.constants.DataID;
+import com.example.progetto_ispw.constants.SessionID;
 import com.example.progetto_ispw.dao.jdbc.QuizDAOJDBC;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataAccessException;
@@ -25,7 +27,7 @@ public class CorsoPageController {
 
         // Conversione dei quiz in oggetti QuizInfoBean
         for (Quiz quiz : quizzes) {
-            SessionManager.getInstance().createSession("catalogo_quiz").addEntity(quiz.getTitolo(), quiz); //Creazione di una sessione dedicata per contenere il catalogo dei quiz estratti dal db
+            SessionManager.getInstance().createSession(SessionID.CATALOGO_QUIZ).addEntity(quiz.getTitolo(), quiz); //Creazione di una sessione dedicata per contenere il catalogo dei quiz estratti dal db
             QuizInfoBean quizInfoBean = new QuizInfoBean();
             quizInfoBean.setTitolo(quiz.getTitolo());
             quizInfoBean.setDurata(quiz.getDurata());
@@ -75,25 +77,23 @@ public class CorsoPageController {
     }
     //----METODO PER RESETTARE NELLA SESSIONE LE INFO SUL CORSO SELEZIONATO
     public void clearInfoCourse(){
-        String nome = "corso";
-        String idSessione = "course_page";
-        Session session = SessionManager.getInstance().getSession(idSessione);
-        session.removeDato(nome);
-        session.removeEntity(nome);
+        Session session = SessionManager.getInstance().getSession(SessionID.COURSE_PAGE);
+        session.removeDato(DataID.CORSO);
+        session.removeEntity(DataID.CORSO.getValue());
     }
     //----METODO PER RESTITUIRE LE INFO SUL CORSO SELEZIONATO
     public CorsoInfoBean getInfoCourse() throws DataNotFoundException {
-        return SessionManager.getInstance().getSession("course_page").getDato("corso",CorsoInfoBean.class);
+        return SessionManager.getInstance().getSession(SessionID.COURSE_PAGE).getDato(DataID.CORSO,CorsoInfoBean.class);
     }
     //----METODO PER RESTITUIRE LE INFO DELL'UTENTE CORRENTE
     public UtenteInfoBean getInfoUser() throws DataNotFoundException {
-        return SessionManager.getInstance().getSession("login").getDato("utente",UtenteInfoBean.class);
+        return SessionManager.getInstance().getSession(SessionID.LOGIN).getDato(DataID.UTENTE,UtenteInfoBean.class);
     }
     //----METODO PER MEMORIZZARE NELLA SESSIONE IL QUIZ SELEZIONATO
     public void setInfoQuiz(QuizInfoBean currentQuiz) throws DataNotFoundException {
         SessionManager istance = SessionManager.getInstance();
-        Quiz quizSelezionato = istance.getSession("catalogo_quiz").getEntity(currentQuiz.getTitolo(), Quiz.class);
-        istance.createSession("quiz_page").addDato("quiz",currentQuiz);
-        istance.createSession("quiz_page").addEntity("quiz",quizSelezionato);
+        Quiz quizSelezionato = istance.getSession(SessionID.CATALOGO_QUIZ).getEntity(currentQuiz.getTitolo(), Quiz.class);
+        istance.createSession(SessionID.QUIZ_PAGE).addDato(DataID.QUIZ,currentQuiz);
+        istance.createSession(SessionID.QUIZ_PAGE).addEntity(DataID.QUIZ.getValue(), quizSelezionato);
     }
 }

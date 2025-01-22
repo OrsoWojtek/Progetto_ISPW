@@ -4,6 +4,8 @@ import com.example.progetto_ispw.Connessione;
 import com.example.progetto_ispw.bean.QuesitoInfoBean;
 import com.example.progetto_ispw.bean.QuizInfoBean;
 import com.example.progetto_ispw.bean.RispostaInfoBean;
+import com.example.progetto_ispw.constants.DataID;
+import com.example.progetto_ispw.constants.SessionID;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.exception.NotFilledQuestionException;
@@ -33,7 +35,7 @@ public class QuizController {
     }
     //----METODO PER RESTITUIRE LE INFO DEL QUIZ CORRENTE
     public QuizInfoBean getInfoQuiz() throws DataNotFoundException {
-        return getQuizSession().getDato("quiz",QuizInfoBean.class);
+        return getQuizSession().getDato(DataID.QUIZ,QuizInfoBean.class);
     }
     //----METODO PER PULIRE CONNESSIONE AL DB E SESSIONE AL LOGOUT----
     public void clean() throws ConnectionException {
@@ -44,15 +46,18 @@ public class QuizController {
     //----METODO PER PULIRE LE SESSIONI SUCCESSIVE A QUELLA DI LOGIN----
     public void clearOtherInfo(){
         clearInfoQuiz();
-        SessionManager.getInstance().getSession("course_page").removeDato("corso");
+        SessionManager istance = SessionManager.getInstance();
+        istance.getSession(SessionID.COURSE_PAGE).removeDato(DataID.CORSO);
+        istance.getSession(SessionID.COURSE_PAGE).removeEntity(DataID.CORSO.getValue());
     }
     //----METODO PER RESETTARE NELLA SESSIONE LE INFO SUL QUIZ SELEZIONATO
     public void clearInfoQuiz(){
-        getQuizSession().removeDato("quiz");
+        getQuizSession().removeDato(DataID.QUIZ);
+        getQuizSession().removeEntity(DataID.QUIZ.getValue());
     }
     //----METODO PER OTTENERE LA SESSIONE RIGUARDO ALLA PAGINA DEL QUIZ
     private Session getQuizSession(){
-        return SessionManager.getInstance().getSession("quiz_page");
+        return SessionManager.getInstance().getSession(SessionID.QUIZ_PAGE);
     }
     //----METODO PER SPUNTARE LA RISPOSTA SELEZIONATA----
     public void tickAnswer(QuesitoInfoBean quesito, String rispostaSelezionata) {

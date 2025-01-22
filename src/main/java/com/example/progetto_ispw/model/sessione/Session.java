@@ -1,6 +1,7 @@
 package com.example.progetto_ispw.model.sessione;
 
 import com.example.progetto_ispw.bean.Bean;
+import com.example.progetto_ispw.constants.DataID;
 import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.exception.DataSessionCastingException;
 import com.example.progetto_ispw.model.Entity;
@@ -25,18 +26,18 @@ public class Session {
     public synchronized void addEntity(String nome, Entity entity){
         entityInSessione.put(nome,entity); //Aggiunge l'entità se non è presente, o la aggiorna se esiste già
     }
-    public synchronized void addDato(String nome, Bean dato){
-        datiDiSessione.put(nome,dato); //Aggiunge il dato se non è presente, o lo aggiorna se esiste già
+    public synchronized void addDato(DataID nome, Bean dato){
+        datiDiSessione.put(nome.getValue(),dato); //Aggiunge il dato se non è presente, o lo aggiorna se esiste già
     }
-    public synchronized void removeDato(String nome){
-        datiDiSessione.remove(nome);
+    public synchronized void removeDato(DataID nome){
+        datiDiSessione.remove(nome.getValue());
     }
     public synchronized void removeEntity(String nome){
         entityInSessione.remove(nome);
     }
-    public synchronized <T extends Bean> T getDato(String nome, Class<T> classe) throws DataNotFoundException {
+    public synchronized <T extends Bean> T getDato(DataID nome, Class<T> classe) throws DataNotFoundException {
         //Recupera l'oggetto dalla mappa
-        Bean dato = datiDiSessione.get(nome);
+        Bean dato = datiDiSessione.get(nome.getValue());
 
         //Controlla se l'oggetto è null
         if (dato == null) {
@@ -47,7 +48,7 @@ public class Session {
         if (classe.isInstance(dato)) {
             return classe.cast(dato); //Esegue il cast in modo sicuro
         } else {
-            throw new DataSessionCastingException("Il dato associato alla chiave '" + nome + "' non è di tipo " + classe.getName());
+            throw new DataSessionCastingException("Il dato associato alla chiave '" + nome.getValue() + "' non è di tipo " + classe.getName());
         }
     }
     public synchronized <T extends Entity> T getEntity(String nome, Class<T> classe) throws DataNotFoundException {
