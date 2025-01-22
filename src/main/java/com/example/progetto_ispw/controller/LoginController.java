@@ -20,6 +20,8 @@ public class LoginController{
         Utente utente = db.getNewUtente(currLog);                   //Prelevato il nuovo utente
         utenteInfo.setRole(utente.getRole());                      //Prelevata l'informazione sul ruolo e username
         utenteInfo.setUsername(utente.getUsername());
-        SessionManager.getInstance().createSession("login").addDato("utente",utenteInfo); //Creata la sessione di login e inserito il bean con le info dell'utente
+        SessionManager istance = SessionManager.getInstance();
+        istance.createSession("login").addDato("utente",utenteInfo); //Creata la sessione di login e inserito il bean con le info dell'utente
+        istance.getSession("login").addEntity("utente",utente); //Inserita anche l'entità
     }
 }

@@ -3,10 +3,7 @@ package com.example.progetto_ispw.view.fx;
 import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.controller.HomeController;
-import com.example.progetto_ispw.exception.ConnectionException;
-import com.example.progetto_ispw.exception.DataNotFoundException;
-import com.example.progetto_ispw.exception.DataSessionCastingException;
-import com.example.progetto_ispw.exception.PageNotFoundException;
+import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.PageManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -92,7 +89,15 @@ public class HomeFX extends PageManager {
     //----METODO PER PASSARE ALLA PAGINA DEL CORSO DESIDERATO----
     private void goToCoursePage(String nomeCorso){
         Optional<CorsoInfoBean> corsoScelto = catalogo.stream().filter(c -> c.getNome().equals(nomeCorso)).findFirst(); //Cerca il bean del corso nel catalogo corrispondere al nome del corso selezionato dall'utente
-        corsoScelto.ifPresent(home::setInfoCourse); //Passa il bean del corso al controller applicativo
+        corsoScelto.ifPresent(currentCourse -> {
+            try {
+                home.setInfoCourse(currentCourse); //Passa il bean del corso al controller applicativo
+            } catch (ConnectionException | DataAccessException e) {
+                showMessageHandler.showError(e.getMessage(),"Errore connessione");
+            } catch (DataNotFoundException e) {
+                showMessageHandler.showError(e.getMessage(),"Corso non trovato");
+            }
+        });
         try{
             pageLoader.loadPage("corso");//...Mostra la pagina del corso
         } catch (PageNotFoundException e){

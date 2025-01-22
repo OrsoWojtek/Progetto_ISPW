@@ -3,12 +3,10 @@ package com.example.progetto_ispw.model.sessione;
 import com.example.progetto_ispw.bean.Bean;
 import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.exception.DataSessionCastingException;
-import com.example.progetto_ispw.model.Corso;
 import com.example.progetto_ispw.model.Entity;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class Session {
     private final String sessionId;

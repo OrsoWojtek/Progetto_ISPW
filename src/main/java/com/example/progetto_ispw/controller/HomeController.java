@@ -47,7 +47,15 @@ public class HomeController {
         return SessionManager.getInstance().getSession("login").getDato("utente",UtenteInfoBean.class);
     }
     //----METODO PER MEMORIZZARE NELLA SESSIONE IL CORSO SELEZIONATO
-    public void setInfoCourse(CorsoInfoBean currentCourse){
-        SessionManager.getInstance().createSession("course_page").addDato("corso",currentCourse);
+    public void setInfoCourse(CorsoInfoBean currentCourse) throws ConnectionException, DataNotFoundException, DataAccessException {
+        SessionManager istance = SessionManager.getInstance();
+        istance.createSession("course_page").addDato("corso",currentCourse);
+        istance.getSession("course_page").addEntity("corso",getCorsoSelezionato(currentCourse));
+        System.out.println("CorsoBean: \nNome= "+istance.getSession("course_page").getDato("corso",CorsoInfoBean.class).getNome()+"\nDescrizione= "+istance.getSession("course_page").getDato("corso",CorsoInfoBean.class).getDescrizione()+"\nCorsoEntity: \nNome= "+ istance.getSession("course_page").getEntity("corso",Corso.class).getNome()+"\nDescrizione= "+ istance.getSession("course_page").getEntity("corso",Corso.class).getDescrizione());
+    }
+    //----METODO PER OTTENERE IL CORSO SELEZIONATO DALL'UTENTE----
+    private Corso getCorsoSelezionato(CorsoInfoBean corsoSelezionato) throws ConnectionException, DataNotFoundException, DataAccessException {
+        CorsoDAOJDBC dao = new CorsoDAOJDBC();
+        return dao.getCourse(corsoSelezionato);
     }
 }
