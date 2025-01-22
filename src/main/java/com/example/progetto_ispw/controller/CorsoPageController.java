@@ -6,7 +6,6 @@ import com.example.progetto_ispw.dao.jdbc.QuizDAOJDBC;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataAccessException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
-import com.example.progetto_ispw.model.Corso;
 import com.example.progetto_ispw.model.Quesito;
 import com.example.progetto_ispw.model.Quiz;
 import com.example.progetto_ispw.model.Risposta;
