@@ -17,4 +17,5 @@ module com.example.progetto_ispw {
     opens com.example.progetto_ispw.bean to javafx.fxml;
     exports com.example.progetto_ispw.dao.jdbc;
     opens com.example.progetto_ispw.dao.jdbc to javafx.fxml;
+    exports com.example.progetto_ispw.constants;
 }

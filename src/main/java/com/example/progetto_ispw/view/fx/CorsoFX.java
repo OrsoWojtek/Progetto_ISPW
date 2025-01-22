@@ -3,6 +3,7 @@ package com.example.progetto_ispw.view.fx;
 import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.QuizInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
+import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.controller.CorsoPageController;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.PageManager;
@@ -32,8 +33,6 @@ public class CorsoFX extends PageManager {
     private AnchorPane catalogoQuiz; //'Sfondo' del catalogo
     private CorsoInfoBean corso; //Riferimento al corso della pagina
     private List<QuizInfoBean> quizzes; //Catalogo dei quiz disponibili
-    private static final String MAINTENANCE = "Funzionalità in manutenzione";
-    private static final String PAGENOTFOUND = "Pagina non trovata";
     private  CorsoPageController controller; //Riferimento al controller applicativo associato
     private int currentPage = 0;//Indice della pagina corrente dei quiz da mostrare
     private final VBox quizContainer = new VBox(); //Contenitore per i quiz
@@ -50,16 +49,16 @@ public class CorsoFX extends PageManager {
             quizzes = controller.getQuizDisponibili(corso);
             showQuizCatalog();
         } catch (ConnectionException e){
-            showMessageHandler.showError(e.getMessage(), "Errrore connessione");
+            showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);
         } catch (QuizCreationException e){
-            showMessageHandler.showError(e.getMessage(), "Quiz non trovati");
+            showMessageHandler.showError(e.getMessage(), ErrorCode.QUIZ_NOT_FOUND);
         } catch (DataAccessException e){
-            showMessageHandler.showError(e.getMessage(),"Errore DB");
+            showMessageHandler.showError(e.getMessage(),ErrorCode.DB_ERROR);
         } catch (DataNotFoundException e) {
-            showMessageHandler.showError(e.getMessage(),"Errore di sessione");
+            showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
             onLogoutButtonClicked();
         }catch (DataSessionCastingException e){
-            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.","Errore di casting");
+            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
             onLogoutButtonClicked();
         }
         configUI();
@@ -82,9 +81,9 @@ public class CorsoFX extends PageManager {
             controller.clean();
             pageLoader.loadPage("login");
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
+            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         } catch (ConnectionException e){
-            showMessageHandler.showError(e.getMessage(),"Errore connessione");
+            showMessageHandler.showError(e.getMessage(),ErrorCode.CONNECTION);
         }
     }
     //----METODO PER TORNARE ALLA HOME----
@@ -94,7 +93,7 @@ public class CorsoFX extends PageManager {
         try{
             pageLoader.loadPage("home");
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
+            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         }
     }
     @FXML
@@ -107,11 +106,11 @@ public class CorsoFX extends PageManager {
     }
     @FXML
     public void onSollecitaDomandaClicked(){
-        showMessageHandler.showError("Al momento non è possibile sollecitare domande al tutor.\nCi dispiace per il disagio.", MAINTENANCE);
+        showMessageHandler.showError("Al momento non è possibile sollecitare domande al tutor.\nCi dispiace per il disagio.", ErrorCode.MAINTENANCE);
     }
     @FXML
     public void onVisualizzaDomandeClicked(){
-        showMessageHandler.showError("Al momento non è possibile visualizzare domande in arrivo dagli studenti.\nCi dispiace per il disagio.", MAINTENANCE);
+        showMessageHandler.showError("Al momento non è possibile visualizzare domande in arrivo dagli studenti.\nCi dispiace per il disagio.", ErrorCode.MAINTENANCE);
     }
     @FXML
     public void onDescrizioneClicked(){
@@ -119,7 +118,7 @@ public class CorsoFX extends PageManager {
     }
     @FXML
     public void onTeoriaClicked(){
-        showMessageHandler.showError("La teoria del corso non è al momento consultabile.\nCi dispiace per il disagio.", MAINTENANCE);
+        showMessageHandler.showError("La teoria del corso non è al momento consultabile.\nCi dispiace per il disagio.", ErrorCode.MAINTENANCE);
     }
 
     //----METODO PER PASSARE ALLA PAGINA DEL QUIZ DESIDERATO----
@@ -129,17 +128,17 @@ public class CorsoFX extends PageManager {
             try {
                 controller.setInfoQuiz(currentQuiz); //Passa il bean del quiz al controller applicativo
             } catch (DataNotFoundException e) {
-                showMessageHandler.showError(e.getMessage(),"Errore di sessione");
+                showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
                 onLogoutButtonClicked();
             }catch (DataSessionCastingException e){
-                showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.","Errore di casting");
+                showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
                 onLogoutButtonClicked();
             }
         });
         try{
             pageLoader.loadPage("quiz");//...Mostra la pagina del quiz
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
+            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         }
     }
 

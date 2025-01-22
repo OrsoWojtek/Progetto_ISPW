@@ -1,5 +1,6 @@
 package com.example.progetto_ispw.view.fx;
 
+import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.view.ShowMessageHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -9,9 +10,9 @@ import java.util.Optional;
 //----CLASSE PER GESTIRE I MESSAGGI DI ERRORE DA MOSTRARE A SCHERMO (VIEW: JAVAFX)
 public class ShowMessageHandlerFX implements ShowMessageHandler {
     @Override
-    public void showError(String message, String title){
+    public void showError(String message, ErrorCode code){
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
+        alert.setTitle(code.getMessage());
         alert.setHeaderText(null);
         alert.setContentText(message);
 

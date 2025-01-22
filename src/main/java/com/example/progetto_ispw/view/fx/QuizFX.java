@@ -1,6 +1,7 @@
 package com.example.progetto_ispw.view.fx;
 
 import com.example.progetto_ispw.bean.QuizInfoBean;
+import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.controller.QuizController;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
@@ -22,7 +23,6 @@ public class QuizFX extends PageManager {
     private Label difficoltaQuiz; //Difficoltà del quiz
     private QuizInfoBean quiz; //Riferimento al quiz della pagina
     private QuizController quizController; //Riferimento al controller applicativo associato
-    private static final String PAGENOTFOUND = "Pagina non trovata";
     @FXML
     public void initialize(){
         quizController = new QuizController();
@@ -33,10 +33,10 @@ public class QuizFX extends PageManager {
             domandeQuiz.setText(quiz.getNumeroDomandeBean()+"");
             difficoltaQuiz.setText(quiz.getDifficolta());
         } catch (DataNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),"Errore di sessione");
+            showMessageHandler.showError(e.getMessage(), ErrorCode.SESSION);
             onLogoutButtonClicked();
         } catch (DataSessionCastingException e){
-            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.","Errore di casting");
+            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
             onLogoutButtonClicked();
         }
     }
@@ -47,9 +47,9 @@ public class QuizFX extends PageManager {
             quizController.clean();
             pageLoader.loadPage("login");
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
+            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         } catch (ConnectionException e){
-            showMessageHandler.showError(e.getMessage(),"Errore connessione");
+            showMessageHandler.showError(e.getMessage(),ErrorCode.CONNECTION);
         }
     }
     //----METODO PER MOSTRARE GLI ARGOMENTI DEL QUIZ----
@@ -64,7 +64,7 @@ public class QuizFX extends PageManager {
         try{
             pageLoader.loadPage("home");
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
+            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         }
     }
     //----METODO PER TORNARE ALLA PAGINA DEL CORSO----
@@ -74,7 +74,7 @@ public class QuizFX extends PageManager {
         try{
             pageLoader.loadPage("corso");
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
+            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         }
     }
     //----METODO AL CLICK DEL TASTO DI AVVIO DEL QUIZ----
@@ -83,7 +83,7 @@ public class QuizFX extends PageManager {
         try{
             pageLoader.loadPage("svolgimento_quiz");
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
+            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         }
     }
 }

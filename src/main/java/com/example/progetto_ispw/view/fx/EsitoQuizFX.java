@@ -1,5 +1,6 @@
 package com.example.progetto_ispw.view.fx;
 
+import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.controller.QuizController;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.PageNotFoundException;
@@ -27,9 +28,9 @@ public class EsitoQuizFX extends PageManager {
             controllerQuiz.clean();
             pageLoader.loadPage("login");
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
+            showMessageHandler.showError(e.getMessage(), ErrorCode.PAGE_NOT_FOUND);
         } catch (ConnectionException e){
-            showMessageHandler.showError(e.getMessage(),"Errore connessione");
+            showMessageHandler.showError(e.getMessage(),ErrorCode.CONNECTION);
         }
     }
     //----METODO PER TORNARE ALLA HOME----
@@ -39,7 +40,7 @@ public class EsitoQuizFX extends PageManager {
         try{
             pageLoader.loadPage("home");
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
+            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         }
     }
     //----METODO PER TORNARE ALLA PAGINA DEL CORSO----
@@ -49,7 +50,7 @@ public class EsitoQuizFX extends PageManager {
         try{
             pageLoader.loadPage("corso");
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
+            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         }
     }
 }

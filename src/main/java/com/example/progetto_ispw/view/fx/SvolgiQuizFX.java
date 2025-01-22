@@ -2,6 +2,7 @@ package com.example.progetto_ispw.view.fx;
 
 import com.example.progetto_ispw.bean.QuesitoInfoBean;
 import com.example.progetto_ispw.bean.QuizInfoBean;
+import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.controller.QuizController;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.PageManager;
@@ -55,10 +56,10 @@ public class SvolgiQuizFX extends PageManager {
             startTimer();
             showQuesito(); //Metodo che si occupa di mostrare i quesiti (ricorda la gestione dei tasti 'next' e 'back')
         } catch (DataNotFoundException e) {
-            showMessageHandler.showError(e.getMessage(),"Errore di sessione");
+            showMessageHandler.showError(e.getMessage(), ErrorCode.SESSION);
             logout();
         } catch (DataSessionCastingException e){
-            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.","Errore di casting");
+            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
             logout();
         }
     }
@@ -171,7 +172,7 @@ public class SvolgiQuizFX extends PageManager {
         try {
             pageLoader.loadPage("esito_quiz");
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
+            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         }
     }
     //----METODO PER IL LOGOUT----
@@ -180,9 +181,9 @@ public class SvolgiQuizFX extends PageManager {
             controllerApplicativo.clean();
             pageLoader.loadPage("login");
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),"Pagina non trovata");
+            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         } catch (ConnectionException e){
-            showMessageHandler.showError(e.getMessage(),"Errore connessione");
+            showMessageHandler.showError(e.getMessage(),ErrorCode.CONNECTION);
         }
     }
 }

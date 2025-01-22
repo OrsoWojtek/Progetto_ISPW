@@ -2,6 +2,7 @@ package com.example.progetto_ispw.view.fx;
 
 import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
+import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.controller.HomeController;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.PageManager;
@@ -34,12 +35,6 @@ public class HomeFX extends PageManager {
     private HomeController home; //Riferimento al controller applicativo
     private int currentPage = 0; //Indice della pagina corrente dei corsi da mostrare
     private final VBox coursesContainer = new VBox(); //Contenitore per i corsi
-    //----TITOLI DEI MESSAGGI DI ERRORE----
-    private static final String MAINTENANCE = "Funzionalità in manutenzione";
-    private static final String CONNECTION = "Errore connessione";
-    private static final String PAGENOTFOUND = "Pagina non trovata";
-    private static final String SESSION = "Errore di sessione";
-    private static final String CASTING = "Errore di casting";
 
     //----INIZIALIZZAZIONE DELLA PAGINA HOME----
     @FXML
@@ -55,12 +50,12 @@ public class HomeFX extends PageManager {
 
             catalogo = home.getCorsiFrequentati(user); //Richiesta dei corsi a cui è iscritto l'utente
         } catch (ConnectionException e){
-            showMessageHandler.showError(e.getMessage(),CONNECTION);
+            showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);
         } catch (DataNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),SESSION);
+            showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
             onLogoutButtonClicked();
         } catch (DataSessionCastingException e){
-            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",CASTING);
+            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
             onLogoutButtonClicked();
         }
         if (!"".equals(catalogo.getFirst().getDescrizione())){
@@ -76,19 +71,19 @@ public class HomeFX extends PageManager {
             home.clean();
             pageLoader.loadPage("login");
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
+            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         } catch (ConnectionException e){
-            showMessageHandler.showError(e.getMessage(),CONNECTION);
+            showMessageHandler.showError(e.getMessage(),ErrorCode.CONNECTION);
         }
     }
     //----METODO PER APRIRE LA BARRA DI RICERCA PER ISCRIVERSI AI CORSI----
     @FXML
     public void onSearchButtonClicked() {
-        showMessageHandler.showError("La funzione di iscrizione ad un nuovo corso è al momento disabilitata.\nCi dispiace per il disagio.",MAINTENANCE);
+        showMessageHandler.showError("La funzione di iscrizione ad un nuovo corso è al momento disabilitata.\nCi dispiace per il disagio.",ErrorCode.MAINTENANCE);
     }
     //----METODO PER GESTIRE I CORSI (DISPONIBILE SOLO PER I TUTOR)----
     public void onOptionButtonClicked(){
-        showMessageHandler.showError("La funzione di gestione dei corsi è al momento disabilitata.\nCi dispiace per il disagio.", MAINTENANCE);
+        showMessageHandler.showError("La funzione di gestione dei corsi è al momento disabilitata.\nCi dispiace per il disagio.", ErrorCode.MAINTENANCE);
     }
 
     //----METODO PER PASSARE ALLA PAGINA DEL CORSO DESIDERATO----
@@ -98,17 +93,17 @@ public class HomeFX extends PageManager {
             try {
                 home.setInfoCourse(currentCourse); //Passa il bean del corso al controller applicativo
             } catch (DataNotFoundException e) {
-                showMessageHandler.showError(e.getMessage(),SESSION);
+                showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
                 onLogoutButtonClicked();
             }catch (DataSessionCastingException e){
-                showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",CASTING);
+                showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
                 onLogoutButtonClicked();
             }
         });
         try{
             pageLoader.loadPage("corso");//...Mostra la pagina del corso
         } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),PAGENOTFOUND);
+            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         }
     }
     //---METODO PER INIZIALIZZARE IL CONTENITORE DEI CORSI----
