@@ -8,12 +8,12 @@ import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.exception.DataSessionCastingException;
 import com.example.progetto_ispw.exception.PageNotFoundException;
-import com.example.progetto_ispw.view.fx.handler.shortcut.ShortcutHandlerFX;
+import com.example.progetto_ispw.view.fx.handler.shortcut.CompleteShortcutHandlerFX;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 //----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA [CASO SPECIFICO: QUIZ (1/3)]----
-public class QuizFX extends ShortcutHandlerFX {
+public class QuizFX extends CompleteShortcutHandlerFX {
     @FXML
     private Label titoloQuiz; //Titolo del quiz
     @FXML
@@ -66,11 +66,7 @@ public class QuizFX extends ShortcutHandlerFX {
     @FXML
     public void onTornaAlCorso(){
         quizController.clearInfoQuiz();
-        try{
-            pageLoader.loadPage(PageID.CORSO);
-        } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
-        }
+        course();
     }
     //----METODO AL CLICK DEL TASTO DI AVVIO DEL QUIZ----
     @FXML

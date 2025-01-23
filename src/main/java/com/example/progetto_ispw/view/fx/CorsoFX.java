@@ -7,7 +7,7 @@ import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.constants.PageID;
 import com.example.progetto_ispw.controller.CorsoPageController;
 import com.example.progetto_ispw.exception.*;
-import com.example.progetto_ispw.view.PageManager;
+import com.example.progetto_ispw.view.fx.handler.shortcut.ShortcutHandlerFX;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -23,7 +23,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 //----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA (CASO SPECIFICO: CORSO)----
-public class CorsoFX extends PageManager {
+public class CorsoFX extends ShortcutHandlerFX {
     @FXML
     private Label nomeCorso; //Nome del corso
     @FXML
@@ -80,9 +80,7 @@ public class CorsoFX extends PageManager {
     public void onLogout(){
         try {
             controller.clean();
-            pageLoader.loadPage(PageID.LOGIN);
-        } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
+            logout();
         } catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.CONNECTION);
         }
@@ -91,11 +89,7 @@ public class CorsoFX extends PageManager {
     @FXML
     public void onHomeButtonClicked(){
         controller.clearInfoCourse();
-        try{
-            pageLoader.loadPage(PageID.HOME);
-        } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
-        }
+        home();
     }
     @FXML
     public void onMessageBoxClicked(){
