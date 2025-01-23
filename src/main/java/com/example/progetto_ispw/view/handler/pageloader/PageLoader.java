@@ -1,4 +1,4 @@
-package com.example.progetto_ispw.view;
+package com.example.progetto_ispw.view.handler.pageloader;
 
 import com.example.progetto_ispw.constants.PageID;
 import com.example.progetto_ispw.exception.PageNotFoundException;

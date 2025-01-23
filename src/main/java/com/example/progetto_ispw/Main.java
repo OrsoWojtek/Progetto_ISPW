@@ -1,8 +1,8 @@
 package com.example.progetto_ispw;
 
 import com.example.progetto_ispw.view.PageManager;
-import com.example.progetto_ispw.view.fx.PageLoaderFX;
-import com.example.progetto_ispw.view.fx.ShowMessageHandlerFX;
+import com.example.progetto_ispw.view.fx.handler.pageloader.PageLoaderFX;
+import com.example.progetto_ispw.view.fx.handler.showmessage.ShowMessageHandlerFX;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

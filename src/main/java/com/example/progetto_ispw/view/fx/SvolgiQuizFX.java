@@ -7,7 +7,7 @@ import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.constants.PageID;
 import com.example.progetto_ispw.controller.QuizController;
 import com.example.progetto_ispw.exception.*;
-import com.example.progetto_ispw.view.PageManager;
+import com.example.progetto_ispw.view.fx.handler.shortcut.ShortcutHandlerFX;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -20,7 +20,7 @@ import javafx.util.Duration;
 import java.util.List;
 
 //----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA [CASO SPECIFICO: QUIZ (2/3)]----
-public class SvolgiQuizFX extends PageManager {
+public class SvolgiQuizFX extends ShortcutHandlerFX {
     @FXML
     private Label nameQuiz; //Titolo del quiz
     @FXML
@@ -59,10 +59,10 @@ public class SvolgiQuizFX extends PageManager {
             showQuesito(); //Metodo che si occupa di mostrare i quesiti (ricorda la gestione dei tasti 'next' e 'back')
         } catch (DataNotFoundException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.SESSION);
-            logout();
+            logoutProcess();
         } catch (DataSessionCastingException e){
             showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
-            logout();
+            logoutProcess();
         }
     }
     //----METODO PER INIZIALIZZARE IL POOL DI RISPOSTE----
@@ -184,12 +184,10 @@ public class SvolgiQuizFX extends PageManager {
         }
     }
     //----METODO PER IL LOGOUT----
-    private void logout(){
+    private void logoutProcess(){
         try {
             controllerApplicativo.clean();
-            pageLoader.loadPage(PageID.LOGIN);
-        } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
+            logout();
         } catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.CONNECTION);
         }

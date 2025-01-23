@@ -1,7 +1,7 @@
-package com.example.progetto_ispw.view.fx;
+package com.example.progetto_ispw.view.fx.handler.showmessage;
 
 import com.example.progetto_ispw.constants.ErrorCode;
-import com.example.progetto_ispw.view.ShowMessageHandler;
+import com.example.progetto_ispw.view.handler.showmessage.ShowMessageHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 

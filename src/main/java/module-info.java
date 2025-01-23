@@ -18,4 +18,15 @@ module com.example.progetto_ispw {
     exports com.example.progetto_ispw.dao.jdbc;
     opens com.example.progetto_ispw.dao.jdbc to javafx.fxml;
     exports com.example.progetto_ispw.constants;
+    exports com.example.progetto_ispw.view.fx.shortcuthandler;
+    opens com.example.progetto_ispw.view.fx.shortcuthandler to javafx.fxml;
+    exports com.example.progetto_ispw.view.fx.handler.showmessage;
+    opens com.example.progetto_ispw.view.fx.handler.showmessage to javafx.fxml;
+    exports com.example.progetto_ispw.view.fx.handler.pageloader;
+    opens com.example.progetto_ispw.view.fx.handler.pageloader to javafx.fxml;
+    exports com.example.progetto_ispw.view.fx.handler.shortcut;
+    opens com.example.progetto_ispw.view.fx.handler.shortcut to javafx.fxml;
+    exports com.example.progetto_ispw.view.handler.pageloader;
+    exports com.example.progetto_ispw.view.handler.shortcut;
+    exports com.example.progetto_ispw.view.handler.showmessage;
 }

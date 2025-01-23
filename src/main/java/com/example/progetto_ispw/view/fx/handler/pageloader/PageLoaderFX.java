@@ -1,9 +1,10 @@
-package com.example.progetto_ispw.view.fx;
+package com.example.progetto_ispw.view.fx.handler.pageloader;
 
 import com.example.progetto_ispw.constants.PageID;
 import com.example.progetto_ispw.exception.PageNotFoundException;
-import com.example.progetto_ispw.view.PageLoader;
+import com.example.progetto_ispw.view.handler.pageloader.PageLoader;
 import com.example.progetto_ispw.view.PageManager;
+import com.example.progetto_ispw.view.fx.handler.showmessage.ShowMessageHandlerFX;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

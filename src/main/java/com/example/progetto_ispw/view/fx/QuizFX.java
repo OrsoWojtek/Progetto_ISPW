@@ -8,12 +8,12 @@ import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.exception.DataSessionCastingException;
 import com.example.progetto_ispw.exception.PageNotFoundException;
-import com.example.progetto_ispw.view.PageManager;
+import com.example.progetto_ispw.view.fx.handler.shortcut.ShortcutHandlerFX;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 //----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA [CASO SPECIFICO: QUIZ (1/3)]----
-public class QuizFX extends PageManager {
+public class QuizFX extends ShortcutHandlerFX {
     @FXML
     private Label titoloQuiz; //Titolo del quiz
     @FXML
@@ -46,9 +46,7 @@ public class QuizFX extends PageManager {
     public void onLogoutButtonClicked(){
         try {
             quizController.clean();
-            pageLoader.loadPage(PageID.LOGIN);
-        } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
+            logout();
         } catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.CONNECTION);
         }
@@ -62,11 +60,7 @@ public class QuizFX extends PageManager {
     @FXML
     public void onHomeButtonClicked(){
         quizController.clearOtherInfo();
-        try{
-            pageLoader.loadPage(PageID.HOME);
-        } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
-        }
+        home();
     }
     //----METODO PER TORNARE ALLA PAGINA DEL CORSO----
     @FXML

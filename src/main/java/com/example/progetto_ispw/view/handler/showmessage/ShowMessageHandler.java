@@ -1,4 +1,4 @@
-package com.example.progetto_ispw.view;
+package com.example.progetto_ispw.view.handler.showmessage;
 
 import com.example.progetto_ispw.constants.ErrorCode;
 
