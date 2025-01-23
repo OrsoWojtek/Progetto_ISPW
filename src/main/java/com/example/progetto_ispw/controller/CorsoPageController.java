@@ -34,7 +34,6 @@ public class CorsoPageController {
             quizInfoBean.setDifficolta(quiz.getDifficolta());
             quizInfoBean.setArgomenti(quiz.getArgomenti());
             quizInfoBean.setPunteggio(quiz.getPunteggio());
-            quizInfoBean.setPunteggioStudente(quiz.getScoreUtente());
 
             // Conversione dei quesiti
             List<QuesitoInfoBean> quesiti = getQuesitoInfoBeans(quiz);

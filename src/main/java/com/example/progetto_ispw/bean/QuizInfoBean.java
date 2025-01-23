@@ -13,6 +13,7 @@ public class QuizInfoBean implements Bean{
     private int numeroDomandeBean;
     private int punteggioBean; //PUNTEGGIO TOTALE DEL QUIZ
     private int punteggioStudente = 0; //PUNTEGGIO OTTENUTO DALLO STUDENTE
+    private int tempo; //Tempo impiegato per completare il quiz
     //----METODI----
     public String getTitolo() {
         return titoloBean;
@@ -58,4 +59,10 @@ public class QuizInfoBean implements Bean{
         this.punteggioStudente+=punti;
     }
     public int getPunteggioStudente(){return punteggioStudente;}
+    public void setTempo(int tempo) {
+        this.tempo = tempo;
+    }
+    public int getTempo() {
+        return tempo;
+    }
 }

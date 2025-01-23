@@ -10,6 +10,7 @@ import com.example.progetto_ispw.constants.SessionID;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.exception.NotFilledQuestionException;
+import com.example.progetto_ispw.model.Quiz;
 import com.example.progetto_ispw.model.sessione.Session;
 import com.example.progetto_ispw.model.sessione.SessionManager;
 
@@ -80,6 +81,26 @@ public class QuizController {
                 risposta.setTicked(false);
                 break;
             }
+        }
+    }
+    //----METODO PER SOTTOPORRERE IL QUIZ----
+    public void submitQuiz(QuizInfoBean quiz) throws DataNotFoundException {
+        for (QuesitoInfoBean quesito : quiz.getQuesiti()) {
+            for (RispostaInfoBean risposta : quesito.getRisposte()){
+                if(risposta.isCorretta()&&risposta.isTicked()) {
+                    quiz.setPunteggioStudente(quesito.getPunti());
+                }
+            }
+        }
+        updateQuiz(quiz.getPunteggioStudente());
+        //aggiungi l'aggiornamento dei punti dello studente relativi al quiz sul db (usa l'entity)
+        //int i;
+    }
+    //----METODO PER AGGIORNARE L'ENTITÀ QUIZ NELLA SESSIONE----
+    private void updateQuiz(int punteggioStudente) throws DataNotFoundException {
+        Quiz quiz = getQuizSession().getEntity(DataID.QUIZ.getValue(), Quiz.class);
+        if(quiz.getScoreUtente()<punteggioStudente) { //Se il punteggio ottenuto sul momento dello studente è maggiore dal punteggio che ha precedentemente ottenuto allo stesso quiz...
+            quiz.updateScoreUtente(punteggioStudente); //...Allora aggiorna il punteggio dello studente
         }
     }
 }

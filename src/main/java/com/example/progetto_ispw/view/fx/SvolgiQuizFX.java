@@ -174,13 +174,14 @@ public class SvolgiQuizFX extends ShortcutHandlerFX {
     }
     //----METODO PER LA CHIUSURA DEL QUIZ----
     private synchronized void termina(){
-        //Blocco in cui salvo l'esito del quiz nella sessione
-        //int i = 0;
-
         try {
+            quiz.setTempo(remainingTime);
+            controllerApplicativo.submitQuiz(quiz);
             pageLoader.loadPage(PageID.ESITO_QUIZ);
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
+        } catch (DataNotFoundException e){
+            showMessageHandler.showError(e.getMessage(), ErrorCode.SESSION);
         }
     }
     //----METODO PER IL LOGOUT----
