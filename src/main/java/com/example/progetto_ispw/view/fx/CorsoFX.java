@@ -47,7 +47,7 @@ public class CorsoFX extends PageManager {
             nomeCorso.setText(corso.getNome()+":"); //Mostra nella pagina del corso il nome del corso
             visualizzaDomande.setVisible("tutor".equalsIgnoreCase(user.getRole())); //Mostra il testo per accedere alla funzionalità disponibile solo per i tutor
             sollecitaDomanda.setVisible("studente".equalsIgnoreCase(user.getRole())); //Mostra il testo per accedere alla funzionalità disponibile solo per gli studenti
-            quizzes = controller.getQuizDisponibili(corso);
+            quizzes = controller.getQuizDisponibili(corso,user);
             showQuizCatalog();
         } catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);

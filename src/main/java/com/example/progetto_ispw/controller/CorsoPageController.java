@@ -20,10 +20,10 @@ import java.util.List;
 //----CONTROLLER APPLICATIVO PER GESTIRE IL CORSO----
 public class CorsoPageController {
     //----METODO PER RICERCARE QUALI SONO I QUIZ DISPONIBILI NEL CORSO----
-    public List<QuizInfoBean> getQuizDisponibili(CorsoInfoBean corso) throws ConnectionException, DataAccessException {
+    public List<QuizInfoBean> getQuizDisponibili(CorsoInfoBean corso, UtenteInfoBean utente) throws ConnectionException, DataAccessException {
         QuizDAOJDBC dao = new QuizDAOJDBC();
         List<QuizInfoBean> catalogoQuiz = new ArrayList<>();
-        List<Quiz> quizzes = dao.getQuizzes(corso);
+        List<Quiz> quizzes = dao.getQuizzes(corso, utente);
 
         // Conversione dei quiz in oggetti QuizInfoBean
         for (Quiz quiz : quizzes) {
@@ -34,6 +34,7 @@ public class CorsoPageController {
             quizInfoBean.setDifficolta(quiz.getDifficolta());
             quizInfoBean.setArgomenti(quiz.getArgomenti());
             quizInfoBean.setPunteggio(quiz.getPunteggio());
+            quizInfoBean.setPunteggioStudente(quiz.getScoreUtente());
 
             // Conversione dei quesiti
             List<QuesitoInfoBean> quesiti = getQuesitoInfoBeans(quiz);

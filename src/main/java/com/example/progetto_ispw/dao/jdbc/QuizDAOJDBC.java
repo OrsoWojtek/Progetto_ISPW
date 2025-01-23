@@ -2,6 +2,7 @@ package com.example.progetto_ispw.dao.jdbc;
 
 import com.example.progetto_ispw.Connessione;
 import com.example.progetto_ispw.bean.CorsoInfoBean;
+import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataAccessException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
@@ -26,21 +27,23 @@ public class QuizDAOJDBC {
         connection = connessione.getConnect();
     }
     //----METODO PER OTTENERE TUTTI I QUIZ PRESENTI NEL CORSO----
-    public List<Quiz> getQuizzes(CorsoInfoBean corso) throws DataAccessException{
+    public List<Quiz> getQuizzes(CorsoInfoBean corso, UtenteInfoBean utente) throws DataAccessException{
         List<Quiz> quizzes = new ArrayList<>();
+
         String query = """
-        SELECT q.idquiz, q.titolo, q.durata, q.difficolta, q.argomenti,
-               d.iddomanda, d.testo AS domanda_testo, d.punti,
-               r.testo AS risposta_testo, r.corretta
+        SELECT  q.idquiz, q.titolo, q.durata, q.difficolta, q.argomenti, d.iddomanda,
+                d.testo AS domanda_testo, d.punti, r.testo AS risposta_testo, r.corretta, uq.punteggioUtente
         FROM quiz q
         JOIN domanda d ON q.idquiz = d.idquiz
         JOIN risposta r ON d.iddomanda = r.iddomanda
-        WHERE q.idcorso = (SELECT corso_id FROM corso WHERE nome_corso = ?)
+        JOIN utente_quiz uq ON q.idquiz = uq.quizID
+        WHERE q.idcorso = ( SELECT corso_id FROM corso WHERE nome_corso = ?) AND uq.username_utente = ?
         ORDER BY q.idquiz, d.iddomanda;
         """;
 
         try (PreparedStatement stm = connection.prepareStatement(query)) {
             stm.setString(1, corso.getNome());
+            stm.setString(2,utente.getUsername());
             try (ResultSet result = stm.executeQuery()) {
                 Map<Integer, Quiz.Builder> quizBuilders = new HashMap<>();
                 Map<Integer, Quesito.Builder> quesitoBuilders = new HashMap<>();
@@ -54,6 +57,7 @@ public class QuizDAOJDBC {
                     int durata = result.getInt("durata");
                     String domanda = result.getString("domanda_testo");
                     int punti = result.getInt("punti");
+                    int punteggioPrecedenteUser = result.getInt("punteggioUtente");
 
                     // Se il quiz non è già stato aggiunto, creiamo il suo builder
                     quizBuilders.computeIfAbsent(quizId, id -> {
@@ -62,7 +66,8 @@ public class QuizDAOJDBC {
                                 .setTitolo(titolo)
                                 .setDurata(durata)
                                 .setDifficolta(difficolta)
-                                .setArgomenti(argomenti);
+                                .setArgomenti(argomenti)
+                                .setScoreUtente(punteggioPrecedenteUser);
                         return builder;
                     });
 
