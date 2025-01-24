@@ -5,6 +5,7 @@ import com.example.progetto_ispw.bean.QuizInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.constants.PageID;
+import com.example.progetto_ispw.constants.StandardMessagge;
 import com.example.progetto_ispw.controller.CorsoPageController;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.fx.handler.shortcut.ShortcutHandlerFX;
@@ -62,20 +63,20 @@ public class CorsoFX extends ShortcutHandlerFX {
             showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
             onLogout();
         }catch (DataSessionCastingException e){
-            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
+            showMessageHandler.showError(StandardMessagge.CASTING.getValue(), ErrorCode.CASTING);
             onLogout();
         }
         configUI();
     }
     //---METODO PER INIZIALIZZARE IL CONTENITORE DEI QUIZ----
     private void configUI() {
-        // Posizione del container
+        //Posizione del container
         int x = 371; //(per il maxi-schermo: 742; per altri schermi: 371)
         int y = 86; //(per il maxi-schermo: 173; per altri schermi: 86)
-        // Configura il contenitore dinamico per i quiz
+        //Configura il contenitore dinamico per i quiz
         quizContainer.setLayoutX(x);
         quizContainer.setLayoutY(y);
-        quizContainer.setSpacing(10); // Spazio tra i quiz
+        quizContainer.setSpacing(10); //Spazio tra i quiz
         catalogoQuiz.getChildren().add(quizContainer);
     }
     //----METODO PER EFFETTUARE IL LOGOUT----
@@ -104,11 +105,11 @@ public class CorsoFX extends ShortcutHandlerFX {
     }
     @FXML
     public void onSollecitaDomandaClicked(){
-        showMessageHandler.showError("Al momento non è possibile sollecitare domande al tutor.\nCi dispiace per il disagio.", ErrorCode.MAINTENANCE);
+        showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
     }
     @FXML
     public void onVisualizzaDomandeClicked(){
-        showMessageHandler.showError("Al momento non è possibile visualizzare domande in arrivo dagli studenti.\nCi dispiace per il disagio.", ErrorCode.MAINTENANCE);
+        showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
     }
     @FXML
     public void onDescrizioneClicked(){
@@ -116,7 +117,7 @@ public class CorsoFX extends ShortcutHandlerFX {
     }
     @FXML
     public void onTeoriaClicked(){
-        showMessageHandler.showError("La teoria del corso non è al momento consultabile.\nCi dispiace per il disagio.", ErrorCode.MAINTENANCE);
+        showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
     }
 
     //----METODO PER PASSARE ALLA PAGINA DEL QUIZ DESIDERATO----
@@ -129,7 +130,7 @@ public class CorsoFX extends ShortcutHandlerFX {
                 showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
                 onLogout();
             }catch (DataSessionCastingException e){
-                showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
+                showMessageHandler.showError(StandardMessagge.CASTING.getValue(),ErrorCode.CASTING);
                 onLogout();
             }
         });

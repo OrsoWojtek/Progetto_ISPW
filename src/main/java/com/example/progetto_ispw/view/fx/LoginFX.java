@@ -3,6 +3,7 @@ package com.example.progetto_ispw.view.fx;
 import com.example.progetto_ispw.bean.LoginInfoBean;
 import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.constants.PageID;
+import com.example.progetto_ispw.constants.StandardMessagge;
 import com.example.progetto_ispw.controller.LoginController;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.PageManager;
@@ -34,7 +35,7 @@ public class LoginFX extends PageManager {
 
             // Controlla se uno dei campi è vuoto
             if (usernameInsert.isEmpty() || passwordInsert.isEmpty()) {
-                showMessageHandler.showError("Una o più credenziali non sono state inserite.", ErrorCode.CREDENTIAL_NOT_FOUND);
+                showMessageHandler.showError(StandardMessagge.CREDENTIAL.getValue(), ErrorCode.CREDENTIAL_NOT_FOUND);
             } else {
                 onLoginButtonClick();
             }
@@ -69,6 +70,6 @@ public class LoginFX extends PageManager {
     //----METODO CHIAMATO AL CLICK DELLA RICHIESTA DI REGISTRAZIONE----
     @FXML
     public void onRegistReqClick(){
-        showMessageHandler.showError("La funzione di registrazione è al momento disabilitata.\nCi dispiace per il disagio.", ErrorCode.MAINTENANCE);
+        showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
     }
 }

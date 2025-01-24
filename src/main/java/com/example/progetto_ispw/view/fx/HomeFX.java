@@ -4,6 +4,7 @@ import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.constants.PageID;
+import com.example.progetto_ispw.constants.StandardMessagge;
 import com.example.progetto_ispw.controller.HomeController;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.PageManager;
@@ -56,7 +57,7 @@ public class HomeFX extends PageManager {
             showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
             onLogoutButtonClicked();
         } catch (DataSessionCastingException e){
-            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
+            showMessageHandler.showError(StandardMessagge.CASTING.getValue(), ErrorCode.CASTING);
             onLogoutButtonClicked();
         }
         if (!"".equals(catalogo.getFirst().getDescrizione())){
@@ -80,11 +81,11 @@ public class HomeFX extends PageManager {
     //----METODO PER APRIRE LA BARRA DI RICERCA PER ISCRIVERSI AI CORSI----
     @FXML
     public void onSearchButtonClicked() {
-        showMessageHandler.showError("La funzione di iscrizione ad un nuovo corso è al momento disabilitata.\nCi dispiace per il disagio.",ErrorCode.MAINTENANCE);
+        showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
     }
     //----METODO PER GESTIRE I CORSI (DISPONIBILE SOLO PER I TUTOR)----
     public void onOptionButtonClicked(){
-        showMessageHandler.showError("La funzione di gestione dei corsi è al momento disabilitata.\nCi dispiace per il disagio.", ErrorCode.MAINTENANCE);
+        showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
     }
 
     //----METODO PER PASSARE ALLA PAGINA DEL CORSO DESIDERATO----
@@ -97,7 +98,7 @@ public class HomeFX extends PageManager {
                 showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
                 onLogoutButtonClicked();
             }catch (DataSessionCastingException e){
-                showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
+                showMessageHandler.showError(StandardMessagge.CASTING.getValue(),ErrorCode.CASTING);
                 onLogoutButtonClicked();
             }
         });

@@ -5,6 +5,7 @@ import com.example.progetto_ispw.bean.QuesitoInfoBean;
 import com.example.progetto_ispw.bean.QuizInfoBean;
 import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.constants.PageID;
+import com.example.progetto_ispw.constants.StandardMessagge;
 import com.example.progetto_ispw.controller.QuizController;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.fx.handler.shortcut.ShortcutHandlerFX;
@@ -61,7 +62,7 @@ public class SvolgiQuizFX extends ShortcutHandlerFX {
             showMessageHandler.showError(e.getMessage(), ErrorCode.SESSION);
             logoutProcess();
         } catch (DataSessionCastingException e){
-            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
+            showMessageHandler.showError(StandardMessagge.CASTING.getValue(),ErrorCode.CASTING);
             logoutProcess();
         }
     }
@@ -187,7 +188,7 @@ public class SvolgiQuizFX extends ShortcutHandlerFX {
         } catch (DataAccessException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.DB_ERROR);
         } catch (DataSessionCastingException e){
-            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
+            showMessageHandler.showError(StandardMessagge.CASTING.getValue(),ErrorCode.CASTING);
         }
     }
     //----METODO PER IL LOGOUT----

@@ -3,6 +3,7 @@ package com.example.progetto_ispw.view.fx;
 import com.example.progetto_ispw.bean.ErroriQuizInfoBean;
 import com.example.progetto_ispw.bean.QuizInfoBean;
 import com.example.progetto_ispw.constants.ErrorCode;
+import com.example.progetto_ispw.constants.StandardMessagge;
 import com.example.progetto_ispw.controller.QuizController;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
@@ -30,7 +31,7 @@ public class EsitoQuizFX extends CompleteShortcutHandlerFX {
             showMessageHandler.showError(e.getMessage(), ErrorCode.SESSION);
             effettuaLogout();
         } catch (DataSessionCastingException e){
-            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
+            showMessageHandler.showError(StandardMessagge.CASTING.getValue(),ErrorCode.CASTING);
             effettuaLogout();
         }
     }
@@ -65,7 +66,7 @@ public class EsitoQuizFX extends CompleteShortcutHandlerFX {
         } catch (DataNotFoundException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.SESSION);
         } catch (DataSessionCastingException e){
-            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
+            showMessageHandler.showError(StandardMessagge.CASTING.getValue(),ErrorCode.CASTING);
         }
     }
 }
