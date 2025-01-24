@@ -3,10 +3,7 @@ package com.example.progetto_ispw.dao.jdbc;
 import com.example.progetto_ispw.Connessione;
 import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
-import com.example.progetto_ispw.exception.ConnectionException;
-import com.example.progetto_ispw.exception.DataAccessException;
-import com.example.progetto_ispw.exception.DataNotFoundException;
-import com.example.progetto_ispw.exception.QuizCreationException;
+import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.model.Quesito;
 import com.example.progetto_ispw.model.Quiz;
 
@@ -103,5 +100,35 @@ public class QuizDAOJDBC {
             throw new DataAccessException("Errore di comunicazione con il database.");
         }
         return quizzes;
+    }
+    //----METODO PER AGGIORNARE IL PUNTEGGIO OTTENUTO DALLO STUDENTE AD UN QUIZ----
+    public void updateScore(Quiz quiz, UtenteInfoBean utente, CorsoInfoBean corso) throws DataAccessException, UpdateDataException {
+        String query = """
+        UPDATE utente_quiz
+        SET punteggioUtente = ?
+        WHERE username_utente = ?
+        AND quizID = (
+            SELECT idquiz
+            FROM quiz
+            WHERE idcorso = (
+                  SELECT corso_id
+                  FROM corso
+                  WHERE nome_corso = ?
+            )
+            AND titolo = ?
+        );
+        """;
+        try (PreparedStatement stm = connection.prepareStatement(query)) {
+            stm.setInt(1, quiz.getScoreUtente());
+            stm.setString(2,utente.getUsername());
+            stm.setString(3, corso.getNome());
+            stm.setString(4,quiz.getTitolo());
+            int rowsAffected = stm.executeUpdate();
+            if(rowsAffected == 0){
+                throw new UpdateDataException("Non è stata aggiornata alcuna riga nel db");
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Errore di comunicazione con il database.");
+        }
     }
 }

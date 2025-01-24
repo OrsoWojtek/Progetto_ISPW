@@ -1,15 +1,11 @@
 package com.example.progetto_ispw.controller;
 
 import com.example.progetto_ispw.Connessione;
-import com.example.progetto_ispw.bean.AnsweringProcessInfoBean;
-import com.example.progetto_ispw.bean.QuesitoInfoBean;
-import com.example.progetto_ispw.bean.QuizInfoBean;
-import com.example.progetto_ispw.bean.RispostaInfoBean;
+import com.example.progetto_ispw.bean.*;
 import com.example.progetto_ispw.constants.DataID;
 import com.example.progetto_ispw.constants.SessionID;
-import com.example.progetto_ispw.exception.ConnectionException;
-import com.example.progetto_ispw.exception.DataNotFoundException;
-import com.example.progetto_ispw.exception.NotFilledQuestionException;
+import com.example.progetto_ispw.dao.jdbc.QuizDAOJDBC;
+import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.model.Quiz;
 import com.example.progetto_ispw.model.sessione.Session;
 import com.example.progetto_ispw.model.sessione.SessionManager;
@@ -84,7 +80,7 @@ public class QuizController {
         }
     }
     //----METODO PER SOTTOPORRERE IL QUIZ----
-    public void submitQuiz(QuizInfoBean quiz) throws DataNotFoundException {
+    public void submitQuiz(QuizInfoBean quiz) throws DataNotFoundException, ConnectionException, DataAccessException {
         for (QuesitoInfoBean quesito : quiz.getQuesiti()) {
             for (RispostaInfoBean risposta : quesito.getRisposte()){
                 if(risposta.isCorretta()&&risposta.isTicked()) {
@@ -92,15 +88,21 @@ public class QuizController {
                 }
             }
         }
-        updateQuiz(quiz.getPunteggioStudente());
-        //aggiungi l'aggiornamento dei punti dello studente relativi al quiz sul db (usa l'entity)
-        //int i;
+        try {
+            updateQuiz(quiz.getPunteggioStudente());
+        } catch (UpdateDataException e) { //Update in persistenza non andato a buon fine
+            throw new DataNotFoundException("Non è stato possibile salvare il nuovo punteggio ottenuto.");
+        }
     }
     //----METODO PER AGGIORNARE L'ENTITÀ QUIZ NELLA SESSIONE----
-    private void updateQuiz(int punteggioStudente) throws DataNotFoundException {
+    private void updateQuiz(int punteggioStudente) throws DataNotFoundException, ConnectionException, UpdateDataException, DataAccessException {
         Quiz quiz = getQuizSession().getEntity(DataID.QUIZ.getValue(), Quiz.class);
         if(quiz.getScoreUtente()<punteggioStudente) { //Se il punteggio ottenuto sul momento dello studente è maggiore dal punteggio che ha precedentemente ottenuto allo stesso quiz...
             quiz.updateScoreUtente(punteggioStudente); //...Allora aggiorna il punteggio dello studente
+            QuizDAOJDBC dao = new QuizDAOJDBC();
+            UtenteInfoBean utente = SessionManager.getInstance().getSession(SessionID.LOGIN).getDato(DataID.UTENTE, UtenteInfoBean.class);
+            CorsoInfoBean corso = SessionManager.getInstance().getSession(SessionID.COURSE_PAGE).getDato(DataID.CORSO, CorsoInfoBean.class);
+            dao.updateScore(quiz,utente,corso); //Aggiorna il punteggio ottenuto nel db
         }
     }
 }

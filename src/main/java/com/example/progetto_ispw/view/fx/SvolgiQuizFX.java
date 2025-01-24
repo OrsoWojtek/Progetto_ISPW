@@ -182,6 +182,10 @@ public class SvolgiQuizFX extends ShortcutHandlerFX {
             showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
         } catch (DataNotFoundException e){
             showMessageHandler.showError(e.getMessage(), ErrorCode.SESSION);
+        } catch (ConnectionException e){
+            showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);
+        }catch (DataAccessException e){
+            showMessageHandler.showError(e.getMessage(),ErrorCode.DB_ERROR);
         }
     }
     //----METODO PER IL LOGOUT----
