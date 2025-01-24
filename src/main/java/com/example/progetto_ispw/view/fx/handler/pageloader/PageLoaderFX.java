@@ -23,7 +23,7 @@ public class PageLoaderFX implements PageLoader {
             Parent root =loader.load(); //Carica la pagina richiesta
             Stage stage = (Stage) Stage.getWindows().getFirst();
 
-            // Ottieni il controller collegato e lo inizializzi
+            //Ottieni il controller collegato e lo inizializzi
             PageManager controller = loader.getController();
             controller.setupDependencies(new PageLoaderFX(),new ShowMessageHandlerFX());
 

@@ -6,6 +6,7 @@ import com.example.progetto_ispw.exception.PageNotFoundException;
 import com.example.progetto_ispw.view.PageManager;
 import com.example.progetto_ispw.view.handler.shortcut.ShortcutHandler;
 
+//----CLASSE ASTRATTA PER DEFINIRE UNA BASE PER LA CREAZIONE DI CONTROLLER GRAFICI CHE HANNO LE SHORTCUT PER IL LOGOUT E HOME----
 public abstract class ShortcutHandlerFX extends PageManager implements ShortcutHandler {
     @Override
     public void logout(){
