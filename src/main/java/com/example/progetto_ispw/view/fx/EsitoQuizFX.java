@@ -1,5 +1,6 @@
 package com.example.progetto_ispw.view.fx;
 
+import com.example.progetto_ispw.bean.ErroriQuizInfoBean;
 import com.example.progetto_ispw.bean.QuizInfoBean;
 import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.controller.QuizController;
@@ -54,5 +55,17 @@ public class EsitoQuizFX extends CompleteShortcutHandlerFX {
     public void onTornaAlCorsoClicked(){
         controllerQuiz.clearInfoQuiz();
         course();
+    }
+    //----METODO PER MOSTRARE GLI ERRORI COMPIUTI----
+    @FXML
+    public void onErroriButtonClicked(){
+        try {
+            ErroriQuizInfoBean errori = controllerQuiz.getErrori();
+            showMessageHandler.showMessage(errori.toString(),"Errori");
+        } catch (DataNotFoundException e) {
+            showMessageHandler.showError(e.getMessage(), ErrorCode.SESSION);
+        } catch (DataSessionCastingException e){
+            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
+        }
     }
 }

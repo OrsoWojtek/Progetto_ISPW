@@ -184,8 +184,10 @@ public class SvolgiQuizFX extends ShortcutHandlerFX {
             showMessageHandler.showError(e.getMessage(), ErrorCode.SESSION);
         } catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);
-        }catch (DataAccessException e){
+        } catch (DataAccessException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.DB_ERROR);
+        } catch (DataSessionCastingException e){
+            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
         }
     }
     //----METODO PER IL LOGOUT----

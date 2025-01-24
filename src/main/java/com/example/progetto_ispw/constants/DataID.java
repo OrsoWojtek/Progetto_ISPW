@@ -5,7 +5,8 @@ public enum DataID {
     //Costanti definite nella enum, ognuna rappresenta un identificatore unico.
     UTENTE("utente"),    //Identificatore per i dati che si riferiscono ad un 'utente'
     CORSO("corso"),     //Identificatore per i dati che si riferiscono ad un 'corso'
-    QUIZ("quiz");        //Identificatore per i dati che si riferiscono ad un 'quiz'
+    QUIZ("quiz"),         //Identificatore per i dati che si riferiscono ad un 'quiz'
+    ERRORI("errori");   //Identificatore per i dati che si riferiscono agli errori commessi nel quiz
     private final String value;
     DataID(String value){
         this.value = value;

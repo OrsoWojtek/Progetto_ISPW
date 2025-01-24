@@ -8,6 +8,7 @@ import com.example.progetto_ispw.constants.PageID;
 import com.example.progetto_ispw.controller.CorsoPageController;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.fx.handler.shortcut.ShortcutHandlerFX;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -15,6 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
@@ -138,7 +141,7 @@ public class CorsoFX extends ShortcutHandlerFX {
     }
 
     //----METODO PER MOSTRARE IL CATALOGO DI QUIZ DISPONIBILI----
-    private void showQuizCatalog() {
+    private void showQuizCatalog1() {
         //Rimuovi i precedenti quiz dal contenitore
         quizContainer.getChildren().clear();
 
@@ -159,17 +162,27 @@ public class CorsoFX extends ShortcutHandlerFX {
             rectangle.setFill(Color.BLACK);
             rectangle.setStroke(Color.BLACK);
 
-            //Crea il testo con il nome del quiz
+            //Font per il testo nel rettangolo
             String fontSize = "18"; //(per il maxi-schermo: 36; per altri schermi: 18)
-            Text titolo = new Text(quiz.getTitolo()+": "+quiz.getPunteggioStudente()+"/"+quiz.getPunteggio());
+
+            //Crea il testo con il nome del quiz
+            Text titolo = new Text(quiz.getTitolo()+":");
             titolo.setFill(Color.WHITE);
             titolo.setStyle("-fx-font-weight: bold;");
             titolo.setStyle("-fx-font-size:"+fontSize+";");
             titolo.setUnderline(true);
 
+            //Crea il testo con il punteggio del quiz
+            Text punteggio = new Text(quiz.getPunteggioStudente() + "/" + quiz.getPunteggio());
+            punteggio.setFill(Color.WHITE);
+            punteggio.setStyle("-fx-font-size:" + fontSize + ";");
+
             //Centrare il testo nel rettangolo
-            StackPane quizBox = new StackPane(rectangle, titolo);
+            StackPane quizBox = new StackPane(rectangle, titolo, punteggio);
             quizBox.setAlignment(Pos.CENTER);
+
+            // Gestione posizione del punteggio
+            punteggio.setTranslateX(titolo.getLayoutBounds().getWidth() + 20); //Spazio tra titolo e punteggio
 
             //Eventi per clic sul quiz
             quizBox.setOnMouseEntered(event -> quizBox.setCursor(Cursor.HAND));
@@ -183,6 +196,87 @@ public class CorsoFX extends ShortcutHandlerFX {
         //Aggiungi i bottoni di navigazione
         addNavigationButtons(endIndx);
     }
+
+
+
+
+    private void showQuizCatalog() {
+        //Rimuovi i precedenti quiz dal contenitore
+        quizContainer.getChildren().clear();
+
+        //Calcola l'indice iniziale e finale dei quiz da mostrare
+        int quizzesPerPage = 4; //Numero massimo di quiz per pagina
+        int startIndx = currentPage * quizzesPerPage;
+        int endIndx = Math.min(startIndx + quizzesPerPage, quizzes.size());
+
+
+        //Mostra i quiz correnti
+        for (int i = startIndx; i < endIndx; i++) {
+            QuizInfoBean quiz = quizzes.get(i);
+
+            //Larghezza massima per entrambi gli oggetti (rettangolo ed ellisse)
+            int width = 298; //(per il maxi-schermo: 597; per altri schermi: 298)
+
+            //Rettangolo (Titolo)
+            Rectangle rectTitolo = new Rectangle(187, 43);
+            rectTitolo.setFill(Color.BLACK);
+
+            //Ellisse (Punteggio)
+            Ellipse ellipsePunteggio = new Ellipse(53, 27);
+            ellipsePunteggio.setFill(Color.valueOf("871414"));
+
+            //Font per i testi
+            String fontSize = "18"; //(per il maxi-schermo: 36; per altri schermi: 18)
+
+            //Crea il testo per il titolo del quiz
+            Text titolo = new Text(quiz.getTitolo());
+            titolo.setFill(Color.WHITE);
+            titolo.setStyle("-fx-font-weight: bold;");
+            titolo.setStyle("-fx-font-size:" + fontSize + ";");
+
+            //Crea il testo per il punteggio
+            Text punteggio = new Text(quiz.getPunteggioStudente() + "/" + quiz.getPunteggio());
+            punteggio.setFill(Color.WHITE);
+            punteggio.setStyle("-fx-font-weight: bold;");
+            punteggio.setStyle("-fx-font-size:" + fontSize + ";");
+
+            //Aggiungi il testo al rispettivo riquadro
+            StackPane stackTitolo = new StackPane(rectTitolo, titolo);
+            stackTitolo.setAlignment(Pos.CENTER);
+
+            StackPane stackPunteggio = new StackPane(ellipsePunteggio, punteggio);
+            stackPunteggio.setAlignment(Pos.CENTER);
+
+            //Aggiungi gli eventi per il titolo (ritorna alla pagina del quiz)
+            stackTitolo.setOnMouseEntered(event -> stackTitolo.setCursor(Cursor.HAND));
+            stackTitolo.setOnMouseExited(event -> stackTitolo.setCursor(Cursor.DEFAULT));
+            stackTitolo.setOnMouseClicked(mouseEvent -> goToQuizPage(quiz.getTitolo())); // Porta alla pagina del quiz
+
+            //Aggiungi gli eventi per il punteggio
+            stackPunteggio.setOnMouseEntered(event -> stackPunteggio.setCursor(Cursor.HAND));
+            stackPunteggio.setOnMouseExited(event -> stackPunteggio.setCursor(Cursor.DEFAULT));
+
+            //Crea un HBox per affiancare i due rettangoli
+            HBox quizBox = new HBox(stackTitolo, stackPunteggio);
+            quizBox.setSpacing(10); //Spazio tra il titolo e il punteggio
+            quizBox.setAlignment(Pos.CENTER);
+
+            //Aggiungi una linea orizzontale sotto la coppia
+            Line separatore = new Line(0, 0, width, 0); //Linea lunga quanto il rettangolo totale
+            separatore.setStroke(Color.GRAY); //Colore della linea
+            separatore.setStrokeWidth(1); //Spessore della linea
+
+            //Aggiungi l'HBox al contenitore
+            Platform.runLater(() -> {
+                quizContainer.getChildren().add(quizBox);
+                quizContainer.getChildren().add(separatore);
+            });
+        }
+
+        //Aggiungi i bottoni di navigazione
+        addNavigationButtons(endIndx);
+    }
+
 
     private void addNavigationButtons(int endIndx) {
         //Rimuovi i precedenti bottoni

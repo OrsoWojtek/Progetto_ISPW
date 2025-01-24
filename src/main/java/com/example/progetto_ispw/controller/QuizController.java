@@ -12,25 +12,7 @@ import com.example.progetto_ispw.model.sessione.SessionManager;
 
 //----CONTROLLER APPLICATIVO PER GESTIRE IL QUIZ----
 public class QuizController {
-    //----METODO CHE CONTROLLA LA PRESENZA DI ALMENO UN QUESITO DEL QUIZ SENZA UNA RISPOSTA SELEZIONATA DALL'UTENTE----
-    public void isFullyFilled(QuizInfoBean quiz) throws NotFilledQuestionException {
-        for (QuesitoInfoBean quesito : quiz.getQuesiti()) {
-            boolean allNotTicked = true;
-
-            for (RispostaInfoBean risposta : quesito.getRisposte()) {
-                if (risposta.isTicked()) {
-                    allNotTicked = false;
-                    break; //Esci dal ciclo interno appena trovi una risposta di un quesito che è stata selezionata
-                }
-            }
-
-            if (allNotTicked) {
-                //Lancia l'eccezione appena trovi un quesito con tutte le risposte non selezionate
-                throw new NotFilledQuestionException("Trovato un quesito con tutte le risposte non ticked.");
-            }
-        }
-        //Se il metodo termina senza lanciare l'eccezione, significa che non esiste un quesito con tutte le risposte non ticked
-    }
+    //___________________________METODI CHE HANNO STRETTAMENTE A CHE FARE CON LA SESSIONE__________________________________
     //----METODO PER RESTITUIRE LE INFO DEL QUIZ CORRENTE
     public QuizInfoBean getInfoQuiz() throws DataNotFoundException {
         return getQuizSession().getDato(DataID.QUIZ,QuizInfoBean.class);
@@ -52,10 +34,34 @@ public class QuizController {
     public void clearInfoQuiz(){
         getQuizSession().removeDato(DataID.QUIZ);
         getQuizSession().removeEntity(DataID.QUIZ.getValue());
+        getQuizSession().removeDato(DataID.ERRORI);
     }
     //----METODO PER OTTENERE LA SESSIONE RIGUARDO ALLA PAGINA DEL QUIZ
     private Session getQuizSession(){
         return SessionManager.getInstance().getSession(SessionID.QUIZ_PAGE);
+    }
+
+
+
+    //___________________________METODI 'PIÙ LEGATI AL CASO D'USO'__________________________________
+    //----METODO CHE CONTROLLA LA PRESENZA DI ALMENO UN QUESITO DEL QUIZ SENZA UNA RISPOSTA SELEZIONATA DALL'UTENTE----
+    public void isFullyFilled(QuizInfoBean quiz) throws NotFilledQuestionException {
+        for (QuesitoInfoBean quesito : quiz.getQuesiti()) {
+            boolean allNotTicked = true;
+
+            for (RispostaInfoBean risposta : quesito.getRisposte()) {
+                if (risposta.isTicked()) {
+                    allNotTicked = false;
+                    break; //Esci dal ciclo interno appena trovi una risposta di un quesito che è stata selezionata
+                }
+            }
+
+            if (allNotTicked) {
+                //Lancia l'eccezione appena trovi un quesito con tutte le risposte non selezionate
+                throw new NotFilledQuestionException("Trovato un quesito con tutte le risposte non ticked.");
+            }
+        }
+        //Se il metodo termina senza lanciare l'eccezione, significa che non esiste un quesito con tutte le risposte non ticked
     }
     //----METODO PER SPUNTARE LA RISPOSTA SELEZIONATA----
     public void tickAnswer(AnsweringProcessInfoBean answer) {
@@ -82,13 +88,20 @@ public class QuizController {
     //----METODO PER SOTTOPORRERE IL QUIZ----
     public void submitQuiz(QuizInfoBean quiz) throws DataNotFoundException, ConnectionException, DataAccessException {
         quiz.setPunteggioStudente(-quiz.getPunteggioStudente()); //Resettiamo il punteggio dello studente
+        ErroriQuizInfoBean errori = new ErroriQuizInfoBean();
         for (QuesitoInfoBean quesito : quiz.getQuesiti()) {
             for (RispostaInfoBean risposta : quesito.getRisposte()){
-                if(risposta.isCorretta()&&risposta.isTicked()) {
-                    quiz.setPunteggioStudente(quesito.getPunti());
+                if(risposta.isTicked()){
+                    if(risposta.isCorretta()){
+                        quiz.setPunteggioStudente(quesito.getPunti());
+                    } else {
+                        errori.setErrore(quesito.getDomanda(),risposta.getTesto());
+                    }
+                    break;
                 }
             }
         }
+        getQuizSession().addDato(DataID.ERRORI,errori); //Aggiungo il bean con gli errori alla sessione della pagina del quiz
         try {
             updateQuiz(quiz.getPunteggioStudente());
         } catch (UpdateDataException e) { //Update in persistenza non andato a buon fine
@@ -105,5 +118,9 @@ public class QuizController {
             CorsoInfoBean corso = SessionManager.getInstance().getSession(SessionID.COURSE_PAGE).getDato(DataID.CORSO, CorsoInfoBean.class);
             dao.updateScore(quiz,utente,corso); //Aggiorna il punteggio ottenuto nel db
         }
+    }
+    //----METODO PER SCOPRIRE GLI ERRORI COMMESSI DALL'UTENTE NEL QUIZ----
+    public ErroriQuizInfoBean getErrori() throws DataNotFoundException {
+        return getQuizSession().getDato(DataID.ERRORI,ErroriQuizInfoBean.class);
     }
 }
