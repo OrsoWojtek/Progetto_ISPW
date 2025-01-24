@@ -57,13 +57,9 @@ public class Quiz implements Entity{
             this.scoreUtente = punteggioPrecedente;
             return this;
         }
-        public void addQuesito(Quesito quesito) {
-            if (quesito == null) {
-                throw new IllegalArgumentException("Il quesito non può essere null.");
-            }
-            this.quesiti.add(quesito);
+        public void addQuesito(Quesito.Builder builder) {
+            this.quesiti.add(builder.build());
         }
-
         public Quiz build() throws DataNotFoundException{
             if (titolo == null || difficolta == null || argomenti == null || durata == 0 || quesiti.isEmpty()) {
                 throw new DataNotFoundException("Mancano dati obbligatori per costruire il quiz.");
@@ -100,12 +96,8 @@ public class Quiz implements Entity{
         return scoreUtente;
     }
 
-    //Metodo per rispondere ad un quesito
-    public void answering(int quesito, int risposta ){
-        quesiti.get(quesito).tickingAnswer(risposta);
-    }
     //Metodo per aggiornare lo score dell'utente
     public void updateScoreUtente(int punti){
-        scoreUtente+=punti;
+        this.scoreUtente=punti;
     }
 }

@@ -56,34 +56,29 @@ public class QuizDAOJDBC {
                     int punti = result.getInt("punti");
                     int punteggioPrecedenteUser = result.getInt("punteggioUtente");
 
-                    // Se il quiz non è già stato aggiunto, creiamo il suo builder
-                    quizBuilders.computeIfAbsent(quizId, id -> {
-                        Quiz.Builder builder = null;
-                        builder = new Quiz.Builder()
-                                .setTitolo(titolo)
-                                .setDurata(durata)
-                                .setDifficolta(difficolta)
-                                .setArgomenti(argomenti)
-                                .setScoreUtente(punteggioPrecedenteUser);
-                        return builder;
-                    });
+                    //Se il quiz non è già stato aggiunto, creiamo il suo builder
+                    quizBuilders.computeIfAbsent(quizId, id ->
+                            new Quiz.Builder()
+                            .setTitolo(titolo)
+                            .setDurata(durata)
+                            .setDifficolta(difficolta)
+                            .setArgomenti(argomenti)
+                            .setScoreUtente(punteggioPrecedenteUser));
 
-                    // Se il quesito non è già stato aggiunto, creiamo il suo builder
-                    quesitoBuilders.computeIfAbsent(domandaId, id -> {
-                        Quesito.Builder quesitoBuilder = null;
-                        quesitoBuilder = new Quesito.Builder()
-                                .setDomanda(domanda)
-                                .setPunti(punti);
-                        return quesitoBuilder;
-                    });
-                    // Aggiungiamo le risposte al quesito
+                    //Se il quesito non è già stato aggiunto, creiamo il suo builder
+                    quesitoBuilders.computeIfAbsent(domandaId, id ->
+                            new Quesito.Builder()
+                            .setDomanda(domanda)
+                            .setPunti(punti));
+
+                    //Aggiungiamo le risposte al quesito
                     quesitoBuilders.get(domandaId).addRisposta(
                             result.getString("risposta_testo"),
                             result.getBoolean("corretta")
                     );
                     int nRispxDom = 4; //Numero di risposte per domanda
                     if (rispostaCorrente == nRispxDom){
-                        quizBuilders.get(quizId).addQuesito(quesitoBuilders.get(domandaId).build());
+                        quizBuilders.get(quizId).addQuesito(quesitoBuilders.get(domandaId));
                         rispostaCorrente = 0;
                     }
                     rispostaCorrente++;

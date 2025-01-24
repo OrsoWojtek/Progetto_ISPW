@@ -161,7 +161,7 @@ public class CorsoFX extends ShortcutHandlerFX {
 
             //Crea il testo con il nome del quiz
             String fontSize = "18"; //(per il maxi-schermo: 36; per altri schermi: 18)
-            Text titolo = new Text(quiz.getTitolo());
+            Text titolo = new Text(quiz.getTitolo()+": "+quiz.getPunteggioStudente()+"/"+quiz.getPunteggio());
             titolo.setFill(Color.WHITE);
             titolo.setStyle("-fx-font-weight: bold;");
             titolo.setStyle("-fx-font-size:"+fontSize+";");

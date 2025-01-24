@@ -1,8 +1,11 @@
 package com.example.progetto_ispw.view.fx;
 
+import com.example.progetto_ispw.bean.QuizInfoBean;
 import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.controller.QuizController;
 import com.example.progetto_ispw.exception.ConnectionException;
+import com.example.progetto_ispw.exception.DataNotFoundException;
+import com.example.progetto_ispw.exception.DataSessionCastingException;
 import com.example.progetto_ispw.view.fx.handler.shortcut.CompleteShortcutHandlerFX;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -18,6 +21,17 @@ public class EsitoQuizFX extends CompleteShortcutHandlerFX {
     @FXML
     public void initialize() {
         controllerQuiz = new QuizController();
+        try {
+            QuizInfoBean quiz = controllerQuiz.getInfoQuiz();
+            punteggio.setText(quiz.getPunteggioStudente()+"/"+ quiz.getPunteggio());
+            tempo.setText(quiz.showTempo());
+        }catch (DataNotFoundException e){
+            showMessageHandler.showError(e.getMessage(), ErrorCode.SESSION);
+            effettuaLogout();
+        } catch (DataSessionCastingException e){
+            showMessageHandler.showError("Si è presentato un errore nel casting di un qualche dato conservato nella sessione.",ErrorCode.CASTING);
+            effettuaLogout();
+        }
     }
     //----METODO PER EFFETTUARE IL LOGOUT----
     @FXML

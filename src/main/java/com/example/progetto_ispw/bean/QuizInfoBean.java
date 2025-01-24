@@ -62,7 +62,7 @@ public class QuizInfoBean implements Bean{
     public void setTempo(int tempo) {
         this.tempo = tempo;
     }
-    public int getTempo() {
-        return tempo;
+    public String showTempo() {
+        return tempo/60+":"+tempo%60;
     }
 }

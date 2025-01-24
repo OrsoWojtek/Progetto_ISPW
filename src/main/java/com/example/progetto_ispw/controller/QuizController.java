@@ -81,6 +81,7 @@ public class QuizController {
     }
     //----METODO PER SOTTOPORRERE IL QUIZ----
     public void submitQuiz(QuizInfoBean quiz) throws DataNotFoundException, ConnectionException, DataAccessException {
+        quiz.setPunteggioStudente(-quiz.getPunteggioStudente()); //Resettiamo il punteggio dello studente
         for (QuesitoInfoBean quesito : quiz.getQuesiti()) {
             for (RispostaInfoBean risposta : quesito.getRisposte()){
                 if(risposta.isCorretta()&&risposta.isTicked()) {
