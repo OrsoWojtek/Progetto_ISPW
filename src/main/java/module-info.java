@@ -27,4 +27,6 @@ module com.example.progetto_ispw {
     exports com.example.progetto_ispw.view.handler.pageloader;
     exports com.example.progetto_ispw.view.handler.shortcut;
     exports com.example.progetto_ispw.view.handler.showmessage;
+    exports com.example.progetto_ispw.connessione;
+    opens com.example.progetto_ispw.connessione to javafx.fxml;
 }

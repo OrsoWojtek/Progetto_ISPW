@@ -50,6 +50,7 @@ public class QuizFX extends CompleteShortcutHandlerFX {
             logout();
         } catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.CONNECTION);
+            System.exit(1);
         }
     }
     //----METODO PER MOSTRARE GLI ARGOMENTI DEL QUIZ----

@@ -1,7 +1,7 @@
 package com.example.progetto_ispw.controller;
 
-import com.example.progetto_ispw.Connessione;
 import com.example.progetto_ispw.bean.*;
+import com.example.progetto_ispw.connessione.PersistenceConnectionManager;
 import com.example.progetto_ispw.constants.DataID;
 import com.example.progetto_ispw.constants.SessionID;
 import com.example.progetto_ispw.dao.jdbc.QuizDAOJDBC;
@@ -20,8 +20,12 @@ public class QuizController {
     //----METODO PER PULIRE CONNESSIONE AL DB E SESSIONE AL LOGOUT----
     public void clean() throws ConnectionException {
         SessionManager.getInstance().invalidateSessions(); //Formatto le sessioni
-        Connessione conn = Connessione.getInstance();
-        conn.closeConnection(); //Chiudo definitivamente la connessione con il db
+        try {
+            PersistenceConnectionManager conn = PersistenceConnectionManager.getInstance();
+            conn.closeConnection(); //Chiudo definitivamente la connessione con la persistenza
+        }catch (InstanceException e){
+            throw new ConnectionException("Si è verificato un errore inatteso nella ricerca della connessione al livello di persistenza");
+        }
     }
     //----METODO PER PULIRE LE SESSIONI SUCCESSIVE A QUELLA DI LOGIN----
     public void clearOtherInfo(){

@@ -28,8 +28,5 @@ public class Main extends Application {
         stage.show();
         //-----------------FINE------
     }
-
-    public static void main(String[] args) {
-        launch();
-    }
+    public static void main(String[] args) {launch();}
 }

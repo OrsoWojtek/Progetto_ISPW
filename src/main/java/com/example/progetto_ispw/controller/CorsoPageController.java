@@ -1,13 +1,14 @@
 package com.example.progetto_ispw.controller;
 
-import com.example.progetto_ispw.Connessione;
 import com.example.progetto_ispw.bean.*;
+import com.example.progetto_ispw.connessione.PersistenceConnectionManager;
 import com.example.progetto_ispw.constants.DataID;
 import com.example.progetto_ispw.constants.SessionID;
 import com.example.progetto_ispw.dao.jdbc.QuizDAOJDBC;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataAccessException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
+import com.example.progetto_ispw.exception.InstanceException;
 import com.example.progetto_ispw.model.Quesito;
 import com.example.progetto_ispw.model.Quiz;
 import com.example.progetto_ispw.model.Risposta;
@@ -73,8 +74,12 @@ public class CorsoPageController {
     //----METODO PER PULIRE CONNESSIONE AL DB E SESSIONE AL LOGOUT----
     public void clean() throws ConnectionException {
         SessionManager.getInstance().invalidateSessions(); //Formatto le sessioni
-        Connessione conn = Connessione.getInstance();
-        conn.closeConnection(); //Chiudo definitivamente la connessione con il db
+        try {
+            PersistenceConnectionManager conn = PersistenceConnectionManager.getInstance();
+            conn.closeConnection(); //Chiudo definitivamente la connessione con la persistenza
+        }catch (InstanceException e){
+            throw new ConnectionException("Si è verificato un errore inatteso nella ricerca della connessione al livello di persistenza");
+        }
     }
     //----METODO PER RESETTARE NELLA SESSIONE LE INFO SUL CORSO SELEZIONATO
     public void clearInfoCourse(){

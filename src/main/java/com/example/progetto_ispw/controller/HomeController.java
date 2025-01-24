@@ -1,14 +1,15 @@
 package com.example.progetto_ispw.controller;
 
-import com.example.progetto_ispw.Connessione;
 import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
+import com.example.progetto_ispw.connessione.PersistenceConnectionManager;
 import com.example.progetto_ispw.constants.DataID;
 import com.example.progetto_ispw.constants.SessionID;
 import com.example.progetto_ispw.dao.jdbc.CorsoDAOJDBC;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataAccessException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
+import com.example.progetto_ispw.exception.InstanceException;
 import com.example.progetto_ispw.model.Corso;
 import com.example.progetto_ispw.model.sessione.SessionManager;
 
@@ -42,8 +43,12 @@ public class HomeController {
     //----METODO PER PULIRE CONNESSIONE AL DB E SESSIONE----
     public void clean() throws ConnectionException {
         SessionManager.getInstance().invalidateSessions(); //Formatto le sessioni
-        Connessione conn = Connessione.getInstance();
-        conn.closeConnection(); //Chiudo definitivamente la connessione con il db
+        try {
+            PersistenceConnectionManager conn = PersistenceConnectionManager.getInstance();
+            conn.closeConnection(); //Chiudo definitivamente la connessione con la persistenza
+        }catch (InstanceException e){
+            throw new ConnectionException("Si è verificato un errore inatteso nella ricerca della connessione al livello di persistenza");
+        }
     }
     //----METODO PER OTTENERE LE INFORMAZIONI DELL'UTENTE CORRENTE----
     public UtenteInfoBean getInfoUser() throws DataNotFoundException {

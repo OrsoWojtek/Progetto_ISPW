@@ -1,27 +1,23 @@
 package com.example.progetto_ispw.dao.jdbc;
 
-import com.example.progetto_ispw.Connessione;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.model.Corso;
 import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.exception.DataAccessException;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CorsoDAOJDBC {
-    private final Connessione connessione;
-    private final Connection connection;
+public class CorsoDAOJDBC extends DAOJDBC{
     private PreparedStatement statement = null;
 
     public CorsoDAOJDBC() throws ConnectionException {
-        connection = Connessione.getInstance().getConnect();
-        connessione = Connessione.getInstance();
+        connessione = getConnessione();
+        connection = connessione.getConnect();
     }
     //----METODO PER OTTENERE TUTTI I CORSI A CUI È ISCRITTO L'UTENTE----
     public List<Corso> getCourses(UtenteInfoBean user) throws DataNotFoundException, DataAccessException, ConnectionException {

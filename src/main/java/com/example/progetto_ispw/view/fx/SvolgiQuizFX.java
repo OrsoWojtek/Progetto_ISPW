@@ -198,6 +198,7 @@ public class SvolgiQuizFX extends ShortcutHandlerFX {
             logout();
         } catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.CONNECTION);
+            System.exit(1);
         }
     }
 }

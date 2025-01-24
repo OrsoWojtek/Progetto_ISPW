@@ -1,8 +1,7 @@
-package com.example.progetto_ispw;
+package com.example.progetto_ispw.connessione;
 
 import com.example.progetto_ispw.exception.ConnectionException;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -11,24 +10,17 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
 
-//----CLASSE PER LA CONNESSIONE AL DB (IMPLEMENTA IL PATTERN SINGLETON)----
-public class Connessione {
-    private static Connessione istance = null; //----VARIABILE STATICA CHE CONTIENE L'UNICA ISTANZA DELLA CLASSE
+//----CLASSE PER LA CONNESSIONE AL DB----
+public class ConnessioneJDBC extends PersistenceConnectionManager{
     private Connection connect = null; //----CONNESSIONE AL DB
 
 
-    //----COSTRUTTORE PRIVATO PER IMPEDIRE L'ISTANZAZIONE ESTERNA----
-    protected Connessione() throws ConnectionException {
-        createConnection();
+    //----COSTRUTTORE IN CUI ANDIAMO A CREARE LA CONNESSIONE E INIZIALIZZA IL SINGLETON----
+    public ConnessioneJDBC() throws ConnectionException {
+        openConnection();
+        initializeInstance(this);
     }
 
-    //----METODO STATICO PER OTTENERE L'ISTANZA UNICA----
-    public static synchronized Connessione getInstance() throws ConnectionException {
-        if(Connessione.istance == null){
-            Connessione.istance = new Connessione();
-        }
-        return istance;
-    }
 
     //----METODO PER CHIUDERE LO STATEMENT----
     public void close(PreparedStatement stm) throws ConnectionException{
@@ -40,10 +32,10 @@ public class Connessione {
             throw new ConnectionException("Errore nella chiusura dello statement");
         }
     }
+    @Override
     //----METODO PER CREARE LA CONNESSIONE----
-    private void createConnection() throws ConnectionException{
-        try{
-            InputStream input = getClass().getClassLoader().getResourceAsStream("connecting_info.properties");
+    protected void openConnection() throws ConnectionException{
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("connecting_info.properties")) {
             Properties properties = new Properties();
             properties.load(input);
 
@@ -51,8 +43,6 @@ public class Connessione {
             String pssw = properties.getProperty("db.password");
             String dburl = properties.getProperty("db.url");
             this.connect = DriverManager.getConnection(dburl, user, pssw);
-        } catch (FileNotFoundException e){
-            throw new ConnectionException("File inesistente o non accessibile");
         } catch (IOException e){
             throw new ConnectionException("Errore durante la lettura del file 'connecting_info.properties'");
         } catch (SQLException e){
@@ -64,7 +54,7 @@ public class Connessione {
     public Connection getConnect() throws ConnectionException {
         try {
             if (this.connect == null || this.connect.isClosed()) {
-                createConnection(); //Ricrea la connessione
+                openConnection(); //Ricrea la connessione
             }
         } catch (SQLException e){
             throw new ConnectionException("Errore durante il controllo dello stato della connessione");
@@ -73,6 +63,7 @@ public class Connessione {
     }
 
     //----METODO PER CHIUDERE LA CONNESSIONE----
+    @Override
     public void closeConnection() throws ConnectionException{
         if (this.connect != null) {
             try {

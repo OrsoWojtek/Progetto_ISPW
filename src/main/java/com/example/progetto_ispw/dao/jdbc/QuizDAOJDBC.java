@@ -1,13 +1,11 @@
 package com.example.progetto_ispw.dao.jdbc;
 
-import com.example.progetto_ispw.Connessione;
 import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.model.Quesito;
 import com.example.progetto_ispw.model.Quiz;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,11 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class QuizDAOJDBC {
-    private final Connection connection;
+public class QuizDAOJDBC extends DAOJDBC{
 
     public QuizDAOJDBC() throws ConnectionException {
-        Connessione connessione = Connessione.getInstance();
+        connessione = getConnessione();
         connection = connessione.getConnect();
     }
     //----METODO PER OTTENERE TUTTI I QUIZ PRESENTI NEL CORSO----

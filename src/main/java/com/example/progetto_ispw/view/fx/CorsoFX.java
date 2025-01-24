@@ -87,6 +87,7 @@ public class CorsoFX extends ShortcutHandlerFX {
             logout();
         } catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.CONNECTION);
+            System.exit(1);
         }
     }
     //----METODO PER TORNARE ALLA HOME----

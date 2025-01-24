@@ -1,29 +1,21 @@
 package com.example.progetto_ispw.dao.jdbc;
 
-import com.example.progetto_ispw.Connessione;
 import com.example.progetto_ispw.bean.LoginInfoBean;
-import com.example.progetto_ispw.exception.ConnectionException;
-import com.example.progetto_ispw.exception.DataNotFoundException;
-import com.example.progetto_ispw.exception.DataAccessException;
-import com.example.progetto_ispw.exception.RoleNotFoundException;
+import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.model.Utente;
 import com.example.progetto_ispw.pattern.factory.UtenteFactory;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UtenteDAOJDBC {
-    private final Connessione connessione;
-    private final Connection connection;
+public class UtenteDAOJDBC extends DAOJDBC{
     private PreparedStatement statement = null;
 
     public UtenteDAOJDBC() throws ConnectionException {
-        connection = Connessione.getInstance().getConnect();
-        connessione = Connessione.getInstance();
+        connessione = getConnessione();
+        connection = connessione.getConnect();
     }
-
 
     //----METODO PER VERIFICARE LA PRESENZA DELLE CREDENZIALI INSERITE NEL DB----
     public Utente getNewUtente(LoginInfoBean currentCred) throws DataNotFoundException, DataAccessException, RoleNotFoundException, ConnectionException {
