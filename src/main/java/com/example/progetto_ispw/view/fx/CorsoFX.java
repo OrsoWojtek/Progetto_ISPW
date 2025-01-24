@@ -141,65 +141,6 @@ public class CorsoFX extends ShortcutHandlerFX {
     }
 
     //----METODO PER MOSTRARE IL CATALOGO DI QUIZ DISPONIBILI----
-    private void showQuizCatalog1() {
-        //Rimuovi i precedenti quiz dal contenitore
-        quizContainer.getChildren().clear();
-
-        //Calcola l'indice iniziale e finale dei quiz da mostrare
-
-        int quizzesPerPage = 6; //Numero massimo di quiz per pagina
-        int startIndx = currentPage * quizzesPerPage;
-        int endIndx = Math.min(startIndx + quizzesPerPage, quizzes.size());
-
-        //Mostra i quiz correnti
-        for (int i = startIndx; i < endIndx; i++) {
-            QuizInfoBean quiz = quizzes.get(i);
-
-            //Crea un rettangolo
-            int width = 298; //(per il maxi-schermo: 597; per altri schermi: 298)
-            int height = 43; //(per il maxi-schermo: 86; per altri schermi: 43)
-            Rectangle rectangle = new Rectangle(width, height);
-            rectangle.setFill(Color.BLACK);
-            rectangle.setStroke(Color.BLACK);
-
-            //Font per il testo nel rettangolo
-            String fontSize = "18"; //(per il maxi-schermo: 36; per altri schermi: 18)
-
-            //Crea il testo con il nome del quiz
-            Text titolo = new Text(quiz.getTitolo()+":");
-            titolo.setFill(Color.WHITE);
-            titolo.setStyle("-fx-font-weight: bold;");
-            titolo.setStyle("-fx-font-size:"+fontSize+";");
-            titolo.setUnderline(true);
-
-            //Crea il testo con il punteggio del quiz
-            Text punteggio = new Text(quiz.getPunteggioStudente() + "/" + quiz.getPunteggio());
-            punteggio.setFill(Color.WHITE);
-            punteggio.setStyle("-fx-font-size:" + fontSize + ";");
-
-            //Centrare il testo nel rettangolo
-            StackPane quizBox = new StackPane(rectangle, titolo, punteggio);
-            quizBox.setAlignment(Pos.CENTER);
-
-            // Gestione posizione del punteggio
-            punteggio.setTranslateX(titolo.getLayoutBounds().getWidth() + 20); //Spazio tra titolo e punteggio
-
-            //Eventi per clic sul quiz
-            quizBox.setOnMouseEntered(event -> quizBox.setCursor(Cursor.HAND));
-            quizBox.setOnMouseExited(event -> quizBox.setCursor(Cursor.DEFAULT));
-            quizBox.setOnMouseClicked(mouseEvent -> goToQuizPage(quiz.getTitolo())); //porta alla pagina del quiz
-
-            //Aggiungi il rettangolo e il testo al contenitore
-            quizContainer.getChildren().add(quizBox);
-        }
-
-        //Aggiungi i bottoni di navigazione
-        addNavigationButtons(endIndx);
-    }
-
-
-
-
     private void showQuizCatalog() {
         //Rimuovi i precedenti quiz dal contenitore
         quizContainer.getChildren().clear();
@@ -208,7 +149,6 @@ public class CorsoFX extends ShortcutHandlerFX {
         int quizzesPerPage = 4; //Numero massimo di quiz per pagina
         int startIndx = currentPage * quizzesPerPage;
         int endIndx = Math.min(startIndx + quizzesPerPage, quizzes.size());
-
 
         //Mostra i quiz correnti
         for (int i = startIndx; i < endIndx; i++) {
@@ -227,18 +167,20 @@ public class CorsoFX extends ShortcutHandlerFX {
 
             //Font per i testi
             String fontSize = "18"; //(per il maxi-schermo: 36; per altri schermi: 18)
+            String fontWeightStyle = "-fx-font-weight: bold;";
+            String fontSizeStyle ="-fx-font-size:" + fontSize + ";" ;
 
             //Crea il testo per il titolo del quiz
             Text titolo = new Text(quiz.getTitolo());
             titolo.setFill(Color.WHITE);
-            titolo.setStyle("-fx-font-weight: bold;");
-            titolo.setStyle("-fx-font-size:" + fontSize + ";");
+            titolo.setStyle(fontWeightStyle);
+            titolo.setStyle(fontSizeStyle);
 
             //Crea il testo per il punteggio
             Text punteggio = new Text(quiz.getPunteggioStudente() + "/" + quiz.getPunteggio());
             punteggio.setFill(Color.WHITE);
-            punteggio.setStyle("-fx-font-weight: bold;");
-            punteggio.setStyle("-fx-font-size:" + fontSize + ";");
+            punteggio.setStyle(fontWeightStyle);
+            punteggio.setStyle(fontSizeStyle);
 
             //Aggiungi il testo al rispettivo riquadro
             StackPane stackTitolo = new StackPane(rectTitolo, titolo);
