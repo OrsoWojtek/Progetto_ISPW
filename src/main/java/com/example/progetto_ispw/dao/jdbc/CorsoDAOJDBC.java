@@ -4,6 +4,7 @@ import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.NotificheInfoBean;
 import com.example.progetto_ispw.bean.QuizInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
+import com.example.progetto_ispw.dao.CorsoDAO;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.UpdateDataException;
 import com.example.progetto_ispw.model.Corso;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CorsoDAOJDBC extends DAOJDBC{
+public class CorsoDAOJDBC extends DAOJDBC implements CorsoDAO {
     private PreparedStatement statement = null;
 
     public CorsoDAOJDBC() throws ConnectionException {
@@ -24,6 +25,7 @@ public class CorsoDAOJDBC extends DAOJDBC{
         connection = connessione.getConnect();
     }
     //----METODO PER OTTENERE TUTTI I CORSI A CUI È ISCRITTO L'UTENTE----
+    @Override
     public List<Corso> getCourses(UtenteInfoBean user) throws DataNotFoundException, DataAccessException, ConnectionException {
         ResultSet result;
         List<Corso> corsi = new ArrayList<>();
@@ -47,7 +49,7 @@ public class CorsoDAOJDBC extends DAOJDBC{
         }
         return corsi;
     }
-
+    @Override
     public NotificheInfoBean getNotifiche(UtenteInfoBean utente, CorsoInfoBean corso) throws DataAccessException {
         String query = """
         SELECT uc.notifiche
@@ -70,7 +72,7 @@ public class CorsoDAOJDBC extends DAOJDBC{
         }
         return notificheInfoBean;
     }
-
+    @Override
     public void updateNotifiche(UtenteInfoBean utente, CorsoInfoBean corso, QuizInfoBean quiz) throws DataAccessException, UpdateDataException {
         String query = """
         UPDATE utente_corso uc

@@ -2,6 +2,7 @@ package com.example.progetto_ispw.dao.jdbc;
 
 import com.example.progetto_ispw.bean.LoginInfoBean;
 import com.example.progetto_ispw.constants.UserRole;
+import com.example.progetto_ispw.dao.UtenteDAO;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.model.Utente;
 import com.example.progetto_ispw.pattern.factory.UtenteFactory;
@@ -10,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UtenteDAOJDBC extends DAOJDBC{
+public class UtenteDAOJDBC extends DAOJDBC implements UtenteDAO {
     private PreparedStatement statement = null;
 
     public UtenteDAOJDBC() throws ConnectionException {
@@ -19,6 +20,7 @@ public class UtenteDAOJDBC extends DAOJDBC{
     }
 
     //----METODO PER VERIFICARE LA PRESENZA DELLE CREDENZIALI INSERITE NEL DB----
+    @Override
     public Utente getNewUtente(LoginInfoBean currentCred) throws DataNotFoundException, DataAccessException, RoleNotFoundException, ConnectionException {
         String ruolo;
         ResultSet result;

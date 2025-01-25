@@ -5,7 +5,8 @@ import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.connessione.PersistenceConnectionManager;
 import com.example.progetto_ispw.constants.DataID;
 import com.example.progetto_ispw.constants.SessionID;
-import com.example.progetto_ispw.dao.jdbc.CorsoDAOJDBC;
+import com.example.progetto_ispw.dao.CorsoDAO;
+import com.example.progetto_ispw.dao.TipologiaDAO;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataAccessException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
@@ -21,12 +22,12 @@ public class HomeController {
 
     //----METODO PER RICERCARE QUALI SONO I CORSI A CUI L'UTENTE È ISCRITTO----
     public List<CorsoInfoBean> getCorsiFrequentati(UtenteInfoBean utenteInfoBean) throws ConnectionException {
-        CorsoDAOJDBC db = new CorsoDAOJDBC();
+        CorsoDAO dao = (CorsoDAO) TipologiaDAO.CORSO.getDao();
         List<CorsoInfoBean> catalogoBeans = new ArrayList<>();
         try {
-            List<Corso> corsiFrequentati = db.getCourses(utenteInfoBean);
+            List<Corso> corsiFrequentati = dao.getCourses(utenteInfoBean);
             corsiFrequentati.forEach(corso -> {
-                SessionManager.getInstance().createSession(SessionID.CATALOGO_CORSI).addEntity(corso.getNome(),corso); //Creazione di una sessione dedicata per contenere il catalogo dei corsi estratti dal db
+                SessionManager.getInstance().createSession(SessionID.CATALOGO_CORSI).addEntity(corso.getNome(),corso); //Creazione di una sessione dedicata per contenere il catalogo dei corsi estratti dal dao
                 CorsoInfoBean corsoInfoBean = new CorsoInfoBean();
                 corsoInfoBean.setNome(corso.getNome());
                 corsoInfoBean.setDescrizione(corso.getDescrizione());
@@ -40,7 +41,7 @@ public class HomeController {
         }
         return catalogoBeans;
     }
-    //----METODO PER PULIRE CONNESSIONE AL DB E SESSIONE----
+    //----METODO PER PULIRE CONNESSIONE E SESSIONE----
     public void clean() throws ConnectionException {
         SessionManager.getInstance().invalidateSessions(); //Formatto le sessioni
         try {

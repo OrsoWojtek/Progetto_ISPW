@@ -4,7 +4,8 @@ import com.example.progetto_ispw.bean.LoginInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.constants.DataID;
 import com.example.progetto_ispw.constants.SessionID;
-import com.example.progetto_ispw.dao.jdbc.UtenteDAOJDBC;
+import com.example.progetto_ispw.dao.TipologiaDAO;
+import com.example.progetto_ispw.dao.UtenteDAO;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.exception.DataAccessException;
@@ -17,9 +18,9 @@ public class LoginController{
 
     //----METODO DI VERIFICA DEL LOGIN----
     public void checkLogin(LoginInfoBean currLog) throws DataNotFoundException, DataAccessException, RoleNotFoundException, ConnectionException {
-        UtenteDAOJDBC db = new UtenteDAOJDBC();                     //Istanziamento del DAO per il login
+        UtenteDAO dao = (UtenteDAO) TipologiaDAO.UTENTE.getDao();   //Istanziamento del DAO per il login
         UtenteInfoBean utenteInfo = new UtenteInfoBean();          //Generato il bean per contenere le informazioni necessarie da trasferire
-        Utente utente = db.getNewUtente(currLog);                   //Prelevato il nuovo utente
+        Utente utente = dao.getNewUtente(currLog);                   //Prelevato il nuovo utente
         utenteInfo.setRole(utente.getRole());                      //Prelevata l'informazione sul ruolo e username
         utenteInfo.setUsername(utente.getUsername());
         SessionManager istance = SessionManager.getInstance();

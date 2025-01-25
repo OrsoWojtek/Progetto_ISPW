@@ -4,16 +4,13 @@ import com.example.progetto_ispw.bean.*;
 import com.example.progetto_ispw.connessione.PersistenceConnectionManager;
 import com.example.progetto_ispw.constants.DataID;
 import com.example.progetto_ispw.constants.SessionID;
-import com.example.progetto_ispw.dao.jdbc.CorsoDAOJDBC;
-import com.example.progetto_ispw.dao.jdbc.QuizDAOJDBC;
+import com.example.progetto_ispw.dao.CorsoDAO;
+import com.example.progetto_ispw.dao.QuizDAO;
+import com.example.progetto_ispw.dao.TipologiaDAO;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.model.Quiz;
 import com.example.progetto_ispw.model.sessione.Session;
 import com.example.progetto_ispw.model.sessione.SessionManager;
-
-/*
-Da aggiungere: notifica al tutor
- */
 
 //----CONTROLLER APPLICATIVO PER GESTIRE IL QUIZ----
 public class QuizController {
@@ -22,7 +19,7 @@ public class QuizController {
     public QuizInfoBean getInfoQuiz() throws DataNotFoundException {
         return getQuizSession().getDato(DataID.QUIZ,QuizInfoBean.class);
     }
-    //----METODO PER PULIRE CONNESSIONE AL DB E SESSIONE AL LOGOUT----
+    //----METODO PER PULIRE CONNESSIONE E SESSIONE AL LOGOUT----
     public void clean() throws ConnectionException {
         SessionManager.getInstance().invalidateSessions(); //Formatto le sessioni
         try {
@@ -124,7 +121,7 @@ public class QuizController {
     }
     //----METODO PER AGGIUNGERE UNA NOTIFICA AL TUTOR DEL CORSO----
     private void addNotifica() throws ConnectionException, DataNotFoundException, DataAccessException, UpdateDataException {
-        CorsoDAOJDBC dao = new CorsoDAOJDBC();
+        CorsoDAO dao = (CorsoDAO) TipologiaDAO.CORSO.getDao();
         UtenteInfoBean user = SessionManager.getInstance().getSession(SessionID.LOGIN).getDato(DataID.UTENTE, UtenteInfoBean.class);
         CorsoInfoBean corso = SessionManager.getInstance().getSession(SessionID.COURSE_PAGE).getDato(DataID.CORSO, CorsoInfoBean.class);
         QuizInfoBean quiz = getInfoQuiz();
@@ -136,10 +133,10 @@ public class QuizController {
         Quiz quiz = getQuizSession().getEntity(DataID.QUIZ.getValue(), Quiz.class);
         if(quiz.getScoreUtente()<punteggioStudente) { //Se il punteggio ottenuto sul momento dello studente è maggiore dal punteggio che ha precedentemente ottenuto allo stesso quiz...
             quiz.updateScoreUtente(punteggioStudente); //...Allora aggiorna il punteggio dello studente
-            QuizDAOJDBC dao = new QuizDAOJDBC();
+            QuizDAO dao = (QuizDAO) TipologiaDAO.QUIZ.getDao();
             UtenteInfoBean utente = SessionManager.getInstance().getSession(SessionID.LOGIN).getDato(DataID.UTENTE, UtenteInfoBean.class);
             CorsoInfoBean corso = SessionManager.getInstance().getSession(SessionID.COURSE_PAGE).getDato(DataID.CORSO, CorsoInfoBean.class);
-            dao.updateScore(quiz,utente,corso); //Aggiorna il punteggio ottenuto nel db
+            dao.updateScore(quiz,utente,corso); //Aggiorna il punteggio ottenuto dal dao
         }
     }
     //----METODO PER SCOPRIRE GLI ERRORI COMMESSI DALL'UTENTE NEL QUIZ----

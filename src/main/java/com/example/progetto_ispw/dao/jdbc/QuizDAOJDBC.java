@@ -2,6 +2,7 @@ package com.example.progetto_ispw.dao.jdbc;
 
 import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
+import com.example.progetto_ispw.dao.QuizDAO;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.model.Quesito;
 import com.example.progetto_ispw.model.Quiz;
@@ -14,13 +15,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class QuizDAOJDBC extends DAOJDBC{
+public class QuizDAOJDBC extends DAOJDBC implements QuizDAO {
 
     public QuizDAOJDBC() throws ConnectionException {
         connessione = getConnessione();
         connection = connessione.getConnect();
     }
     //----METODO PER OTTENERE TUTTI I QUIZ PRESENTI NEL CORSO----
+    @Override
     public List<Quiz> getQuizzes(CorsoInfoBean corso, UtenteInfoBean utente) throws DataAccessException{
         List<Quiz> quizzes = new ArrayList<>();
 
@@ -94,6 +96,7 @@ public class QuizDAOJDBC extends DAOJDBC{
         return quizzes;
     }
     //----METODO PER AGGIORNARE IL PUNTEGGIO OTTENUTO DALLO STUDENTE AD UN QUIZ----
+    @Override
     public void updateScore(Quiz quiz, UtenteInfoBean utente, CorsoInfoBean corso) throws DataAccessException, UpdateDataException {
         String query = """
         UPDATE utente_quiz

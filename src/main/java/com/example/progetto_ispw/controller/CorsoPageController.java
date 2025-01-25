@@ -4,8 +4,9 @@ import com.example.progetto_ispw.bean.*;
 import com.example.progetto_ispw.connessione.PersistenceConnectionManager;
 import com.example.progetto_ispw.constants.DataID;
 import com.example.progetto_ispw.constants.SessionID;
-import com.example.progetto_ispw.dao.jdbc.CorsoDAOJDBC;
-import com.example.progetto_ispw.dao.jdbc.QuizDAOJDBC;
+import com.example.progetto_ispw.dao.CorsoDAO;
+import com.example.progetto_ispw.dao.QuizDAO;
+import com.example.progetto_ispw.dao.TipologiaDAO;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataAccessException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
@@ -23,13 +24,13 @@ import java.util.List;
 public class CorsoPageController {
     //----METODO PER RICERCARE QUALI SONO I QUIZ DISPONIBILI NEL CORSO----
     public List<QuizInfoBean> getQuizDisponibili(CorsoInfoBean corso, UtenteInfoBean utente) throws ConnectionException, DataAccessException {
-        QuizDAOJDBC dao = new QuizDAOJDBC();
+        QuizDAO dao = (QuizDAO) TipologiaDAO.QUIZ.getDao();
         List<QuizInfoBean> catalogoQuiz = new ArrayList<>();
         List<Quiz> quizzes = dao.getQuizzes(corso, utente);
 
         // Conversione dei quiz in oggetti QuizInfoBean
         for (Quiz quiz : quizzes) {
-            SessionManager.getInstance().createSession(SessionID.CATALOGO_QUIZ).addEntity(quiz.getTitolo(), quiz); //Creazione di una sessione dedicata per contenere il catalogo dei quiz estratti dal db
+            SessionManager.getInstance().createSession(SessionID.CATALOGO_QUIZ).addEntity(quiz.getTitolo(), quiz); //Creazione di una sessione dedicata per contenere il catalogo dei quiz estratti dal dao
             QuizInfoBean quizInfoBean = new QuizInfoBean();
             quizInfoBean.setTitolo(quiz.getTitolo());
             quizInfoBean.setDurata(quiz.getDurata());
@@ -74,11 +75,11 @@ public class CorsoPageController {
 
     //----METODO PER PRENDERE LE NOTIFICHE DALLA PERSISTENZA
     public NotificheInfoBean getInfoNotifiche() throws ConnectionException, DataNotFoundException, DataAccessException {
-        CorsoDAOJDBC dao = new CorsoDAOJDBC();
+        CorsoDAO dao = (CorsoDAO) TipologiaDAO.CORSO.getDao();
         return dao.getNotifiche(SessionManager.getInstance().getSession(SessionID.LOGIN).getDato(DataID.UTENTE, UtenteInfoBean.class),SessionManager.getInstance().getSession(SessionID.COURSE_PAGE).getDato(DataID.CORSO, CorsoInfoBean.class));
     }
 
-    //----METODO PER PULIRE CONNESSIONE AL DB E SESSIONE AL LOGOUT----
+    //----METODO PER PULIRE CONNESSIONE E SESSIONE AL LOGOUT----
     public void clean() throws ConnectionException {
         SessionManager.getInstance().invalidateSessions(); //Formatto le sessioni
         try {
