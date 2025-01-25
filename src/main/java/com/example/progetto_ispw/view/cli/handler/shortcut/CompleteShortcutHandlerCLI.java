@@ -1,12 +1,13 @@
-package com.example.progetto_ispw.view.fx.handler.shortcut;
+package com.example.progetto_ispw.view.cli.handler.shortcut;
 
 import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.constants.PageID;
 import com.example.progetto_ispw.exception.PageNotFoundException;
+import com.example.progetto_ispw.view.fx.handler.shortcut.ShortcutHandlerFX;
 import com.example.progetto_ispw.view.handler.shortcut.CourseShortcutHandler;
 
-//----CLASSE ASTRATTA PER DEFINIRE UNA BASE PER LA CREAZIONE DI CONTROLLER GRAFICI CHE HANNO TUTTE LE SHORTCUT AL MOMENTO DISPONIBILI  (LOGOUT, HOME E CORSO) (VERSIONE FX)----
-public abstract class CompleteShortcutHandlerFX extends ShortcutHandlerFX implements CourseShortcutHandler {
+//----CLASSE ASTRATTA PER DEFINIRE UNA BASE PER LA CREAZIONE DI CONTROLLER GRAFICI CHE HANNO TUTTE LE SHORTCUT AL MOMENTO DISPONIBILI  (LOGOUT, HOME E CORSO) (VERSIONE CLI)----
+public abstract class CompleteShortcutHandlerCLI extends ShortcutHandlerFX implements CourseShortcutHandler {
     @Override
     public void course() {
         try{

@@ -12,9 +12,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /*
-----Devo faro i dao in filesystem;
 ----Devo implementare la cli;
-----Devo mettere il meccanismo di scelta tra i vari dao e tra le view
+----Devo mettere il meccanismo di scelta tra le view
 ----Devo fare le classi di test (3 minimo);
 int i = 0;
  */
