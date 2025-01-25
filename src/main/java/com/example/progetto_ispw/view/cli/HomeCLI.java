@@ -1,6 +1,5 @@
 package com.example.progetto_ispw.view.cli;
+import com.example.progetto_ispw.view.handler.shortcut.concrete.CompleteShortcutHandler;
 
-import com.example.progetto_ispw.view.PageManager;
-
-public class HomeCLI extends PageManager {
+public class HomeCLI extends CompleteShortcutHandler {
 }

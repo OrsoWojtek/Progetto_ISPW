@@ -10,7 +10,7 @@ import com.example.progetto_ispw.constants.StandardMessagge;
 import com.example.progetto_ispw.constants.UserRole;
 import com.example.progetto_ispw.controller.CorsoPageController;
 import com.example.progetto_ispw.exception.*;
-import com.example.progetto_ispw.view.fx.handler.shortcut.ShortcutHandlerFX;
+import com.example.progetto_ispw.view.handler.shortcut.concrete.BaseShortcutHandler;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -29,7 +29,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 //----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA (CASO SPECIFICO: CORSO)----
-public class CorsoFX extends ShortcutHandlerFX {
+public class CorsoFX extends BaseShortcutHandler {
     @FXML
     private Label nomeCorso; //Nome del corso
     @FXML

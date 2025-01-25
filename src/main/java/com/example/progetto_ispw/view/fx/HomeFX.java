@@ -3,12 +3,11 @@ package com.example.progetto_ispw.view.fx;
 import com.example.progetto_ispw.bean.CorsoInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.constants.ErrorCode;
-import com.example.progetto_ispw.constants.PageID;
 import com.example.progetto_ispw.constants.StandardMessagge;
 import com.example.progetto_ispw.constants.UserRole;
 import com.example.progetto_ispw.controller.HomeController;
 import com.example.progetto_ispw.exception.*;
-import com.example.progetto_ispw.view.PageManager;
+import com.example.progetto_ispw.view.handler.shortcut.concrete.CompleteShortcutHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -25,7 +24,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 //----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA (CASO SPECIFICO: HOME)----
-public class HomeFX extends PageManager {
+public class HomeFX extends CompleteShortcutHandler {
     @FXML
     private Label username; //Username dell'utente loggato
     @FXML
@@ -76,9 +75,7 @@ public class HomeFX extends PageManager {
     public void onLogoutButtonClicked(){
         try{
             home.clean();
-            pageLoader.loadPage(PageID.LOGIN);
-        } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
+            logout();
         } catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.CONNECTION);
             System.exit(1);
@@ -122,11 +119,7 @@ public class HomeFX extends PageManager {
                 onLogoutButtonClicked();
             }
         });
-        try{
-            pageLoader.loadPage(PageID.CORSO);//...Mostra la pagina del corso
-        } catch (PageNotFoundException e){
-            showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
-        }
+        course(); //...Mostra la pagina del corso
     }
     //---METODO PER INIZIALIZZARE IL CONTENITORE DEI CORSI----
     private void initializeUI() {

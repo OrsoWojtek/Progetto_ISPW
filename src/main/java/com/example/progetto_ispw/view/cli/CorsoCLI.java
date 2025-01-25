@@ -1,6 +1,6 @@
 package com.example.progetto_ispw.view.cli;
 
-import com.example.progetto_ispw.view.cli.handler.shortcut.ShortcutHandlerCLI;
+import com.example.progetto_ispw.view.handler.shortcut.concrete.BaseShortcutHandler;
 
-public class CorsoCLI extends ShortcutHandlerCLI {
+public class CorsoCLI extends BaseShortcutHandler {
 }

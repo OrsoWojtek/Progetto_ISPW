@@ -8,7 +8,7 @@ import com.example.progetto_ispw.constants.PageID;
 import com.example.progetto_ispw.constants.StandardMessagge;
 import com.example.progetto_ispw.controller.QuizController;
 import com.example.progetto_ispw.exception.*;
-import com.example.progetto_ispw.view.fx.handler.shortcut.ShortcutHandlerFX;
+import com.example.progetto_ispw.view.handler.shortcut.concrete.BaseShortcutHandler;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -21,7 +21,7 @@ import javafx.util.Duration;
 import java.util.List;
 
 //----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA [CASO SPECIFICO: QUIZ (2/3)]----
-public class SvolgiQuizFX extends ShortcutHandlerFX {
+public class SvolgiQuizFX extends BaseShortcutHandler {
     @FXML
     private Label nameQuiz; //Titolo del quiz
     @FXML

@@ -8,12 +8,12 @@ import com.example.progetto_ispw.controller.QuizController;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.exception.DataSessionCastingException;
-import com.example.progetto_ispw.view.fx.handler.shortcut.CompleteShortcutHandlerFX;
+import com.example.progetto_ispw.view.handler.shortcut.concrete.CompleteShortcutHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 //----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA [CASO SPECIFICO: QUIZ (3/3)]----
-public class EsitoQuizFX extends CompleteShortcutHandlerFX {
+public class EsitoQuizFX extends CompleteShortcutHandler {
     @FXML
     private Label punteggio; //Punteggio ottenuto nel quiz
     @FXML
