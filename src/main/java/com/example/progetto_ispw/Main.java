@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /*
-----Devo ancora creare astrazione per i dao in generale, e applicarla nei controller;
 ----Devo faro i dao in filesystem;
 ----Devo implementare la cli;
 ----Devo mettere il meccanismo di scelta tra i vari dao e tra le view
