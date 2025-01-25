@@ -11,4 +11,5 @@ public abstract class PageManager {
         this.pageLoader = pageLoader;
         this.showMessageHandler = showMessageHandler;
     }
+    public abstract void initialize();
 }

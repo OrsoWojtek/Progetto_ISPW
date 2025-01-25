@@ -49,6 +49,7 @@ public class SvolgiQuizFX extends BaseShortcutHandler {
     private int remainingTime; //Tempo rimanente (in secondi)
     private Timeline timeline; //Timeline per l'animazione del timer
     @FXML
+    @Override
     public void initialize(){
         controllerApplicativo = new QuizController();
         try{

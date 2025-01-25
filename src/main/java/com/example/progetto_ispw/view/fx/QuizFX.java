@@ -26,6 +26,7 @@ public class QuizFX extends CompleteShortcutHandler {
     private QuizInfoBean quiz; //Riferimento al quiz della pagina
     private QuizController quizController; //Riferimento al controller applicativo associato
     @FXML
+    @Override
     public void initialize(){
         quizController = new QuizController();
         try {

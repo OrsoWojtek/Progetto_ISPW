@@ -21,6 +21,7 @@ public class EsitoQuizFX extends CompleteShortcutHandler {
     private QuizController controllerQuiz; //Riferimento al controller applicativo
 
     @FXML
+    @Override
     public void initialize() {
         controllerQuiz = new QuizController();
         try {

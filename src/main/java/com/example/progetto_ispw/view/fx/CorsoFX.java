@@ -49,6 +49,7 @@ public class CorsoFX extends BaseShortcutHandler {
     private UtenteInfoBean user; //Riferimento all'utente loggato
     private final VBox quizContainer = new VBox(); //Contenitore per i quiz
     @FXML
+    @Override
     public void initialize(){
         controller = new CorsoPageController();
         try{

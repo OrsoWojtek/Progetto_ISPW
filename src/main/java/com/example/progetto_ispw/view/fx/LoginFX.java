@@ -26,6 +26,7 @@ public class LoginFX extends PageManager {
     @FXML
     private Button loginButton;
     @FXML
+    @Override
     public void initialize(){
         loginImageButton.setOnMouseClicked(mouseEvent -> loginButton.fire());
         loginButton = new Button();

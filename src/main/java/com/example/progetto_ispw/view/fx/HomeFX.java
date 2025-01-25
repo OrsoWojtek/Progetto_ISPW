@@ -42,6 +42,7 @@ public class HomeFX extends CompleteShortcutHandler {
 
     //----INIZIALIZZAZIONE DELLA PAGINA HOME----
     @FXML
+    @Override
     public void initialize() {
         home = new HomeController();
         try {

@@ -17,26 +17,32 @@ public class PageLoaderCLI implements PageLoader {
             case HOME ->{
                 controller = new HomeCLI();
                 controller.setupDependencies(new PageLoaderCLI(),new ShowMessageHandlerCLI());
+                controller.initialize();
             }
             case CORSO -> {
                 controller = new CorsoCLI();
                 controller.setupDependencies(new PageLoaderCLI(),new ShowMessageHandlerCLI());
+                controller.initialize();
             }
             case QUIZ -> {
                 controller = new QuizCLI();
                 controller.setupDependencies(new PageLoaderCLI(),new ShowMessageHandlerCLI());
+                controller.initialize();
             }
             case LOGIN -> {
                 controller = new LoginCLI();
                 controller.setupDependencies(new PageLoaderCLI(),new ShowMessageHandlerCLI());
+                controller.initialize();
             }
             case ESITO_QUIZ -> {
                 controller = new EsitoQuizCLI();
                 controller.setupDependencies(new PageLoaderCLI(),new ShowMessageHandlerCLI());
+                controller.initialize();
             }
             case SVOLGIMENTO_QUIZ ->{
                 controller = new SvolgiQuizCLI();
                 controller.setupDependencies(new PageLoaderCLI(),new ShowMessageHandlerCLI());
+                controller.initialize();
             }
             default -> throw new PageNotFoundException("Errore nell'apertura della pagina di "+pageID.getValue().toLowerCase());
         }
