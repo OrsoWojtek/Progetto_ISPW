@@ -2,6 +2,7 @@ package com.example.progetto_ispw.dao.filesystem;
 
 import com.example.progetto_ispw.connessione.ConnessioneFS;
 import com.example.progetto_ispw.connessione.PersistenceConnectionManager;
+import com.example.progetto_ispw.dao.DAO;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.InstanceException;
 
@@ -9,7 +10,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 
 //----CLASSE ASTRATTA PER DEFINIRE CLASSI DAO CHE DEVONO COMUNICARE CON FILESYSTEM----
-public abstract class DAOFS {
+public abstract class DAOFS implements DAO {
     protected ConnessioneFS connessione;
     protected BufferedReader reader;
     protected BufferedWriter writer;
