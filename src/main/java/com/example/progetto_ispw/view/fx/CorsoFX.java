@@ -7,6 +7,7 @@ import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.constants.PageID;
 import com.example.progetto_ispw.constants.StandardMessagge;
+import com.example.progetto_ispw.constants.UserRole;
 import com.example.progetto_ispw.controller.CorsoPageController;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.fx.handler.shortcut.ShortcutHandlerFX;
@@ -26,10 +27,7 @@ import javafx.scene.text.Text;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-/*
-Da aggiungere: mettere che la notifica della riuscita del quiz è visualizzabile qui
-int i = 0;
- */
+
 //----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA (CASO SPECIFICO: CORSO)----
 public class CorsoFX extends ShortcutHandlerFX {
     @FXML
@@ -57,10 +55,10 @@ public class CorsoFX extends ShortcutHandlerFX {
             user = controller.getInfoUser();
             corso = controller.getInfoCourse();
             nomeCorso.setText(corso.getNome()+":"); //Mostra nella pagina del corso il nome del corso
-            visualizzaNotifiche.setVisible("tutor".equalsIgnoreCase(user.getRole())); //Mostra il testo per accedere alla funzionalità disponibile solo per i tutor
-            sollecitaDomanda.setVisible("studente".equalsIgnoreCase(user.getRole())); //Mostra il testo per accedere alla funzionalità disponibile solo per gli studenti
-            scoreHead.setVisible("studente".equalsIgnoreCase(user.getRole())); //Mostra la testa della colonna degli score solo per gli studenti
-            plusButton.setVisible("tutor".equalsIgnoreCase(user.getRole())); //Mostra il tasto per aggiungere quiz al corso (disponibile solo per i tutor)
+            visualizzaNotifiche.setVisible(UserRole.TUTOR.getValue().equalsIgnoreCase(user.getRole())); //Mostra il testo per accedere alla funzionalità disponibile solo per i tutor
+            sollecitaDomanda.setVisible(UserRole.STUDENTE.getValue().equalsIgnoreCase(user.getRole())); //Mostra il testo per accedere alla funzionalità disponibile solo per gli studenti
+            scoreHead.setVisible(UserRole.STUDENTE.getValue().equalsIgnoreCase(user.getRole())); //Mostra la testa della colonna degli score solo per gli studenti
+            plusButton.setVisible(UserRole.TUTOR.getValue().equalsIgnoreCase(user.getRole())); //Mostra il tasto per aggiungere quiz al corso (disponibile solo per i tutor)
             quizzes = controller.getQuizDisponibili(corso,user);
             showQuizCatalog();
         } catch (ConnectionException e){
@@ -212,7 +210,7 @@ public class CorsoFX extends ShortcutHandlerFX {
 
             Text testoColonna;
             StackPane stackColonna; //Riquadro per il punteggio o tasto opzioni
-            if("studente".equalsIgnoreCase(user.getRole())){
+            if(UserRole.STUDENTE.getValue().equalsIgnoreCase(user.getRole())){
                 //Crea il testo per il punteggio
                 testoColonna = new Text(quiz.getPunteggioStudente() + "/" + quiz.getPunteggio());
             } else {
@@ -234,14 +232,14 @@ public class CorsoFX extends ShortcutHandlerFX {
             //Aggiungi gli eventi per il titolo (ritorna alla pagina del quiz)
             stackTitolo.setOnMouseEntered(event -> stackTitolo.setCursor(Cursor.HAND));
             stackTitolo.setOnMouseExited(event -> stackTitolo.setCursor(Cursor.DEFAULT));
-            if("studente".equalsIgnoreCase(user.getRole())) {
+            if(UserRole.STUDENTE.getValue().equalsIgnoreCase(user.getRole())) {
                 stackTitolo.setOnMouseClicked(mouseEvent -> goToQuizPage(quiz.getTitolo())); //Porta alla pagina del quiz
             }
 
             //Aggiungi gli eventi per il punteggio oppure opzioni
             stackColonna.setOnMouseEntered(event -> stackColonna.setCursor(Cursor.HAND));
             stackColonna.setOnMouseExited(event -> stackColonna.setCursor(Cursor.DEFAULT));
-            if("tutor".equalsIgnoreCase(user.getRole())) {
+            if(UserRole.TUTOR.getValue().equalsIgnoreCase(user.getRole())) {
                 stackColonna.setOnMouseClicked(mouseEvent -> onModificaClicked());
             }
 

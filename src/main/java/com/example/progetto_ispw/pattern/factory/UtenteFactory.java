@@ -1,5 +1,6 @@
 package com.example.progetto_ispw.pattern.factory;
 
+import com.example.progetto_ispw.constants.UserRole;
 import com.example.progetto_ispw.exception.RoleNotFoundException;
 import com.example.progetto_ispw.model.Utente;
 
@@ -8,9 +9,9 @@ public abstract class UtenteFactory {
 
     // Factory method statico per ottenere una factory specifica
     public static UtenteFactory getFactory(String role) throws RoleNotFoundException {
-        if ("Studente".equalsIgnoreCase(role)) {
+        if (UserRole.STUDENTE.getValue().equalsIgnoreCase(role)) {
             return new StudenteFactory();
-        } else if ("Tutor".equalsIgnoreCase(role)) {
+        } else if (UserRole.TUTOR.getValue().equalsIgnoreCase(role)) {
             return new TutorFactory();
         }
         throw new RoleNotFoundException("Ruolo non supportato: " + role);

@@ -5,6 +5,7 @@ import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.constants.ErrorCode;
 import com.example.progetto_ispw.constants.PageID;
 import com.example.progetto_ispw.constants.StandardMessagge;
+import com.example.progetto_ispw.constants.UserRole;
 import com.example.progetto_ispw.controller.HomeController;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.PageManager;
@@ -50,7 +51,7 @@ public class HomeFX extends PageManager {
             username.setText(username.getText()+" "+ user.getUsername()); //Mostra nella home l'username dell'utente
 
             avatar.setImage(new Image(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/"+ user.getRole().toLowerCase()+"_avatar.png")).toExternalForm())); //Setting dell'immagine relativa al ruolo dell'utente
-            optionButton.setVisible("tutor".equalsIgnoreCase(user.getRole())); //Mostra il bottone delle impostazioni dei corsi (disponibile solo per i tutor)
+            optionButton.setVisible(UserRole.TUTOR.getValue().equalsIgnoreCase(user.getRole())); //Mostra il bottone delle impostazioni dei corsi (disponibile solo per i tutor)
 
             setupPlusButton(user.getRole()); //Imposta il funzionamento del bottone '+' in base al tipo di utente
 
@@ -100,10 +101,10 @@ public class HomeFX extends PageManager {
     }
     //----METODO PER IL SETUP DEL BOTTONE '+'----
     private void setupPlusButton(String role){
-        if("tutor".equalsIgnoreCase(role)){
+        if(UserRole.TUTOR.getValue().equalsIgnoreCase(role)){
             plusButton.setOnMouseClicked(mouseEvent -> onAddButtonClicked());
         }
-        if("studente".equalsIgnoreCase(role)){
+        if(UserRole.STUDENTE.getValue().equalsIgnoreCase(role)){
             plusButton.setOnMouseClicked(mouseEvent -> onSearchButtonClicked());
         }
     }

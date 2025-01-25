@@ -1,6 +1,7 @@
 package com.example.progetto_ispw.dao.jdbc;
 
 import com.example.progetto_ispw.bean.LoginInfoBean;
+import com.example.progetto_ispw.constants.UserRole;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.model.Utente;
 import com.example.progetto_ispw.pattern.factory.UtenteFactory;
@@ -37,9 +38,9 @@ public class UtenteDAOJDBC extends DAOJDBC{
             connessione.close(statement);
         }
         if("S".equals(ruolo)){
-            ruolo = "Studente";
+            ruolo = UserRole.STUDENTE.getValue();
         } else if ("T".equals(ruolo)) {
-            ruolo = "Tutor";
+            ruolo = UserRole.TUTOR.getValue();
         }
         return UtenteFactory.getFactory(ruolo).createUtente(currentCred.getUsername(),currentCred.getPassword());
     }
