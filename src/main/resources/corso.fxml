@@ -107,7 +107,7 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-            <Text fx:id="visualizzaDomande" accessibleRole="BUTTON" fill="WHITE" layoutX="69.0" layoutY="352.0" onMouseClicked="#onVisualizzaDomandeClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Visualizza Domande" textAlignment="CENTER" wrappingWidth="216.13671875">
+            <Text fx:id="visualizzaNotifiche" accessibleRole="BUTTON" fill="WHITE" layoutX="69.0" layoutY="352.0" onMouseClicked="#onVisualizzaNotificheClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Visualizza Notifiche" textAlignment="CENTER" wrappingWidth="216.13671875">
                <font>
                   <Font size="18.0" />
                </font>
@@ -115,10 +115,18 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Text>
-            <ImageView fitHeight="58.0" fitWidth="119.0" layoutX="560.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="scoreHead" fitHeight="58.0" fitWidth="119.0" layoutX="560.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@com/example/progetto_ispw/images/score_column.png" />
                </image>
+            </ImageView>
+            <ImageView fx:id="plusButton" accessibleRole="BUTTON" fitHeight="30.0" fitWidth="30.0" layoutX="659.0" layoutY="35.0" onMouseClicked="#onPlusButtonClicked" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@com/example/progetto_ispw/images/add_icon.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
             </children>
         </AnchorPane>
