@@ -4,6 +4,7 @@ import com.example.progetto_ispw.bean.*;
 import com.example.progetto_ispw.connessione.PersistenceConnectionManager;
 import com.example.progetto_ispw.constants.DataID;
 import com.example.progetto_ispw.constants.SessionID;
+import com.example.progetto_ispw.dao.jdbc.CorsoDAOJDBC;
 import com.example.progetto_ispw.dao.jdbc.QuizDAOJDBC;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataAccessException;
@@ -69,6 +70,12 @@ public class CorsoPageController {
             quesiti.add(quesitoInfoBean);
         }
         return quesiti;
+    }
+
+    //----METODO PER PRENDERE LE NOTIFICHE DALLA PERSISTENZA
+    public NotificheInfoBean getInfoNotifiche() throws ConnectionException, DataNotFoundException, DataAccessException {
+        CorsoDAOJDBC dao = new CorsoDAOJDBC();
+        return dao.getNotifiche(SessionManager.getInstance().getSession(SessionID.LOGIN).getDato(DataID.UTENTE, UtenteInfoBean.class),SessionManager.getInstance().getSession(SessionID.COURSE_PAGE).getDato(DataID.CORSO, CorsoInfoBean.class));
     }
 
     //----METODO PER PULIRE CONNESSIONE AL DB E SESSIONE AL LOGOUT----

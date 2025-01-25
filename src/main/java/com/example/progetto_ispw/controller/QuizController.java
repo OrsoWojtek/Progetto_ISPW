@@ -4,11 +4,16 @@ import com.example.progetto_ispw.bean.*;
 import com.example.progetto_ispw.connessione.PersistenceConnectionManager;
 import com.example.progetto_ispw.constants.DataID;
 import com.example.progetto_ispw.constants.SessionID;
+import com.example.progetto_ispw.dao.jdbc.CorsoDAOJDBC;
 import com.example.progetto_ispw.dao.jdbc.QuizDAOJDBC;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.model.Quiz;
 import com.example.progetto_ispw.model.sessione.Session;
 import com.example.progetto_ispw.model.sessione.SessionManager;
+
+/*
+Da aggiungere: notifica al tutor
+ */
 
 //----CONTROLLER APPLICATIVO PER GESTIRE IL QUIZ----
 public class QuizController {
@@ -111,7 +116,21 @@ public class QuizController {
         } catch (UpdateDataException e) { //Update in persistenza non andato a buon fine
             throw new DataNotFoundException("Non è stato possibile salvare il nuovo punteggio ottenuto.");
         }
+        try {
+            addNotifica();
+        } catch (UpdateDataException e) {
+            throw new DataNotFoundException("Non è stato possibile mandare la notifica al tutor.");
+        }
     }
+    //----METODO PER AGGIUNGERE UNA NOTIFICA AL TUTOR DEL CORSO----
+    private void addNotifica() throws ConnectionException, DataNotFoundException, DataAccessException, UpdateDataException {
+        CorsoDAOJDBC dao = new CorsoDAOJDBC();
+        UtenteInfoBean user = SessionManager.getInstance().getSession(SessionID.LOGIN).getDato(DataID.UTENTE, UtenteInfoBean.class);
+        CorsoInfoBean corso = SessionManager.getInstance().getSession(SessionID.COURSE_PAGE).getDato(DataID.CORSO, CorsoInfoBean.class);
+        QuizInfoBean quiz = getInfoQuiz();
+        dao.updateNotifiche(user,corso,quiz);
+    }
+
     //----METODO PER AGGIORNARE L'ENTITÀ QUIZ NELLA SESSIONE----
     private void updateQuiz(int punteggioStudente) throws DataNotFoundException, ConnectionException, UpdateDataException, DataAccessException {
         Quiz quiz = getQuizSession().getEntity(DataID.QUIZ.getValue(), Quiz.class);

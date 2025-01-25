@@ -32,6 +32,8 @@ public class HomeFX extends PageManager {
     @FXML
     private ImageView optionButton; //Bottone delle impostazioni dei corsi (disponibile solo per i tutor)
     @FXML
+    private ImageView plusButton; //Bottone con il '+' (per il tutor serve a creare un nuovo corso, per lo studente ad iscriversi ad uno già esistente)
+    @FXML
     private AnchorPane catalogoCorsi; //'Sfondo' del catalogo
     private List<CorsoInfoBean> catalogo; //Catalogo dei corsi a cui è iscritto l'utente
     private HomeController home; //Riferimento al controller applicativo
@@ -49,6 +51,8 @@ public class HomeFX extends PageManager {
 
             avatar.setImage(new Image(Objects.requireNonNull(getClass().getResource("/com/example/progetto_ispw/images/"+ user.getRole().toLowerCase()+"_avatar.png")).toExternalForm())); //Setting dell'immagine relativa al ruolo dell'utente
             optionButton.setVisible("tutor".equalsIgnoreCase(user.getRole())); //Mostra il bottone delle impostazioni dei corsi (disponibile solo per i tutor)
+
+            setupPlusButton(user.getRole()); //Imposta il funzionamento del bottone '+' in base al tipo di utente
 
             catalogo = home.getCorsiFrequentati(user); //Richiesta dei corsi a cui è iscritto l'utente
         } catch (ConnectionException e){
@@ -79,16 +83,30 @@ public class HomeFX extends PageManager {
             System.exit(1);
         }
     }
-    //----METODO PER APRIRE LA BARRA DI RICERCA PER ISCRIVERSI AI CORSI----
+    //----METODO PER APRIRE LA BARRA DI RICERCA PER ISCRIVERSI AI CORSI (DISPONIBILE SOLO PER GLI STUDENTI)----
     @FXML
     public void onSearchButtonClicked() {
         showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
     }
+    //----METODO PER ANDARE ALLA PAGINA DI CREAZIONE DI UN NUOVO CORSO (DISPONIBILE SOLO PER I TUTOR)----
+    @FXML
+    public void onAddButtonClicked(){
+        showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
+    }
+    @FXML
     //----METODO PER GESTIRE I CORSI (DISPONIBILE SOLO PER I TUTOR)----
     public void onOptionButtonClicked(){
         showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
     }
-
+    //----METODO PER IL SETUP DEL BOTTONE '+'----
+    private void setupPlusButton(String role){
+        if("tutor".equalsIgnoreCase(role)){
+            plusButton.setOnMouseClicked(mouseEvent -> onAddButtonClicked());
+        }
+        if("studente".equalsIgnoreCase(role)){
+            plusButton.setOnMouseClicked(mouseEvent -> onSearchButtonClicked());
+        }
+    }
     //----METODO PER PASSARE ALLA PAGINA DEL CORSO DESIDERATO----
     private void goToCoursePage(String nomeCorso){
         Optional<CorsoInfoBean> corsoScelto = catalogo.stream().filter(c -> c.getNome().equals(nomeCorso)).findFirst(); //Cerca il bean del corso nel catalogo corrispondere al nome del corso selezionato dall'utente

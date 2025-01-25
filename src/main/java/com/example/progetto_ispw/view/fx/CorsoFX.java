@@ -1,6 +1,7 @@
 package com.example.progetto_ispw.view.fx;
 
 import com.example.progetto_ispw.bean.CorsoInfoBean;
+import com.example.progetto_ispw.bean.NotificheInfoBean;
 import com.example.progetto_ispw.bean.QuizInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.constants.ErrorCode;
@@ -25,7 +26,10 @@ import javafx.scene.text.Text;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
+/*
+Da aggiungere: mettere che la notifica della riuscita del quiz è visualizzabile qui
+int i = 0;
+ */
 //----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA (CASO SPECIFICO: CORSO)----
 public class CorsoFX extends ShortcutHandlerFX {
     @FXML
@@ -33,24 +37,30 @@ public class CorsoFX extends ShortcutHandlerFX {
     @FXML
     private Text sollecitaDomanda; //Testo per la richiesta di "sollecita domanda"
     @FXML
-    private Text visualizzaDomande; //Testo per la richiesta di "visualizza domande"
+    private Text visualizzaNotifiche; //Testo per la richiesta di "visualizza notifiche"
     @FXML
     private AnchorPane catalogoQuiz; //'Sfondo' del catalogo
+    @FXML
+    private ImageView scoreHead; //'Testa' della colonna dei punteggi
+    @FXML
+    private ImageView plusButton; //Tasto per l'aggiunta di quiz
     private CorsoInfoBean corso; //Riferimento al corso della pagina
     private List<QuizInfoBean> quizzes; //Catalogo dei quiz disponibili
     private  CorsoPageController controller; //Riferimento al controller applicativo associato
     private int currentPage = 0;//Indice della pagina corrente dei quiz da mostrare
+    private UtenteInfoBean user; //Riferimento all'utente loggato
     private final VBox quizContainer = new VBox(); //Contenitore per i quiz
     @FXML
     public void initialize(){
         controller = new CorsoPageController();
-        UtenteInfoBean user;
         try{
             user = controller.getInfoUser();
             corso = controller.getInfoCourse();
             nomeCorso.setText(corso.getNome()+":"); //Mostra nella pagina del corso il nome del corso
-            visualizzaDomande.setVisible("tutor".equalsIgnoreCase(user.getRole())); //Mostra il testo per accedere alla funzionalità disponibile solo per i tutor
+            visualizzaNotifiche.setVisible("tutor".equalsIgnoreCase(user.getRole())); //Mostra il testo per accedere alla funzionalità disponibile solo per i tutor
             sollecitaDomanda.setVisible("studente".equalsIgnoreCase(user.getRole())); //Mostra il testo per accedere alla funzionalità disponibile solo per gli studenti
+            scoreHead.setVisible("studente".equalsIgnoreCase(user.getRole())); //Mostra la testa della colonna degli score solo per gli studenti
+            plusButton.setVisible("tutor".equalsIgnoreCase(user.getRole())); //Mostra il tasto per aggiungere quiz al corso (disponibile solo per i tutor)
             quizzes = controller.getQuizDisponibili(corso,user);
             showQuizCatalog();
         } catch (ConnectionException e){
@@ -101,7 +111,7 @@ public class CorsoFX extends ShortcutHandlerFX {
         if(sollecitaDomanda.isVisible()){
             onSollecitaDomandaClicked();
         } else {
-            onVisualizzaDomandeClicked();
+            onVisualizzaNotificheClicked();
         }
     }
     @FXML
@@ -109,8 +119,21 @@ public class CorsoFX extends ShortcutHandlerFX {
         showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
     }
     @FXML
-    public void onVisualizzaDomandeClicked(){
-        showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
+    public void onVisualizzaNotificheClicked(){
+        try {
+            NotificheInfoBean notifiche = controller.getInfoNotifiche();
+            showMessageHandler.showMessage(notifiche.getNotifiche(),"Notifiche");
+        } catch (DataAccessException e) {
+            showMessageHandler.showError(e.getMessage(),ErrorCode.DB_ERROR);
+        } catch (ConnectionException e){
+            showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);
+        } catch (DataNotFoundException e){
+            showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
+            onLogout();
+        } catch (DataSessionCastingException e){
+            showMessageHandler.showError(StandardMessagge.CASTING.getValue(), ErrorCode.CASTING);
+            onLogout();
+        }
     }
     @FXML
     public void onDescrizioneClicked(){
@@ -120,7 +143,16 @@ public class CorsoFX extends ShortcutHandlerFX {
     public void onTeoriaClicked(){
         showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
     }
-
+    //----METODO PER ANDARE ALLA PAGINA DI CREAZIONE DEI QUIZ----
+    @FXML
+    public void onPlusButtonClicked(){
+        showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
+    }
+    //----METODO PER ANDARE ALLA PAGINA DI MODIFICA DEI QUIZ----
+    @FXML
+    public void onModificaClicked(){
+        showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
+    }
     //----METODO PER PASSARE ALLA PAGINA DEL QUIZ DESIDERATO----
     private void goToQuizPage(String nomeQuiz){
         Optional<QuizInfoBean> quizScelto = quizzes.stream().filter(c -> c.getTitolo().equals(nomeQuiz)).findFirst(); //Cerca il bean del quiz nel catalogo corrispondere al nome del quiz selezionato dall'utente
@@ -159,6 +191,11 @@ public class CorsoFX extends ShortcutHandlerFX {
             //Larghezza massima per entrambi gli oggetti (rettangolo ed ellisse)
             int width = 298; //(per il maxi-schermo: 597; per altri schermi: 298)
 
+            //Font per i testi
+            String fontSize = "18"; //(per il maxi-schermo: 36; per altri schermi: 18)
+            String fontWeightStyle = "-fx-font-weight: bold;";
+            String fontSizeStyle ="-fx-font-size:" + fontSize + ";" ;
+
             //Rettangolo (Titolo)
             Rectangle rectTitolo = new Rectangle(187, 43);
             rectTitolo.setFill(Color.BLACK);
@@ -167,41 +204,49 @@ public class CorsoFX extends ShortcutHandlerFX {
             Ellipse ellipsePunteggio = new Ellipse(53, 27);
             ellipsePunteggio.setFill(Color.valueOf("871414"));
 
-            //Font per i testi
-            String fontSize = "18"; //(per il maxi-schermo: 36; per altri schermi: 18)
-            String fontWeightStyle = "-fx-font-weight: bold;";
-            String fontSizeStyle ="-fx-font-size:" + fontSize + ";" ;
-
             //Crea il testo per il titolo del quiz
             Text titolo = new Text(quiz.getTitolo());
             titolo.setFill(Color.WHITE);
             titolo.setStyle(fontWeightStyle);
             titolo.setStyle(fontSizeStyle);
 
-            //Crea il testo per il punteggio
-            Text punteggio = new Text(quiz.getPunteggioStudente() + "/" + quiz.getPunteggio());
-            punteggio.setFill(Color.WHITE);
-            punteggio.setStyle(fontWeightStyle);
-            punteggio.setStyle(fontSizeStyle);
+            Text testoColonna;
+            StackPane stackColonna; //Riquadro per il punteggio o tasto opzioni
+            if("studente".equalsIgnoreCase(user.getRole())){
+                //Crea il testo per il punteggio
+                testoColonna = new Text(quiz.getPunteggioStudente() + "/" + quiz.getPunteggio());
+            } else {
+                //Crea il testo per le opzioni
+                testoColonna = new Text("Modifica");
+            }
+
+            testoColonna.setFill(Color.WHITE);
+            testoColonna.setStyle(fontWeightStyle);
+            testoColonna.setStyle(fontSizeStyle);
 
             //Aggiungi il testo al rispettivo riquadro
             StackPane stackTitolo = new StackPane(rectTitolo, titolo);
             stackTitolo.setAlignment(Pos.CENTER);
 
-            StackPane stackPunteggio = new StackPane(ellipsePunteggio, punteggio);
-            stackPunteggio.setAlignment(Pos.CENTER);
+            stackColonna = new StackPane(ellipsePunteggio, testoColonna);
+            stackColonna.setAlignment(Pos.CENTER);
 
             //Aggiungi gli eventi per il titolo (ritorna alla pagina del quiz)
             stackTitolo.setOnMouseEntered(event -> stackTitolo.setCursor(Cursor.HAND));
             stackTitolo.setOnMouseExited(event -> stackTitolo.setCursor(Cursor.DEFAULT));
-            stackTitolo.setOnMouseClicked(mouseEvent -> goToQuizPage(quiz.getTitolo())); // Porta alla pagina del quiz
+            if("studente".equalsIgnoreCase(user.getRole())) {
+                stackTitolo.setOnMouseClicked(mouseEvent -> goToQuizPage(quiz.getTitolo())); //Porta alla pagina del quiz
+            }
 
-            //Aggiungi gli eventi per il punteggio
-            stackPunteggio.setOnMouseEntered(event -> stackPunteggio.setCursor(Cursor.HAND));
-            stackPunteggio.setOnMouseExited(event -> stackPunteggio.setCursor(Cursor.DEFAULT));
+            //Aggiungi gli eventi per il punteggio oppure opzioni
+            stackColonna.setOnMouseEntered(event -> stackColonna.setCursor(Cursor.HAND));
+            stackColonna.setOnMouseExited(event -> stackColonna.setCursor(Cursor.DEFAULT));
+            if("tutor".equalsIgnoreCase(user.getRole())) {
+                stackColonna.setOnMouseClicked(mouseEvent -> onModificaClicked());
+            }
 
             //Crea un HBox per affiancare i due rettangoli
-            HBox quizBox = new HBox(stackTitolo, stackPunteggio);
+            HBox quizBox = new HBox(stackTitolo, stackColonna);
             quizBox.setSpacing(10); //Spazio tra il titolo e il punteggio
             quizBox.setAlignment(Pos.CENTER);
 

@@ -1,7 +1,11 @@
 package com.example.progetto_ispw.dao.jdbc;
 
+import com.example.progetto_ispw.bean.CorsoInfoBean;
+import com.example.progetto_ispw.bean.NotificheInfoBean;
+import com.example.progetto_ispw.bean.QuizInfoBean;
 import com.example.progetto_ispw.bean.UtenteInfoBean;
 import com.example.progetto_ispw.exception.ConnectionException;
+import com.example.progetto_ispw.exception.UpdateDataException;
 import com.example.progetto_ispw.model.Corso;
 import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.exception.DataAccessException;
@@ -42,5 +46,50 @@ public class CorsoDAOJDBC extends DAOJDBC{
             connessione.close(statement);
         }
         return corsi;
+    }
+
+    public NotificheInfoBean getNotifiche(UtenteInfoBean utente, CorsoInfoBean corso) throws DataAccessException {
+        String query = """
+        SELECT uc.notifiche
+        FROM utente_corso uc
+        JOIN corso c ON uc.corso_id = c.corso_id
+        WHERE uc.username_utente = ? AND c.nome_corso = ?;
+        """;
+        NotificheInfoBean notificheInfoBean = new NotificheInfoBean();
+        notificheInfoBean.setNotifiche("Ultime notifiche: \n");
+        try (PreparedStatement stm = connection.prepareStatement(query)) {
+            stm.setString(1, utente.getUsername());
+            stm.setString(2, corso.getNome());
+            try (ResultSet result = stm.executeQuery()) {
+                if(result.next()) {
+                    notificheInfoBean.addNotifiche(result.getString("notifiche"));
+                }
+            }
+        }catch (SQLException e) {
+            throw new DataAccessException("Errore di comunicazione con il database.");
+        }
+        return notificheInfoBean;
+    }
+
+    public void updateNotifiche(UtenteInfoBean utente, CorsoInfoBean corso, QuizInfoBean quiz) throws DataAccessException, UpdateDataException {
+        String query = """
+        UPDATE utente_corso uc
+        JOIN corso c ON uc.corso_id = c.corso_id
+        JOIN utente u ON uc.username_utente = u.username
+        SET uc.notifiche = ?
+        WHERE c.nome_corso = ? AND u.tipo = ?;
+        """;
+        try (PreparedStatement stm = connection.prepareStatement(query)) {
+            String notifica = quiz.getTitolo()+" sostenuto di recente dall'utente: "+utente.getUsername();
+            stm.setString(1,notifica);
+            stm.setString(2,corso.getNome());
+            stm.setString(3,"T" );
+            int rowsAffected = stm.executeUpdate();
+            if(rowsAffected == 0){
+                throw new UpdateDataException("Non è stata aggiornata alcuna riga nel db");
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Errore di comunicazione con il database.");
+        }
     }
 }
