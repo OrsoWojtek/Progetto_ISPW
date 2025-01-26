@@ -147,12 +147,18 @@ public class SvolgiQuizCLI extends BaseShortcutHandler {
 
     //----METODO PER TERMINARE IL QUIZ----
     private void onTerminaEvent() {
-        OutputHandler.showln("Vuoi davvero terminare il quiz? (S/N)");
-        String input = scanner.nextLine();
-        if (input.equalsIgnoreCase("S")) {
+        String header = "Vuoi davvero terminare il quiz?";
+        String content = "";
+        //Verifica se il quiz presenta dei quesiti senza risposta selezionata e, in caso di riscontro, chiede all'utente se è sicuro di voler terminare
+        try{
+            controllerApplicativo.isFullyFilled(quiz);
+        } catch (NotFilledQuestionException e) {
+            content = "Qualche quesito non presenta alcuna risposta selezionata."; //Aggiunta nella comunicazione che qualche quesito è senza risposta
+        }
+        content += "\nSe termini il quiz non potrai tornare indietro";
+        if(showMessageHandler.askConfirmation(header,content)){
             termina();
         } else {
-            OutputHandler.showln("Continuando il quiz...");
             showQuesito();
         }
     }
