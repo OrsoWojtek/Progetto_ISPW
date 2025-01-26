@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /*
-----Devo mettere il meccanismo di scelta tra le view
 ----Devo fare le classi di test (3 minimo);
 int i = 0;
  */

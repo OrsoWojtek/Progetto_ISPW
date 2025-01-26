@@ -70,6 +70,7 @@ public class LoginCLI extends PageManager {
         //Controlla se i campi sono vuoti
         if (usernameInsert.isEmpty() || passwordInsert.isEmpty()) {
             showMessageHandler.showError(StandardMessagge.CREDENTIAL.getValue(), ErrorCode.CREDENTIAL_NOT_FOUND);
+            initialize();
         } else {
             onLogin(usernameInsert, passwordInsert);
         }
@@ -93,16 +94,16 @@ public class LoginCLI extends PageManager {
             System.exit(1);
         } catch (DataAccessException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.DB_ERROR);
-            System.exit(1);
+            initialize();
         } catch (ConnectionException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);
             System.exit(1);
         } catch (RoleNotFoundException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.UNDEF_ROLE);
-            System.exit(1);
+            initialize();
         } catch (DataNotFoundException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.CREDENTIAL_ERROR);
-            System.exit(1);
+            initialize();
         }
     }
 

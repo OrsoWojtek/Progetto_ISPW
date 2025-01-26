@@ -20,7 +20,7 @@ public abstract class PersistenceConnectionManager {
         if (instance == null) {
             instance = manager;
         } else {
-            throw new IllegalStateException("Instance already initialized");
+            throw new IllegalStateException("Istanza già inizializzata");
         }
     }
     //Metodo astratto per aprire la connessione

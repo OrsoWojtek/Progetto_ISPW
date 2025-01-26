@@ -26,7 +26,7 @@ public class UtenteDAOCSV extends DAOFS implements UtenteDAO {
 
         try {
             String line;
-            while ((line = reader.readLine()) != null) {
+            while (!(line = reader.readLine()).isEmpty()) {
                 String[] parts = line.split(",");  //Supponiamo che i dati siano separati da virgole
                 String username = parts[0];
                 String password = parts[1];

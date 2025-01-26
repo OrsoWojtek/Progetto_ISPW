@@ -60,7 +60,15 @@ public class ConnessioneFS extends PersistenceConnectionManager {
     //----METODO PER OTTENERE IL READER----
     public BufferedReader getReader() throws ConnectionException {
         if (reader == null) {
-            throw new ConnectionException("Il reader non è stato inizializzato correttamente");
+            if (Files.exists(filePath)) {
+                try {
+                    reader = Files.newBufferedReader(filePath);
+                } catch (IOException e) {
+                    throw new ConnectionException("Il reader non è stato inizializzato correttamente");
+                }
+            } else {
+                throw new ConnectionException("Il file non esiste per la lettura");
+            }
         }
         return reader;
     }
