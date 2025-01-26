@@ -39,13 +39,8 @@ public class HomeCLI extends CompleteShortcutHandler {
             catalogo = home.getCorsiFrequentati(user);
             if ("".equals(catalogo.getFirst().getDescrizione())) {
                 OutputHandler.showln("Non sei iscritto a nessun corso.");
-            } else {
-                /*
-                sistema questa parte (così non mostri nulla, neanche il menù)
-                int i;
-                 */
-                showCourseCatalog();
             }
+            showCourseCatalog();
         } catch (ConnectionException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);
             System.exit(1);
@@ -92,13 +87,13 @@ public class HomeCLI extends CompleteShortcutHandler {
         int coursesPerPage = 6; //Numero massimo di corsi per pagina
         int startIndex = currentPage * coursesPerPage;
         int endIndex = Math.min(startIndex + coursesPerPage, catalogo.size());
-
-        OutputHandler.showln("\nCatalogo corsi (Pagina " + (currentPage + 1) + "):\n");
-        for (int i = startIndex; i < endIndex; i++) {
-            CorsoInfoBean corso = catalogo.get(i);
-            OutputHandler.showln((i + 1) + ". " + corso.getNome());
+        if(!"".equals(catalogo.getFirst().getDescrizione())) { //Se ci sono corsi alla mostra il catalogo
+            OutputHandler.showln("\nCatalogo corsi (Pagina " + (currentPage + 1) + "):\n");
+            for (int i = startIndex; i < endIndex; i++) {
+                CorsoInfoBean corso = catalogo.get(i);
+                OutputHandler.showln((i + 1) + ". " + corso.getNome());
+            }
         }
-
         addNavigationOptions(endIndex);
     }
 
@@ -111,7 +106,9 @@ public class HomeCLI extends CompleteShortcutHandler {
         if (endIndex < catalogo.size()) {
             OutputHandler.showln("[N] Pagina successiva");
         }
-        OutputHandler.showln("[S] Seleziona corso");
+        if (!"".equals(catalogo.getFirst().getDescrizione())) { //Se il catalogo contiene corsi
+            OutputHandler.showln("[S] Seleziona corso");  //Mostra l'opzione di selezione
+        }
         OutputHandler.showln("[L] Logout");
         if (userRole.equalsIgnoreCase(UserRole.TUTOR.getValue())){
             OutputHandler.showln("[A] Aggiungi un nuovo corso");
@@ -178,18 +175,23 @@ public class HomeCLI extends CompleteShortcutHandler {
 
     //----METODO PER SELEZIONARE UN CORSO----
     private void selectCourse() {
-        OutputHandler.show("Inserisci il numero del corso: ");
-        try {
-            int courseIndex = Integer.parseInt(scanner.nextLine().trim()) - 1;
-            if (courseIndex >= 0 && courseIndex < catalogo.size()) {
-                goToCoursePage(catalogo.get(courseIndex).getNome());
-            } else {
-                OutputHandler.showln("Numero corso non valido.");
+        if(!"".equals(catalogo.getFirst().getDescrizione())) { //Se ci sono dei corsi nel catalogo esegui la selezione
+            OutputHandler.show("Inserisci il numero del corso: ");
+            try {
+                int courseIndex = Integer.parseInt(scanner.nextLine().trim()) - 1;
+                if (courseIndex >= 0 && courseIndex < catalogo.size()) {
+                    goToCoursePage(catalogo.get(courseIndex).getNome());
+                } else {
+                    OutputHandler.showln("Numero corso non valido.");
+                    selectCourse();
+                }
+            } catch (NumberFormatException e) {
+                OutputHandler.showln("Input non valido. Riprova.");
                 selectCourse();
             }
-        } catch (NumberFormatException e) {
-            OutputHandler.showln("Input non valido. Riprova.");
-            selectCourse();
+        } else {
+            OutputHandler.showln(NOTVALID);     //Altrimenti mostra la selezione non valida
+            showCourseCatalog();
         }
     }
 
