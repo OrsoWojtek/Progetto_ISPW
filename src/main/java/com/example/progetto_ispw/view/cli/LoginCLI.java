@@ -42,7 +42,7 @@ public class LoginCLI extends PageManager {
                     System.out.println(DIVISORE);
                     System.out.println("👋 Grazie per aver utilizzato l'applicazione. Arrivederci!");
                     System.out.println(DIVISORE);
-                    return;
+                    System.exit(0);
 
                 default:
                     System.out.println(DIVISORE);
