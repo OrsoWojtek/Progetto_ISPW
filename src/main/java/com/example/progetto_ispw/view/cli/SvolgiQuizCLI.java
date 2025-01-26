@@ -76,23 +76,11 @@ public class SvolgiQuizCLI extends BaseShortcutHandler {
 
         switch (input.toUpperCase()) {
             case "P": //Torna indietro
-                if (indxCurrentQuesito > 0) {
-                    indxCurrentQuesito--;
-                    showQuesito();
-                } else {
-                    OutputHandler.showln("Non ci sono domande precedenti.");
-                    showQuesito();
-                }
+                prevQuestion();
                 break;
 
             case "N": //Avanti
-                if (indxCurrentQuesito < quesiti.size() - 1) {
-                    indxCurrentQuesito++;
-                    showQuesito();
-                } else {
-                    OutputHandler.showln("Non ci sono altre domande.");
-                    showQuesito();
-                }
+                nextQuestion();
                 break;
 
             case "T": //Termina il quiz
@@ -113,14 +101,36 @@ public class SvolgiQuizCLI extends BaseShortcutHandler {
                         answer.setRisposta(quesito.getRisposte().get(rispostaIndex).getTesto());
                         controllerApplicativo.tickAnswer(answer);
                         OutputHandler.showln("Risposta selezionata: " + quesito.getRisposte().get(rispostaIndex).getTesto());
+                        nextQuestion();
                     } else {
                         OutputHandler.showln("Scelta non valida. Riprova.");
                     }
                 } catch (NumberFormatException e) {
                     OutputHandler.showln("Input non valido. Inserisci un numero o un comando valido.");
                 }
-                showQuesito();
                 break;
+        }
+    }
+
+    //----METODO PER ANDARE ALLA PROSSIMA DOMANDA----
+    private void nextQuestion(){
+        if (indxCurrentQuesito < quesiti.size() - 1) {
+            indxCurrentQuesito++;
+            showQuesito();
+        } else {
+            OutputHandler.showln("Non ci sono altre domande.");
+            showQuesito();
+        }
+    }
+
+    //----METODO PER ANDARE ALLA SCORSA DOMANDA----
+    private void prevQuestion(){
+        if (indxCurrentQuesito > 0) {
+            indxCurrentQuesito--;
+            showQuesito();
+        } else {
+            OutputHandler.showln("Non ci sono domande precedenti.");
+            showQuesito();
         }
     }
 
