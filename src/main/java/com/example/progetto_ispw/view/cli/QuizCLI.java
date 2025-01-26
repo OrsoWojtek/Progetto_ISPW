@@ -45,35 +45,35 @@ public class QuizCLI extends CompleteShortcutHandler {
 
     //----METODO PER MOSTRARE IL MENU PRINCIPALE----
     private void mostraMenu() {
-        while (true) {
-            OutputHandler.showln("\n--- Menu Quiz ---");
-            OutputHandler.showln("[A] Mostra argomenti del quiz");
-            OutputHandler.showln("[S] Avvia il quiz");
-            OutputHandler.showln("[C] Torna al corso");
-            OutputHandler.showln("[H] Torna alla home");
-            OutputHandler.showln("[L] Logout");
-            OutputHandler.show("Seleziona un'opzione: ");
+        OutputHandler.showln("\n--- Menu Quiz ---");
+        OutputHandler.showln("[A] Mostra argomenti del quiz");
+        OutputHandler.showln("[S] Avvia il quiz");
+        OutputHandler.showln("[C] Torna al corso");
+        OutputHandler.showln("[H] Torna alla home");
+        OutputHandler.showln("[L] Logout");
+        OutputHandler.show("Seleziona un'opzione: ");
 
-            String scelta = scanner.nextLine().trim().toUpperCase();
-            switch (scelta) {
-                case "A":
-                    onArgomenti();
-                    break;
-                case "H":
-                    onHome();
-                    return; //Esce dal menu corrente
-                case "C":
-                    onTornaAlCorso();
-                    return; //Esce dal menu corrente
-                case "S":
-                    avviaIlQuiz();
-                    return; //Esce dal menu corrente per caricare il quiz
-                case "L":
-                    onLogout();
-                    return; //Esce dal menu corrente
-                default:
-                    OutputHandler.showln("Opzione non valida. Riprova.");
-            }
+        String scelta = scanner.nextLine().trim().toUpperCase();
+        switch (scelta) {
+            case "A":
+                onArgomenti();
+                mostraMenu();
+                break;
+            case "H":
+                onHome();
+                return; //Esce dal menu corrente
+            case "C":
+                onTornaAlCorso();
+                return; //Esce dal menu corrente
+            case "S":
+                avviaIlQuiz();
+                return; //Esce dal menu corrente per caricare il quiz
+            case "L":
+                onLogout();
+                return; //Esce dal menu corrente
+            default:
+                OutputHandler.showln("Opzione non valida. Riprova.");
+                mostraMenu();
         }
     }
 

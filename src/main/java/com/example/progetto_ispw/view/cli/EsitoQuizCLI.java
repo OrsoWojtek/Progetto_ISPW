@@ -37,32 +37,33 @@ public class EsitoQuizCLI extends CompleteShortcutHandler {
     //----METODO PER MOSTRARE IL MENU PRINCIPALE----
     private void mostraMenu() {
         Scanner scanner = new Scanner(System.in);
-        while (true) {
-            OutputHandler.showln("\n--- Menu Esito Quiz ---");
-            OutputHandler.showln("[E] Visualizza errori");
-            OutputHandler.showln("[H] Torna alla home");
-            OutputHandler.showln("[C] Torna alla pagina del corso");
-            OutputHandler.showln("[L] Effettua logout");
 
-            OutputHandler.show("Scelta: ");
-            String scelta = scanner.nextLine().toUpperCase();
+        OutputHandler.showln("\n--- Menu Esito Quiz ---");
+        OutputHandler.showln("[E] Visualizza errori");
+        OutputHandler.showln("[H] Torna alla home");
+        OutputHandler.showln("[C] Torna alla pagina del corso");
+        OutputHandler.showln("[L] Effettua logout");
 
-            switch (scelta) {
-                case "E":
-                    mostraErrori();
-                    break;
-                case "H":
-                    tornaAllaHome();
-                    return; //Torna al menu precedente o termina l'app
-                case "C":
-                    tornaAlCorso();
-                    return; //Torna al menu precedente o termina l'app
-                case "L":
-                    effettuaLogout();
-                    return; //Effettua il logout
-                default:
-                    OutputHandler.showln("Opzione non valida. Riprova.");
-            }
+        OutputHandler.show("Scelta: ");
+        String scelta = scanner.nextLine().toUpperCase();
+
+        switch (scelta) {
+            case "E":
+                mostraErrori();
+                mostraMenu();
+                break;
+            case "H":
+                tornaAllaHome();
+                return; //Torna al menu precedente o termina l'app
+            case "C":
+                tornaAlCorso();
+                return; //Torna al menu precedente o termina l'app
+            case "L":
+                effettuaLogout();
+                return; //Effettua il logout
+            default:
+                OutputHandler.showln("Opzione non valida. Riprova.");
+                mostraMenu();
         }
     }
 

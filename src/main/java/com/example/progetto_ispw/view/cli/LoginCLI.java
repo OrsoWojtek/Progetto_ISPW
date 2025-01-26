@@ -19,39 +19,38 @@ public class LoginCLI extends PageManager {
     //----METODO PER L'INIZIALIZZAZIONE DELLA GRAFICA----
     @Override
     public void initialize() {
-        while (true) {
-            OutputHandler.showln(DIVISORE);
-            OutputHandler.showln("🔑 BENVENUTO");
-            OutputHandler.showln("1. Login");
-            OutputHandler.showln("2. Registrazione");
-            OutputHandler.showln("3. Esci");
-            OutputHandler.showln(DIVISORE);
-            OutputHandler.show("Seleziona un'opzione (1-3): ");
+        OutputHandler.showln(DIVISORE);
+        OutputHandler.showln("🔑 BENVENUTO");
+        OutputHandler.showln("1. Login");
+        OutputHandler.showln("2. Registrazione");
+        OutputHandler.showln("3. Esci");
+        OutputHandler.showln(DIVISORE);
+        OutputHandler.show("Seleziona un'opzione (1-3): ");
 
-            String choice = scanner.nextLine().trim();
+        String choice = scanner.nextLine().trim();
 
-            switch (choice) {
-                case "1": //Login
-                    handleLogin();
-                    break;
+        switch (choice) {
+            case "1": //Login
+                handleLogin();
+                break;
 
-                case "2": //Registrazione
-                    onRegistrazione();
-                    break;
+            case "2": //Registrazione
+                onRegistrazione();
+                break;
 
-                case "3": //Uscita
-                    OutputHandler.showln(DIVISORE);
-                    OutputHandler.showln("👋 Grazie per aver utilizzato l'applicazione. Arrivederci!");
-                    OutputHandler.showln(DIVISORE);
-                    System.exit(0);
-                    break;
+            case "3": //Uscita
+                OutputHandler.showln(DIVISORE);
+                OutputHandler.showln("👋 Grazie per aver utilizzato l'applicazione. Arrivederci!");
+                OutputHandler.showln(DIVISORE);
+                System.exit(0);
+                break;
 
-                default:
-                    OutputHandler.showln(DIVISORE);
-                    OutputHandler.showln("❌ Opzione non valida. Riprova!");
-                    OutputHandler.showln(DIVISORE);
-                    break;
-            }
+            default:
+                OutputHandler.showln(DIVISORE);
+                OutputHandler.showln("❌ Opzione non valida. Riprova!");
+                OutputHandler.showln(DIVISORE);
+                initialize();
+                break;
         }
     }
 
@@ -114,5 +113,6 @@ public class LoginCLI extends PageManager {
         OutputHandler.showln(DIVISORE);
         showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
         OutputHandler.showln(DIVISORE);
+        initialize();
     }
 }
