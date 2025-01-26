@@ -160,24 +160,24 @@ public class HomeCLI extends CompleteShortcutHandler {
                     handleNavigationInput();
                 } else {
                     onAdd();
-                    break;
                 }
+                break;
             case "M":
                 if(userRole.equalsIgnoreCase(UserRole.STUDENTE.getValue())){
                     OutputHandler.showln(NOTVALID);
                     handleNavigationInput();
                 } else {
                     onOption();
-                    break;
                 }
+                break;
             case "I":
                 if(userRole.equalsIgnoreCase(UserRole.TUTOR.getValue())){
                     OutputHandler.showln(NOTVALID);
                     handleNavigationInput();
                 } else {
                     onSearch();
-                    break;
                 }
+                break;
             default:
                 OutputHandler.showln(NOTVALID);
                 handleNavigationInput();
