@@ -74,23 +74,10 @@ public class QuizController {
         QuesitoInfoBean quesito = answer.getQuesitoInfoBean();
         String rispostaSelezionata = answer.getRisposta();
         for(RispostaInfoBean risposta : quesito.getRisposte()){
-            if(risposta.getTesto().equals(rispostaSelezionata)){
-                risposta.setTicked(true);
-                break;
-            }
+            risposta.setTicked(risposta.getTesto().equals(rispostaSelezionata)); //Imposta 'ticked' la risposta appena selezionata, togliendolo alle altre
         }
     }
-    //----METODO PER TOGLIERE LA SPUNTA DA UNA RISPOSTA----
-    public void untickAnswer(AnsweringProcessInfoBean answer) {
-        QuesitoInfoBean quesito = answer.getQuesitoInfoBean();
-        String rispostaPrecedente = answer.getRisposta();
-        for(RispostaInfoBean risposta : quesito.getRisposte()){
-            if(risposta.getTesto().equals(rispostaPrecedente)){
-                risposta.setTicked(false);
-                break;
-            }
-        }
-    }
+
     //----METODO PER SOTTOPORRERE IL QUIZ----
     public void submitQuiz(QuizInfoBean quiz) throws DataNotFoundException, ConnectionException, DataAccessException {
         quiz.setPunteggioStudente(-quiz.getPunteggioStudente()); //Resettiamo il punteggio dello studente

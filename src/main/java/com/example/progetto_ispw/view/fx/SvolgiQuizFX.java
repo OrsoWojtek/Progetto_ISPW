@@ -81,15 +81,6 @@ public class SvolgiQuizFX extends BaseShortcutHandler {
                 answer.setRisposta(selectedRadioButton.getText());
                 controllerApplicativo.tickAnswer(answer);
             }
-
-            //Verifica quale RadioButton era precedentemente selezionato
-            if (oldValue != null) {
-                RadioButton previousRadioButton = (RadioButton) oldValue;
-                AnsweringProcessInfoBean answer = new AnsweringProcessInfoBean();
-                answer.setQuesitoInfoBean(quesiti.get(indxCurrentQuesito));
-                answer.setRisposta(previousRadioButton.getText());
-                controllerApplicativo.untickAnswer(answer);
-            }
         });
     }
     //----METODO PER MOSTRARE UN QUESITO DEL QUIZ----
