@@ -22,7 +22,7 @@ public class HomeCLI extends CompleteShortcutHandler {
     private static final String NOTVALID = "Scelta non valida. Riprova.";
     private final Scanner scanner = new Scanner(System.in);
 
-    //----Inizializzazione della pagina Home ----
+    //----METODO PER L'INIZIALIZZAZIONE DELLA GRAFICA----
     @Override
     public void initialize() {
         home = new HomeController();
@@ -197,11 +197,11 @@ public class HomeCLI extends CompleteShortcutHandler {
 
     //----METODO PER PASSARE ALLA PAGINA DEL CORSO DESIDERATO----
     private void goToCoursePage(String nomeCorso) {
-        Optional<CorsoInfoBean> corsoScelto = catalogo.stream().filter(c -> c.getNome().equals(nomeCorso)).findFirst();
+        Optional<CorsoInfoBean> corsoScelto = catalogo.stream().filter(c -> c.getNome().equals(nomeCorso)).findFirst(); //Cerca il bean del corso nel catalogo corrispondere al nome del corso selezionato dall'utente
         corsoScelto.ifPresentOrElse(currentCourse -> {
             try {
-                home.setInfoCourse(currentCourse);
-                OutputHandler.showln("Sei entrato nel corso: " + nomeCorso);
+                home.setInfoCourse(currentCourse); //Passa il bean del corso al controller applicativo
+                course();  //...Mostra la pagina del corso
             } catch (DataNotFoundException e) {
                 showMessageHandler.showError(e.getMessage(), ErrorCode.SESSION);
                 onLogout();

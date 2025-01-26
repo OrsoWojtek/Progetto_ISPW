@@ -16,7 +16,7 @@ public class LoginCLI extends PageManager {
     private final Scanner scanner = new Scanner(System.in);
     private static final String DIVISORE = "=================================";
 
-    //Metodo principale per avviare il flusso di login
+    //----METODO PER L'INIZIALIZZAZIONE DELLA GRAFICA----
     @Override
     public void initialize() {
         while (true) {
@@ -55,7 +55,7 @@ public class LoginCLI extends PageManager {
         }
     }
 
-    //Gestione del login
+    //----METODO PER LA GESTIONE DEL LOGIN----
     private void handleLogin() {
         OutputHandler.showln(DIVISORE);
         OutputHandler.showln("🔑 LOGIN");
@@ -76,7 +76,7 @@ public class LoginCLI extends PageManager {
         }
     }
 
-    //Metodo chiamato al click del pulsante di login
+    //----METODO CHIAMATO ALLA RICHIESTA DI CORRETTA DI LOGIN----
     public synchronized void onLogin(String username, String password) {
         LoginInfoBean bean = new LoginInfoBean();               //Istanziamento bean per il login
         LoginController controller = new LoginController();     //Istanziamento controller
@@ -102,7 +102,7 @@ public class LoginCLI extends PageManager {
         }
     }
 
-    //Metodo chiamato quando viene richiesta la registrazione
+    //----METODO CHIAMATO QUANDO VIENE RICHIESTA LA REGISTRAZIONE----
     public void onRegistrazione() {
         OutputHandler.showln(DIVISORE);
         OutputHandler.showln("📝 REGISTRAZIONE");
