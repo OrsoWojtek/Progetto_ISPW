@@ -11,9 +11,7 @@ import com.example.progetto_ispw.exception.DataSessionCastingException;
 import com.example.progetto_ispw.view.cli.handler.OutputHandler;
 import com.example.progetto_ispw.view.handler.shortcut.concrete.CompleteShortcutHandler;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 //----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA (CASO SPECIFICO: HOME)----
 public class HomeCLI extends CompleteShortcutHandler {
@@ -131,56 +129,50 @@ public class HomeCLI extends CompleteShortcutHandler {
         OutputHandler.show("Inserisci la tua scelta: ");
         String choice = scanner.nextLine().trim().toUpperCase();
 
-        switch (choice) {
-            case "P":
-                if (currentPage > 0) {
-                    currentPage--;
-                } else {
-                    OutputHandler.showln("Non ci sono pagine precedenti.");
-                }
-                showCourseCatalog();
-                break;
-            case "N":
-                if ((currentPage + 1) * 6 < catalogo.size()) {
-                    currentPage++;
-                } else {
-                    OutputHandler.showln("Non ci sono altre pagine.");
-                }
-                showCourseCatalog();
-                break;
-            case "S":
-                selectCourse();
-                break;
-            case "L":
-                onLogout();
-                break;
-            case "A":
-                if(userRole.equalsIgnoreCase(UserRole.STUDENTE.getValue())){
-                    OutputHandler.showln(NOTVALID);
-                    handleNavigationInput();
-                } else {
-                    onAdd();
-                }
-                break;
-            case "M":
-                if(userRole.equalsIgnoreCase(UserRole.STUDENTE.getValue())){
-                    OutputHandler.showln(NOTVALID);
-                    handleNavigationInput();
-                } else {
-                    onOption();
-                }
-                break;
-            case "I":
-                if(userRole.equalsIgnoreCase(UserRole.TUTOR.getValue())){
-                    OutputHandler.showln(NOTVALID);
-                    handleNavigationInput();
-                } else {
-                    onSearch();
-                }
-                break;
-            default:
-                OutputHandler.showln(NOTVALID);
-                handleNavigationInput();
+        //Mappa dei comandi e delle azioni
+        Map<String, Runnable> actions = new HashMap<>();
+        actions.put("P", this::handlePreviousPage);
+        actions.put("N", this::handleNextPage);
+        actions.put("S", this::selectCourse);
+        actions.put("L", this::onLogout);
+        actions.put("A", () -> handleRoleBasedAction(UserRole.STUDENTE, this::onAdd));
+        actions.put("M", () -> handleRoleBasedAction(UserRole.STUDENTE, this::onOption));
+        actions.put("I", () -> handleRoleBasedAction(UserRole.TUTOR, this::onSearch));
+
+        //Esegui l'azione corrispondente, o mostra un messaggio per scelta non valida
+        actions.getOrDefault(choice, () -> {
+            OutputHandler.showln(NOTVALID);
+            showCourseCatalog();
+        }).run();
+    }
+
+    //----METODO PER MOSTRARE LA PAGINA PRECEDENTE DEL CATALOGO DEI CORSI----
+    private void handlePreviousPage() {
+        if (currentPage > 0) {
+            currentPage--;
+        } else {
+            OutputHandler.showln("Non ci sono pagine precedenti.");
+        }
+        showCourseCatalog();
+    }
+
+    //----METODO PER MOSTRARE LA PAGINA SUCCESSIVA DEL CATALOGO DEI CORSI----
+    private void handleNextPage() {
+        if ((currentPage + 1) * 6 < catalogo.size()) {
+            currentPage++;
+        } else {
+            OutputHandler.showln("Non ci sono altre pagine.");
+        }
+        showCourseCatalog();
+    }
+
+    //----METODO PER VERIFICARE IL PERMESSO DI USARE UNA CERTA AZIONE IN BASE AL RUOLO DELL'UTENTE----
+    private void handleRoleBasedAction(UserRole forbiddenRole, Runnable action) {
+        if (userRole.equalsIgnoreCase(forbiddenRole.getValue())) {
+            OutputHandler.showln(NOTVALID);
+            showCourseCatalog();
+        } else {
+            action.run();
         }
     }
 
