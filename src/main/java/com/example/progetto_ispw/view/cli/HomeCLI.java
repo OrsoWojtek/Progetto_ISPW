@@ -21,6 +21,7 @@ public class HomeCLI extends CompleteShortcutHandler {
     private List<CorsoInfoBean> catalogo; //Catalogo dei corsi a cui l'utente è iscritto
     private HomeController home; //Controller applicativo
     private int currentPage = 0; //Indice della pagina corrente dei corsi da mostrare
+    private static final String NOTVALID = "Scelta non valida. Riprova.";
     private final Scanner scanner = new Scanner(System.in);
 
     //----Inizializzazione della pagina Home ----
@@ -72,19 +73,19 @@ public class HomeCLI extends CompleteShortcutHandler {
 
     //----METODO PER ISCRIVERSI AI CORSI----
     public void onSearch() {
-        showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
+        showMessageHandler.showError("Iscrizione ai corsi: "+StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
         showCourseCatalog();
     }
 
     //----METODO PER ANDARE ALLA PAGINA DI CREAZIONE DI UN NUOVO CORSO----
     public void onAdd() {
-        showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
+        showMessageHandler.showError("Creazione di un nuovo corso: "+StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
         showCourseCatalog();
     }
 
     //----METODO PER GESTIRE I CORSI----
     public void onOption() {
-        showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
+        showMessageHandler.showError("Modifica di un corso: "+StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
         showCourseCatalog();
     }
 
@@ -155,7 +156,7 @@ public class HomeCLI extends CompleteShortcutHandler {
                 break;
             case "A":
                 if(userRole.equalsIgnoreCase(UserRole.STUDENTE.getValue())){
-                    OutputHandler.showln("Scelta non valida. Riprova.");
+                    OutputHandler.showln(NOTVALID);
                     handleNavigationInput();
                 } else {
                     onAdd();
@@ -163,7 +164,7 @@ public class HomeCLI extends CompleteShortcutHandler {
                 }
             case "M":
                 if(userRole.equalsIgnoreCase(UserRole.STUDENTE.getValue())){
-                    OutputHandler.showln("Scelta non valida. Riprova.");
+                    OutputHandler.showln(NOTVALID);
                     handleNavigationInput();
                 } else {
                     onOption();
@@ -171,14 +172,14 @@ public class HomeCLI extends CompleteShortcutHandler {
                 }
             case "I":
                 if(userRole.equalsIgnoreCase(UserRole.TUTOR.getValue())){
-                    OutputHandler.showln("Scelta non valida. Riprova.");
+                    OutputHandler.showln(NOTVALID);
                     handleNavigationInput();
                 } else {
                     onSearch();
                     break;
                 }
             default:
-                OutputHandler.showln("Scelta non valida. Riprova.");
+                OutputHandler.showln(NOTVALID);
                 handleNavigationInput();
         }
     }
