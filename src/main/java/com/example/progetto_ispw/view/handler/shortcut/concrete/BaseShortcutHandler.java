@@ -13,6 +13,7 @@ public abstract class BaseShortcutHandler extends MinimumShortcutHandler impleme
             pageLoader.loadPage(PageID.HOME);
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
+            logout();
         }
     }
 }

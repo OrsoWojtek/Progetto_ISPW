@@ -38,14 +38,16 @@ public class CorsoCLI extends BaseShortcutHandler {
             onLogoutSelect();
         } catch (QuizCreationException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.QUIZ_NOT_FOUND);
+            onLogoutSelect();
         } catch (DataNotFoundException e) {
             showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
             onLogoutSelect();
         } catch (ConnectionException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);
-            System.exit(1);
+            onLogoutSelect();
         } catch (DataAccessException e) {
             showMessageHandler.showError(e.getMessage(),ErrorCode.DB_ERROR);
+            onLogoutSelect();
         }
     }
     //----METODO PER VISUALIZZARE IL CATALOGO DEI QUIZ----
@@ -167,11 +169,13 @@ public class CorsoCLI extends BaseShortcutHandler {
             onLogoutSelect();
         } catch (DataAccessException e) {
             showMessageHandler.showError(e.getMessage(),ErrorCode.DB_ERROR);
+            onLogoutSelect();
         }catch (DataSessionCastingException e){
             showMessageHandler.showError(StandardMessagge.CASTING.getValue(), ErrorCode.CASTING);
             onLogoutSelect();
         }catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);
+            onLogoutSelect();
         }
     }
     //----METODO PER MOSTRARE LA DESCRIZIONE DEL CORSO----
@@ -227,6 +231,7 @@ public class CorsoCLI extends BaseShortcutHandler {
                 onLogoutSelect();
             } catch (PageNotFoundException e){
                 showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
+                onLogoutSelect();
             } catch (DataNotFoundException e) {
                 showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
                 onLogoutSelect();

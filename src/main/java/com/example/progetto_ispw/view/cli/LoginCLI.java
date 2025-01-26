@@ -91,14 +91,19 @@ public class LoginCLI extends PageManager {
             pageLoader.loadPage(PageID.HOME);    //...Carica la pagina di home
         } catch (PageNotFoundException e) {      //Altrimenti...
             showMessageHandler.showError(e.getMessage(), ErrorCode.PAGE_NOT_FOUND); //...Mostra un errore
+            System.exit(1);
         } catch (DataAccessException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.DB_ERROR);
+            System.exit(1);
         } catch (ConnectionException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);
+            System.exit(1);
         } catch (RoleNotFoundException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.UNDEF_ROLE);
+            System.exit(1);
         } catch (DataNotFoundException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.CREDENTIAL_ERROR);
+            System.exit(1);
         }
     }
 

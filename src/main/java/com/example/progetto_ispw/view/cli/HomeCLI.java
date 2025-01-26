@@ -43,7 +43,7 @@ public class HomeCLI extends CompleteShortcutHandler {
             showCourseCatalog();
         } catch (ConnectionException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);
-            System.exit(1);
+            onLogout();
         } catch (DataNotFoundException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.SESSION);
             onLogout();

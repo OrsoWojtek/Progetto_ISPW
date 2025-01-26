@@ -58,6 +58,7 @@ public class HomeFX extends CompleteShortcutHandler {
             catalogo = home.getCorsiFrequentati(user); //Richiesta dei corsi a cui è iscritto l'utente
         } catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);
+            onLogoutButtonClicked();
         } catch (DataNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
             onLogoutButtonClicked();

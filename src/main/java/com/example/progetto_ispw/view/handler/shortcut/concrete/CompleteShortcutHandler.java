@@ -13,6 +13,7 @@ public abstract class CompleteShortcutHandler extends BaseShortcutHandler implem
             pageLoader.loadPage(PageID.CORSO);
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(), ErrorCode.PAGE_NOT_FOUND);
+            logout();
         }
     }
 }

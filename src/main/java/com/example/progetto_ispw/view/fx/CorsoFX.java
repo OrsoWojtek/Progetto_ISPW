@@ -64,10 +64,13 @@ public class CorsoFX extends BaseShortcutHandler {
             showQuizCatalog();
         } catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);
+            onLogout();
         } catch (QuizCreationException e){
             showMessageHandler.showError(e.getMessage(), ErrorCode.QUIZ_NOT_FOUND);
+            onLogout();
         } catch (DataAccessException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.DB_ERROR);
+            onLogout();
         } catch (DataNotFoundException e) {
             showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
             onLogout();
@@ -124,8 +127,10 @@ public class CorsoFX extends BaseShortcutHandler {
             showMessageHandler.showMessage(notifiche.getNotifiche(),"Notifiche");
         } catch (DataAccessException e) {
             showMessageHandler.showError(e.getMessage(),ErrorCode.DB_ERROR);
+            onLogout();
         } catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);
+            onLogout();
         } catch (DataNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
             onLogout();
@@ -161,7 +166,7 @@ public class CorsoFX extends BaseShortcutHandler {
             } catch (DataNotFoundException e) {
                 showMessageHandler.showError(e.getMessage(),ErrorCode.SESSION);
                 onLogout();
-            }catch (DataSessionCastingException e){
+            } catch (DataSessionCastingException e){
                 showMessageHandler.showError(StandardMessagge.CASTING.getValue(),ErrorCode.CASTING);
                 onLogout();
             }
@@ -170,6 +175,7 @@ public class CorsoFX extends BaseShortcutHandler {
             pageLoader.loadPage(PageID.QUIZ);//...Mostra la pagina del quiz
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
+            onLogout();
         }
     }
 

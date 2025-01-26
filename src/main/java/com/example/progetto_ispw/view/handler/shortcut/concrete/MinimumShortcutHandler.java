@@ -14,6 +14,7 @@ public abstract class MinimumShortcutHandler extends PageManager implements Logo
             pageLoader.loadPage(PageID.LOGIN);
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(), ErrorCode.PAGE_NOT_FOUND);
+            System.exit(1);
         }
     }
 }

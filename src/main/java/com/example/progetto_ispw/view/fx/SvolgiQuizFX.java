@@ -182,14 +182,19 @@ public class SvolgiQuizFX extends BaseShortcutHandler {
             pageLoader.loadPage(PageID.ESITO_QUIZ);
         } catch (PageNotFoundException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.PAGE_NOT_FOUND);
+            logoutProcess();
         } catch (DataNotFoundException e){
             showMessageHandler.showError(e.getMessage(), ErrorCode.SESSION);
+            logoutProcess();
         } catch (ConnectionException e){
             showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);
+            logoutProcess();
         } catch (DataAccessException e){
             showMessageHandler.showError(e.getMessage(),ErrorCode.DB_ERROR);
+            logoutProcess();
         } catch (DataSessionCastingException e){
             showMessageHandler.showError(StandardMessagge.CASTING.getValue(),ErrorCode.CASTING);
+            logoutProcess();
         }
     }
     //----METODO PER IL LOGOUT----
