@@ -8,6 +8,7 @@ import com.example.progetto_ispw.controller.HomeController;
 import com.example.progetto_ispw.exception.ConnectionException;
 import com.example.progetto_ispw.exception.DataNotFoundException;
 import com.example.progetto_ispw.exception.DataSessionCastingException;
+import com.example.progetto_ispw.view.cli.handler.OutputHandler;
 import com.example.progetto_ispw.view.handler.shortcut.concrete.CompleteShortcutHandler;
 
 import java.util.List;
@@ -33,13 +34,17 @@ public class HomeCLI extends CompleteShortcutHandler {
             this.userRole = user.getRole();
 
             //Mostra informazioni di benvenuto
-            System.out.println("Benvenuto, " + username + " (" + userRole + ")");
+            OutputHandler.showln("Benvenuto, " + username + " (" + userRole + ")");
 
             //Recupera il catalogo dei corsi
             catalogo = home.getCorsiFrequentati(user);
             if ("".equals(catalogo.getFirst().getDescrizione())) {
-                System.out.println("Non sei iscritto a nessun corso.");
+                OutputHandler.showln("Non sei iscritto a nessun corso.");
             } else {
+                /*
+                sistema questa parte (così non mostri nulla, neanche il menù)
+                int i;
+                 */
                 showCourseCatalog();
             }
         } catch (ConnectionException e) {
@@ -89,10 +94,10 @@ public class HomeCLI extends CompleteShortcutHandler {
         int startIndex = currentPage * coursesPerPage;
         int endIndex = Math.min(startIndex + coursesPerPage, catalogo.size());
 
-        System.out.println("\nCatalogo corsi (Pagina " + (currentPage + 1) + "):\n");
+        OutputHandler.showln("\nCatalogo corsi (Pagina " + (currentPage + 1) + "):\n");
         for (int i = startIndex; i < endIndex; i++) {
             CorsoInfoBean corso = catalogo.get(i);
-            System.out.println((i + 1) + ". " + corso.getNome());
+            OutputHandler.showln((i + 1) + ". " + corso.getNome());
         }
 
         addNavigationOptions(endIndex);
@@ -100,21 +105,21 @@ public class HomeCLI extends CompleteShortcutHandler {
 
     //----METODO PER AGGIUNGERE OPZIONI DI NAVIGAZIONE----
     private void addNavigationOptions(int endIndex) {
-        System.out.println("\nOpzioni:");
+        OutputHandler.showln("\nOpzioni:");
         if (currentPage > 0) {
-            System.out.println("[P] Pagina precedente");
+            OutputHandler.showln("[P] Pagina precedente");
         }
         if (endIndex < catalogo.size()) {
-            System.out.println("[N] Pagina successiva");
+            OutputHandler.showln("[N] Pagina successiva");
         }
-        System.out.println("[S] Seleziona corso");
-        System.out.println("[L] Logout");
+        OutputHandler.showln("[S] Seleziona corso");
+        OutputHandler.showln("[L] Logout");
         if (userRole.equalsIgnoreCase(UserRole.TUTOR.getValue())){
-            System.out.println("[A] Aggiungi un nuovo corso");
-            System.out.println("[M] Modifica un corso");
+            OutputHandler.showln("[A] Aggiungi un nuovo corso");
+            OutputHandler.showln("[M] Modifica un corso");
         }
         if (userRole.equalsIgnoreCase(UserRole.STUDENTE.getValue())){
-            System.out.println("[I] Iscriviti a un nuovo corso");
+            OutputHandler.showln("[I] Iscriviti a un nuovo corso");
         }
 
         handleNavigationInput();
@@ -122,25 +127,23 @@ public class HomeCLI extends CompleteShortcutHandler {
 
     //----METODO PER GESTIRE L'INPUT DI NAVIGAZIONE----
     private void handleNavigationInput() {
-        System.out.print("Inserisci la tua scelta: ");
+        OutputHandler.show("Inserisci la tua scelta: ");
         String choice = scanner.nextLine().trim().toUpperCase();
 
         switch (choice) {
             case "P":
                 if (currentPage > 0) {
                     currentPage--;
-                    //showCourseCatalog();
                 } else {
-                    System.out.println("Non ci sono pagine precedenti.");
+                    OutputHandler.showln("Non ci sono pagine precedenti.");
                 }
                 showCourseCatalog();
                 break;
             case "N":
                 if ((currentPage + 1) * 6 < catalogo.size()) {
                     currentPage++;
-                    //showCourseCatalog();
                 } else {
-                    System.out.println("Non ci sono altre pagine.");
+                    OutputHandler.showln("Non ci sono altre pagine.");
                 }
                 showCourseCatalog();
                 break;
@@ -152,7 +155,7 @@ public class HomeCLI extends CompleteShortcutHandler {
                 break;
             case "A":
                 if(userRole.equalsIgnoreCase(UserRole.STUDENTE.getValue())){
-                    System.out.println("Scelta non valida. Riprova.");
+                    OutputHandler.showln("Scelta non valida. Riprova.");
                     handleNavigationInput();
                 } else {
                     onAdd();
@@ -160,7 +163,7 @@ public class HomeCLI extends CompleteShortcutHandler {
                 }
             case "M":
                 if(userRole.equalsIgnoreCase(UserRole.STUDENTE.getValue())){
-                    System.out.println("Scelta non valida. Riprova.");
+                    OutputHandler.showln("Scelta non valida. Riprova.");
                     handleNavigationInput();
                 } else {
                     onOption();
@@ -168,31 +171,31 @@ public class HomeCLI extends CompleteShortcutHandler {
                 }
             case "I":
                 if(userRole.equalsIgnoreCase(UserRole.TUTOR.getValue())){
-                    System.out.println("Scelta non valida. Riprova.");
+                    OutputHandler.showln("Scelta non valida. Riprova.");
                     handleNavigationInput();
                 } else {
                     onSearch();
                     break;
                 }
             default:
-                System.out.println("Scelta non valida. Riprova.");
+                OutputHandler.showln("Scelta non valida. Riprova.");
                 handleNavigationInput();
         }
     }
 
     //----METODO PER SELEZIONARE UN CORSO----
     private void selectCourse() {
-        System.out.print("Inserisci il numero del corso: ");
+        OutputHandler.show("Inserisci il numero del corso: ");
         try {
             int courseIndex = Integer.parseInt(scanner.nextLine().trim()) - 1;
             if (courseIndex >= 0 && courseIndex < catalogo.size()) {
                 goToCoursePage(catalogo.get(courseIndex).getNome());
             } else {
-                System.out.println("Numero corso non valido.");
+                OutputHandler.showln("Numero corso non valido.");
                 selectCourse();
             }
         } catch (NumberFormatException e) {
-            System.out.println("Input non valido. Riprova.");
+            OutputHandler.showln("Input non valido. Riprova.");
             selectCourse();
         }
     }
@@ -203,7 +206,7 @@ public class HomeCLI extends CompleteShortcutHandler {
         corsoScelto.ifPresentOrElse(currentCourse -> {
             try {
                 home.setInfoCourse(currentCourse);
-                System.out.println("Sei entrato nel corso: " + nomeCorso);
+                OutputHandler.showln("Sei entrato nel corso: " + nomeCorso);
             } catch (DataNotFoundException e) {
                 showMessageHandler.showError(e.getMessage(), ErrorCode.SESSION);
                 onLogout();
@@ -212,7 +215,7 @@ public class HomeCLI extends CompleteShortcutHandler {
                 onLogout();
             }
         }, () -> {
-                System.out.println("Corso non trovato.");
+                OutputHandler.showln("Corso non trovato.");
                 showCourseCatalog();
             });
     }

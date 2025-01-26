@@ -7,6 +7,7 @@ import com.example.progetto_ispw.constants.StandardMessagge;
 import com.example.progetto_ispw.controller.LoginController;
 import com.example.progetto_ispw.exception.*;
 import com.example.progetto_ispw.view.PageManager;
+import com.example.progetto_ispw.view.cli.handler.OutputHandler;
 
 import java.util.Scanner;
 
@@ -19,13 +20,13 @@ public class LoginCLI extends PageManager {
     @Override
     public void initialize() {
         while (true) {
-            System.out.println(DIVISORE);
-            System.out.println("🔑 BENVENUTO");
-            System.out.println("1. Login");
-            System.out.println("2. Registrazione");
-            System.out.println("3. Esci");
-            System.out.println(DIVISORE);
-            System.out.print("Seleziona un'opzione (1-3): ");
+            OutputHandler.showln(DIVISORE);
+            OutputHandler.showln("🔑 BENVENUTO");
+            OutputHandler.showln("1. Login");
+            OutputHandler.showln("2. Registrazione");
+            OutputHandler.showln("3. Esci");
+            OutputHandler.showln(DIVISORE);
+            OutputHandler.show("Seleziona un'opzione (1-3): ");
 
             String choice = scanner.nextLine().trim();
 
@@ -39,15 +40,15 @@ public class LoginCLI extends PageManager {
                     break;
 
                 case "3": //Uscita
-                    System.out.println(DIVISORE);
-                    System.out.println("👋 Grazie per aver utilizzato l'applicazione. Arrivederci!");
-                    System.out.println(DIVISORE);
+                    OutputHandler.showln(DIVISORE);
+                    OutputHandler.showln("👋 Grazie per aver utilizzato l'applicazione. Arrivederci!");
+                    OutputHandler.showln(DIVISORE);
                     System.exit(0);
 
                 default:
-                    System.out.println(DIVISORE);
-                    System.out.println("❌ Opzione non valida. Riprova!");
-                    System.out.println(DIVISORE);
+                    OutputHandler.showln(DIVISORE);
+                    OutputHandler.showln("❌ Opzione non valida. Riprova!");
+                    OutputHandler.showln(DIVISORE);
                     break;
             }
         }
@@ -55,15 +56,15 @@ public class LoginCLI extends PageManager {
 
     //Gestione del login
     private void handleLogin() {
-        System.out.println(DIVISORE);
-        System.out.println("🔑 LOGIN");
-        System.out.println(DIVISORE);
+        OutputHandler.showln(DIVISORE);
+        OutputHandler.showln("🔑 LOGIN");
+        OutputHandler.showln(DIVISORE);
 
         //Richiedi all'utente di inserire username e password
-        System.out.print("Inserisci il tuo username: ");
+        OutputHandler.show("Inserisci il tuo username: ");
         String usernameInsert = scanner.nextLine().trim();
 
-        System.out.print("Inserisci la tua password: ");
+        OutputHandler.show("Inserisci la tua password: ");
         String passwordInsert = scanner.nextLine().trim();
 
         //Controlla se i campi sono vuoti
@@ -83,9 +84,9 @@ public class LoginCLI extends PageManager {
 
         try {
             controller.checkLogin(bean);     //Se le credenziali inserite sono corrette...
-            System.out.println(DIVISORE);
-            System.out.println("✅ Login effettuato con successo!");
-            System.out.println(DIVISORE);
+            OutputHandler.showln(DIVISORE);
+            OutputHandler.showln("✅ Login effettuato con successo!");
+            OutputHandler.showln(DIVISORE);
             pageLoader.loadPage(PageID.HOME);    //...Carica la pagina di home
         } catch (DataNotFoundException e) {      //Altrimenti...
             showMessageHandler.showError(e.getMessage(), ErrorCode.CREDENTIAL_ERROR);   //...Mostra un errore
@@ -102,10 +103,10 @@ public class LoginCLI extends PageManager {
 
     //Metodo chiamato quando viene richiesta la registrazione
     public void onRegistrazione() {
-        System.out.println(DIVISORE);
-        System.out.println("📝 REGISTRAZIONE");
-        System.out.println(DIVISORE);
+        OutputHandler.showln(DIVISORE);
+        OutputHandler.showln("📝 REGISTRAZIONE");
+        OutputHandler.showln(DIVISORE);
         showMessageHandler.showError(StandardMessagge.MAINTENANCE.getValue(), ErrorCode.MAINTENANCE);
-        System.out.println(DIVISORE);
+        OutputHandler.showln(DIVISORE);
     }
 }
