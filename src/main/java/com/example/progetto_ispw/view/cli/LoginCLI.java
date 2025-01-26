@@ -88,16 +88,16 @@ public class LoginCLI extends PageManager {
             OutputHandler.showln("✅ Login effettuato con successo!");
             OutputHandler.showln(DIVISORE);
             pageLoader.loadPage(PageID.HOME);    //...Carica la pagina di home
-        } catch (DataNotFoundException e) {      //Altrimenti...
-            showMessageHandler.showError(e.getMessage(), ErrorCode.CREDENTIAL_ERROR);   //...Mostra un errore
+        } catch (PageNotFoundException e) {      //Altrimenti...
+            showMessageHandler.showError(e.getMessage(), ErrorCode.PAGE_NOT_FOUND); //...Mostra un errore
         } catch (DataAccessException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.DB_ERROR);
-        } catch (RoleNotFoundException e) {
-            showMessageHandler.showError(e.getMessage(), ErrorCode.UNDEF_ROLE);
-        } catch (PageNotFoundException e) {
-            showMessageHandler.showError(e.getMessage(), ErrorCode.PAGE_NOT_FOUND);
         } catch (ConnectionException e) {
             showMessageHandler.showError(e.getMessage(), ErrorCode.CONNECTION);
+        } catch (RoleNotFoundException e) {
+            showMessageHandler.showError(e.getMessage(), ErrorCode.UNDEF_ROLE);
+        } catch (DataNotFoundException e) {
+            showMessageHandler.showError(e.getMessage(), ErrorCode.CREDENTIAL_ERROR);
         }
     }
 
