@@ -20,7 +20,7 @@ public class HomeCLI extends CompleteShortcutHandler {
     private HomeController home; //Controller applicativo
     private int currentPage = 0; //Indice della pagina corrente dei corsi da mostrare
     private static final String NOTVALID = "Scelta non valida. Riprova.";
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in); //Scanner per input utente
 
     //----METODO PER L'INIZIALIZZAZIONE DELLA GRAFICA----
     @Override

@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 //----CONTROLLER GRAFICO SECONDO IL PATTERN MVC PER LA GESTIONE DELLE INTERAZIONI DELL'UTENTE CON IL SISTEMA (CASO SPECIFICO: LOGIN)----
 public class LoginCLI extends PageManager {
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in); //Scanner per input utente
     private static final String DIVISORE = "=================================";
 
     //----METODO PER L'INIZIALIZZAZIONE DELLA GRAFICA----

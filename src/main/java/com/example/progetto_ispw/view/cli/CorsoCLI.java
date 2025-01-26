@@ -23,7 +23,7 @@ public class CorsoCLI extends BaseShortcutHandler {
     private int currentPage = 0; //Indice della pagina corrente dei quiz da mostrare
     private UtenteInfoBean user; //Riferimento all'utente loggato
     private static final String NOTVALID = "Scelta non valida. Riprova.";
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in); //Scanner per input utente
     //----METODO PER L'INIZIALIZZAZIONE DELLA GRAFICA----
     @Override
     public void initialize(){
@@ -75,26 +75,26 @@ public class CorsoCLI extends BaseShortcutHandler {
     private void showNavigationOptions(int endIndx) {
         OutputHandler.showln("\nOpzioni:");
         if (currentPage > 0) {
-            OutputHandler.showln("P. Pagina precedente");
+            OutputHandler.showln("[P] Pagina precedente");
         }
         if (endIndx < quizzes.size()) {
-            OutputHandler.showln("N. Pagina successiva");
+            OutputHandler.showln("[N] Pagina successiva");
         }
         if ((!quizzes.isEmpty())&&(user.getRole().equalsIgnoreCase(UserRole.STUDENTE.getValue()))) {
-            OutputHandler.showln("S. Seleziona un quiz");
+            OutputHandler.showln("[S] Seleziona un quiz");
         }
         if (user.getRole().equalsIgnoreCase(UserRole.TUTOR.getValue())){
-            OutputHandler.showln("V. Visualizza notifiche");
-            OutputHandler.showln("A. Aggiungi quiz");
-            OutputHandler.showln("M. Modifica quiz");
+            OutputHandler.showln("[V] Visualizza notifiche");
+            OutputHandler.showln("[A] Aggiungi quiz");
+            OutputHandler.showln("[M] Modifica quiz");
         }
         if (user.getRole().equalsIgnoreCase(UserRole.STUDENTE.getValue())){
-            OutputHandler.showln("Q. Sollecita domanda");
+            OutputHandler.showln("[Q] Sollecita domanda");
         }
-        OutputHandler.showln("T. Consulta la teoria");
-        OutputHandler.showln("D. Descrizione del corso");
-        OutputHandler.showln("H. Torna alla home");
-        OutputHandler.showln("L. Logout");
+        OutputHandler.showln("[T] Consulta la teoria");
+        OutputHandler.showln("[D] Descrizione del corso");
+        OutputHandler.showln("[H] Torna alla home");
+        OutputHandler.showln("[L] Logout");
 
         handleNavigationInput();
     }
