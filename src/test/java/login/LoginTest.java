@@ -11,22 +11,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 
 /*
- *  Il test si occupa di verificare se il processo di login avvenga correttamente
+ *  Il test si occupa di verificare che il processo di login avvenga correttamente
  */
 class LoginTest{
-
-        @Test
-        void loginTest() throws Exception {
-                int flag = 0;
-                LoginInfoBean userBean = new LoginInfoBean();
-                userBean.setUsername("a");
-                userBean.setPassword("s");
-                LoginController controller = new LoginController();
-                try{
-                        controller.checkLogin(userBean);
-                } catch (DataNotFoundException e){ //L'utente non è stato trovato
-                        flag = 1;
-                }
-                assertEquals(0,flag);
+    @Test
+    void loginTest() throws Exception {
+        int flag = 0;
+        LoginInfoBean userBean = new LoginInfoBean();
+        userBean.setUsername("a");
+        userBean.setPassword("s");
+        LoginController controller = new LoginController();
+        try {
+            controller.checkLogin(userBean);
+        } catch (DataNotFoundException e){ //L'utente non è stato trovato
+            flag = 1;
         }
+        assertEquals(0,flag);
+    }
 }
