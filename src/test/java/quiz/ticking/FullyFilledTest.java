@@ -18,14 +18,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /*
  *  Il test si occupa di verificare che venga restituita l'eccezione in caso di quiz non completamente compilato
- *  (ovvero che almeno un quesito del quiz non presenti alcuna risposta selezionata)
+ *  (ovvero che almeno un quesito del quiz non presenti alcuna risposta selezionata) e che non venga restituita in caso contrario
  */
-class NotFullyFilledTest {
+class FullyFilledTest {
     private QuizInfoBean quiz;
     @BeforeEach
     void setUpQuiz(){
         initializeQuiz(); //Inizializzazione del quiz
-        //Chiamare tickAnswers() se si vuole impostare ticked la prima risposta di ogni quesito
     }
 
     private void initializeQuiz(){
@@ -67,5 +66,18 @@ class NotFullyFilledTest {
             flag = 1;
         }
         assertEquals(1,flag);
+    }
+
+    @Test
+    void fullyFilledTest(){
+        int flag = 0;
+        QuizController controller = new QuizController();
+        tickAnswers();
+        try {
+            controller.isFullyFilled(quiz);
+        } catch (NotFilledQuestionException e) {
+            flag = 1;
+        }
+        assertEquals(0,flag);
     }
 }
