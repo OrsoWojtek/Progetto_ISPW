@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /*
  *  Il test si occupa di verificare l'esistenza del recupero delle notifiche avvenga correttamente
  */
-public class GetNotificheTest {
+class GetNotificheTest {
     @BeforeAll
     static void setUp(){
         UtenteInfoBean utente = new UtenteInfoBean();
