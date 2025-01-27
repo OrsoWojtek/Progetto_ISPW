@@ -316,6 +316,6 @@ public class CorsoFX extends BaseShortcutHandler {
         }
 
         //Aggiungi il contenitore con i bottoni alla lista dei corsi
-        quizContainer.getChildren().add(navigBox);
+        Platform.runLater(() -> quizContainer.getChildren().add(navigBox));
     }
 }

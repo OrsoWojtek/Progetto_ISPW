@@ -96,18 +96,18 @@ public class CorsoCLI extends BaseShortcutHandler {
         OutputHandler.showln("[H] Torna alla home");
         OutputHandler.showln("[L] Logout");
 
-        handleNavigationInput();
+        handleNavigationInput(endIndx);
     }
 
     //----METODO PER GESTIRE L'INPUT DI NAVIGAZIONE----
-    private void handleNavigationInput() {
+    private void handleNavigationInput(int endIndx) {
         OutputHandler.show("Inserisci la tua scelta: ");
         String choice = scanner.nextLine().trim().toUpperCase();
 
         //Mappa dei comandi e delle azioni
         Map<String, Runnable> actions = new HashMap<>();
         actions.put("P", this::previousPage);
-        actions.put("N", this::nextPage);
+        actions.put("N", () -> nextPage(endIndx));
         actions.put("D", this::onDescrizione);
         actions.put("L", this::onLogoutSelect);
         actions.put("H", this::onHomeSelect);
@@ -135,8 +135,8 @@ public class CorsoCLI extends BaseShortcutHandler {
     }
 
     //----METODO PER MOSTRARE LA PAGINA SUCCESSIVA DEL CATALOGO DEI QUIZ----
-    private void nextPage() {
-        if ((currentPage + 1) * 6 < quizzes.size()) {
+    private void nextPage(int endIndx) {
+        if (endIndx < quizzes.size()) {
             currentPage++;
         } else {
             OutputHandler.showln("Non ci sono altre pagine.");
