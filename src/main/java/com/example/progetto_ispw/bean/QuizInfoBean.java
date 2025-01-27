@@ -63,6 +63,19 @@ public class QuizInfoBean implements Bean{
         this.tempo = tempo;
     }
     public String showTempo() {
-        return tempo/60+":"+tempo%60;
+        String tempoRim;
+        int secondi= tempo%60;
+        int minuti= tempo/60;
+        if(minuti < 10){
+            tempoRim = "0" + minuti + ":";
+        } else {
+            tempoRim = minuti + ":";
+        }
+        if(secondi < 10){
+            tempoRim += "0" + secondi;
+        } else {
+            tempoRim += "" + secondi;
+        }
+        return tempoRim;
     }
 }

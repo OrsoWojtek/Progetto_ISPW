@@ -19,7 +19,7 @@ import java.util.Scanner;
 /*
 ----Devo fare le classi di test (3 minimo);
 int i = 0;
- */
+*/
 
 public class Main extends Application {
     private final Scanner scanner = new Scanner(System.in); //Scanner per input utente
