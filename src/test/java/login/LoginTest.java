@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-/* Autore: Alessandro Brunori
+/*  Autore: Alessandro Brunori
  *  Matricola: 0311012
  */
 
 /*
- Il test si occupa di verificare se il processo di login avvenga correttamente
+ *  Il test si occupa di verificare se il processo di login avvenga correttamente
  */
 class LoginTest{
 
