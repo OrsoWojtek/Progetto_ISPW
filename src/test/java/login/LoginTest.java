@@ -14,10 +14,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /*
  Il test si occupa di verificare se il processo di login avvenga correttamente
  */
-public class LoginTest{
+class LoginTest{
 
         @Test
-        public void loginTest() throws Exception {
+        void loginTest() throws Exception {
                 int flag = 0;
                 LoginInfoBean userBean = new LoginInfoBean();
                 userBean.setUsername("a");
